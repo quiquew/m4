@@ -606,9 +606,9 @@
         <div class="controls">
             <button class="btn" onclick="showSection('resumen')">📊 Resumen</button>
             <button class="btn" onclick="showSection('personas')">👥 Personas</button>
-            <button class="btn active" onclick="showSection('calendario')">📅 Calendario</button>
+            <button class="btn" onclick="showSection('calendario')">📅 Calendario</button>
             <button class="btn" onclick="showSection('conflictos')">⚠️ Conflictos</button>
-            <button class="btn edit-controls" onclick="showSection('gestion')" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <button class="btn edit-controls active" onclick="showSection('gestion')" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                 ⚙️ Gestión
             </button>
             <button class="btn" onclick="showSection('hoy')">🎯 Hoy</button>
@@ -630,6 +630,24 @@
                     <div class="stat-number" id="total-personas">7</div>
                 </div>
             <div class="stat-card">
+                        <div class="stat-label">Guardias 2026</div>
+                        <div class="stat-number">55</div>
+                    </div><div class="stat-card">
+                        <div class="stat-label">Vacaciones 2026</div>
+                        <div class="stat-number">16</div>
+                    </div><div class="stat-card">
+                        <div class="stat-label">Festivos 2026</div>
+                        <div class="stat-number">15</div>
+                    </div><div class="stat-card">
+                        <div class="stat-label">Guardias 2026</div>
+                        <div class="stat-number">55</div>
+                    </div><div class="stat-card">
+                        <div class="stat-label">Vacaciones 2026</div>
+                        <div class="stat-number">16</div>
+                    </div><div class="stat-card">
+                        <div class="stat-label">Festivos 2026</div>
+                        <div class="stat-number">15</div>
+                    </div><div class="stat-card">
                         <div class="stat-label">Guardias 2026</div>
                         <div class="stat-number">55</div>
                     </div><div class="stat-card">
@@ -2113,7 +2131,7 @@
                 </div></div>
         </div>
         
-        <div id="calendario" class="section active">
+        <div id="calendario" class="section">
             <h2>📅 Calendario de Guardias</h2>
             <div class="cal-controls">
                 <button class="btn" onclick="prevMonth()">◀ Anterior</button>
@@ -2195,7 +2213,7 @@
                 </div>
         </div>
         
-        <div id="gestion" class="section">
+        <div id="gestion" class="section active">
             <h2>⚙️ Gestión del Sistema</h2>
             <div class="alert alert-warning">
                 ⚠️ Solo disponible en modo local. Los cambios se guardan en tu navegador.
