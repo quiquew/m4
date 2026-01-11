@@ -604,9 +604,9 @@
         </header>
         
         <div class="controls">
-            <button class="btn active" onclick="showSection('resumen')">📊 Resumen</button>
+            <button class="btn" onclick="showSection('resumen')">📊 Resumen</button>
             <button class="btn" onclick="showSection('personas')">👥 Personas</button>
-            <button class="btn" onclick="showSection('calendario')">📅 Calendario</button>
+            <button class="btn active" onclick="showSection('calendario')">📅 Calendario</button>
             <button class="btn" onclick="showSection('conflictos')">⚠️ Conflictos</button>
             <button class="btn edit-controls" onclick="showSection('gestion')" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                 ⚙️ Gestión
@@ -622,7 +622,7 @@
             </button>
         </div>
         
-        <div id="resumen" class="section active">
+        <div id="resumen" class="section">
             <h2>📊 Resumen General</h2>
             <div class="stats-grid" id="stats-grid">
                 <div class="stat-card">
@@ -631,7 +631,16 @@
                 </div>
             <div class="stat-card">
                         <div class="stat-label">Guardias 2026</div>
-                        <div class="stat-number">53</div>
+                        <div class="stat-number">55</div>
+                    </div><div class="stat-card">
+                        <div class="stat-label">Vacaciones 2026</div>
+                        <div class="stat-number">16</div>
+                    </div><div class="stat-card">
+                        <div class="stat-label">Festivos 2026</div>
+                        <div class="stat-number">15</div>
+                    </div><div class="stat-card">
+                        <div class="stat-label">Guardias 2026</div>
+                        <div class="stat-number">55</div>
                     </div><div class="stat-card">
                         <div class="stat-label">Vacaciones 2026</div>
                         <div class="stat-number">16</div>
@@ -641,10 +650,10 @@
                     </div></div>
             <div class="person-grid" id="resumen-grid"><div class="person-card">
                     <div class="person-name">QUIQUE</div>
-                    <div>8 guardias asignadas</div>
+                    <div>9 guardias asignadas</div>
                 </div><div class="person-card">
                     <div class="person-name">DANI</div>
-                    <div>7 guardias asignadas</div>
+                    <div>8 guardias asignadas</div>
                 </div><div class="person-card">
                     <div class="person-name">RICARDO</div>
                     <div>8 guardias asignadas</div>
@@ -668,7 +677,7 @@
             <div class="person-grid" id="personas-grid"><div class="person-card">
                     <div class="person-name">QUIQUE</div>
                     <div style="margin-top: 10px; opacity: 0.9;">
-                        8 guardias • 3 períodos de vacaciones
+                        9 guardias • 3 períodos de vacaciones
                     </div>
                     <div style="margin-top: 10px;"><strong>Guardias:</strong></div>
                         <div class="guardia-item">
@@ -711,7 +720,7 @@
                     
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
-                                18/3/2026 - 24/3/2026
+                                18/3/2026 - 22/3/2026
                             </div>
                             
                             <div style="display: flex; gap: 5px;">
@@ -730,7 +739,7 @@
                     
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
-                                20/5/2026 - 26/5/2026
+                                23/3/2026 - 24/3/2026
                             </div>
                             
                             <div style="display: flex; gap: 5px;">
@@ -749,7 +758,7 @@
                     
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
-                                22/7/2026 - 28/7/2026
+                                20/5/2026 - 26/5/2026
                             </div>
                             
                             <div style="display: flex; gap: 5px;">
@@ -768,7 +777,7 @@
                     
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
-                                2/9/2026 - 8/9/2026
+                                22/7/2026 - 28/7/2026
                             </div>
                             
                             <div style="display: flex; gap: 5px;">
@@ -787,7 +796,7 @@
                     
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
-                                28/10/2026 - 3/11/2026
+                                2/9/2026 - 8/9/2026
                             </div>
                             
                             <div style="display: flex; gap: 5px;">
@@ -806,7 +815,7 @@
                     
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
-                                25/11/2026 - 1/12/2026
+                                28/10/2026 - 3/11/2026
                             </div>
                             
                             <div style="display: flex; gap: 5px;">
@@ -817,6 +826,25 @@
                                     ✏️
                                 </button>
                                 <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('QUIQUE', 7)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
+                            
+                        </div>
+                    
+                        <div class="guardia-item">
+                            <div style="font-size: 0.9em;">
+                                25/11/2026 - 1/12/2026
+                            </div>
+                            
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 8)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('QUIQUE', 8)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('QUIQUE', 8)" title="Eliminar">
                                     🗑️
                                 </button>
                             </div>
@@ -888,7 +916,7 @@
                 </div><div class="person-card">
                     <div class="person-name">DANI</div>
                     <div style="margin-top: 10px; opacity: 0.9;">
-                        7 guardias • 1 períodos de vacaciones
+                        8 guardias • 1 períodos de vacaciones
                     </div>
                     <div style="margin-top: 10px;"><strong>Guardias:</strong></div>
                         <div class="guardia-item">
@@ -912,7 +940,7 @@
                     
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
-                                1/4/2026 - 7/4/2026
+                                1/4/2026 - 2/4/2026
                             </div>
                             
                             <div style="display: flex; gap: 5px;">
@@ -931,7 +959,7 @@
                     
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
-                                13/5/2026 - 19/5/2026
+                                3/4/2026 - 7/4/2026
                             </div>
                             
                             <div style="display: flex; gap: 5px;">
@@ -950,7 +978,7 @@
                     
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
-                                1/7/2026 - 7/7/2026
+                                13/5/2026 - 19/5/2026
                             </div>
                             
                             <div style="display: flex; gap: 5px;">
@@ -969,7 +997,7 @@
                     
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
-                                5/8/2026 - 11/8/2026
+                                1/7/2026 - 7/7/2026
                             </div>
                             
                             <div style="display: flex; gap: 5px;">
@@ -988,7 +1016,7 @@
                     
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
-                                21/10/2026 - 27/10/2026
+                                5/8/2026 - 11/8/2026
                             </div>
                             
                             <div style="display: flex; gap: 5px;">
@@ -1007,7 +1035,7 @@
                     
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
-                                9/12/2026 - 15/12/2026
+                                21/10/2026 - 27/10/2026
                             </div>
                             
                             <div style="display: flex; gap: 5px;">
@@ -1018,6 +1046,25 @@
                                     ✏️
                                 </button>
                                 <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('DANI', 6)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
+                            
+                        </div>
+                    
+                        <div class="guardia-item">
+                            <div style="font-size: 0.9em;">
+                                9/12/2026 - 15/12/2026
+                            </div>
+                            
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 7)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('DANI', 7)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('DANI', 7)" title="Eliminar">
                                     🗑️
                                 </button>
                             </div>
@@ -2066,7 +2113,7 @@
                 </div></div>
         </div>
         
-        <div id="calendario" class="section">
+        <div id="calendario" class="section active">
             <h2>📅 Calendario de Guardias</h2>
             <div class="cal-controls">
                 <button class="btn" onclick="prevMonth()">◀ Anterior</button>
@@ -2129,7 +2176,7 @@
                         <div class="conflict-details">
                             <div style="margin-bottom: 8px;">
                                 <strong>Guardia:</strong> 
-                                18/3/2026 - 
+                                23/3/2026 - 
                                 24/3/2026
                             </div>
                             <div style="margin-bottom: 8px;">
@@ -2558,7 +2605,10 @@
                 
                 <div class="form-group">
                     <label>Guardia a intercambiar:</label>
-                    <div id="guardia-origen" style="padding: 10px; background: #f0f0f0; border-radius: 6px; margin-bottom: 15px;"></div>
+                    <div id="guardia-origen" style="padding: 10px; background: #f0f0f0; border-radius: 6px; margin-bottom: 15px;">
+                <strong>DANI</strong><br>
+                23/3/2026 - 24/3/2026
+            </div>
                 </div>
                 
                 <div class="form-group">
@@ -2573,24 +2623,66 @@
                 <div id="selector-dias" style="display: none;">
                     <div class="form-group">
                         <label>Selecciona los días a pasar:</label>
-                        <div id="dias-disponibles" style="background: #f9f9f9; padding: 15px; border-radius: 8px; max-height: 200px; overflow-y: auto;"></div>
+                        <div id="dias-disponibles" style="background: #f9f9f9; padding: 15px; border-radius: 8px; max-height: 200px; overflow-y: auto;"><div class="dia-checkbox">
+                    <input type="checkbox" id="dia-2026-03-23" value="2026-03-23">
+                    <label for="dia-2026-03-23">
+                        <strong>Lun</strong> 23/3/2026
+                    </label>
+                </div><div class="dia-checkbox">
+                    <input type="checkbox" id="dia-2026-03-24" value="2026-03-24">
+                    <label for="dia-2026-03-24">
+                        <strong>Mar</strong> 24/3/2026
+                    </label>
+                </div></div>
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label>Pasar a:</label>
-                    <select id="select-persona-destino" class="form-control">
-                        <option value="">Selecciona un técnico...</option>
-                    </select>
+                    <select id="select-persona-destino" class="form-control"><option value="">Selecciona un técnico...</option><option value="QUIQUE">QUIQUE</option><option value="RICARDO">RICARDO</option><option value="JONA">JONA</option><option value="PEDRO">PEDRO</option><option value="MIGUEL">MIGUEL</option><option value="ANDREU">ANDREU</option></select>
                 </div>
                 
                 <!-- Solo para intercambio completo -->
-                <div id="selector-guardia-destino">
+                <div id="selector-guardia-destino" style="display: block;">
                     <div class="form-group">
                         <label>Guardia del otro técnico:</label>
-                        <select id="select-guardia-destino" class="form-control">
-                            <option value="">Selecciona una guardia...</option>
-                        </select>
+                        <select id="select-guardia-destino" class="form-control"><option value="">Selecciona una guardia...</option>
+                    <option value="0">
+                        1/1/2026 - 6/1/2026
+                    </option>
+                
+                    <option value="1">
+                        11/2/2026 - 17/2/2026
+                    </option>
+                
+                    <option value="2">
+                        18/3/2026 - 22/3/2026
+                    </option>
+                
+                    <option value="3">
+                        1/4/2026 - 2/4/2026
+                    </option>
+                
+                    <option value="4">
+                        20/5/2026 - 26/5/2026
+                    </option>
+                
+                    <option value="5">
+                        22/7/2026 - 28/7/2026
+                    </option>
+                
+                    <option value="6">
+                        2/9/2026 - 8/9/2026
+                    </option>
+                
+                    <option value="7">
+                        28/10/2026 - 3/11/2026
+                    </option>
+                
+                    <option value="8">
+                        25/11/2026 - 1/12/2026
+                    </option>
+                </select>
                     </div>
                 </div>
             </div>
@@ -2730,6 +2822,10 @@
                     ],
                     [
                               "2026-03-18",
+                              "2026-03-22"
+                    ],
+                    [
+                              "2026-03-23",
                               "2026-03-24"
                     ],
                     [
@@ -2760,6 +2856,10 @@
                     ],
                     [
                               "2026-04-01",
+                              "2026-04-02"
+                    ],
+                    [
+                              "2026-04-03",
                               "2026-04-07"
                     ],
                     [
