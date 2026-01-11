@@ -627,7 +627,7 @@
             <div class="stats-grid" id="stats-grid">
                 <div class="stat-card">
                     <div class="stat-label">Total Personas</div>
-                    <div class="stat-number" id="total-personas">8</div>
+                    <div class="stat-number" id="total-personas">7</div>
                 </div>
             <div class="stat-card">
                         <div class="stat-label">Guardias 2026</div>
@@ -683,6 +683,15 @@
                     </div><div class="stat-card">
                         <div class="stat-label">Festivos 2026</div>
                         <div class="stat-number">15</div>
+                    </div><div class="stat-card">
+                        <div class="stat-label">Guardias 2026</div>
+                        <div class="stat-number">53</div>
+                    </div><div class="stat-card">
+                        <div class="stat-label">Vacaciones 2026</div>
+                        <div class="stat-number">16</div>
+                    </div><div class="stat-card">
+                        <div class="stat-label">Festivos 2026</div>
+                        <div class="stat-number">15</div>
                     </div></div>
             <div class="person-grid" id="resumen-grid"><div class="person-card">
                     <div class="person-name">QUIQUE</div>
@@ -705,9 +714,6 @@
                 </div><div class="person-card">
                     <div class="person-name">ANDREU</div>
                     <div>8 guardias asignadas</div>
-                </div><div class="person-card">
-                    <div class="person-name">HOLA</div>
-                    <div>0 guardias asignadas</div>
                 </div></div>
         </div>
         
@@ -2111,19 +2117,6 @@
                         </button>
                         
                     </div>
-                </div><div class="person-card">
-                    <div class="person-name">HOLA</div>
-                    <div style="margin-top: 10px; opacity: 0.9;">
-                        0 guardias • 0 períodos de vacaciones
-                    </div>
-                    <div style="margin-top: 10px;"><strong>Guardias:</strong></div>
-                    
-                    <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button class="btn-small" onclick="exportarGuardiasCalendario('HOLA')">
-                            📅 Exportar Guardias
-                        </button>
-                        
-                    </div>
                 </div></div>
         </div>
         
@@ -2225,7 +2218,7 @@
                     </div>
                     <div class="form-group" style="margin-top: 20px;">
                         <label>Eliminar técnico:</label>
-                        <select id="select-eliminar-tecnico" class="form-input"><option value="">Selecciona un técnico...</option><option value="ANDREU">ANDREU</option><option value="DANI">DANI</option><option value="HOLA">HOLA</option><option value="JONA">JONA</option><option value="MIGUEL">MIGUEL</option><option value="PEDRO">PEDRO</option><option value="QUIQUE">QUIQUE</option><option value="RICARDO">RICARDO</option></select>
+                        <select id="select-eliminar-tecnico" class="form-input"><option value="">Selecciona un técnico...</option><option value="ANDREU">ANDREU</option><option value="DANI">DANI</option><option value="JONA">JONA</option><option value="MIGUEL">MIGUEL</option><option value="PEDRO">PEDRO</option><option value="QUIQUE">QUIQUE</option><option value="RICARDO">RICARDO</option></select>
                         <button class="btn-cancel" onclick="eliminarTecnico()">🗑️ Eliminar Técnico</button>
                     </div>
                 </div>
@@ -2235,7 +2228,7 @@
                     <h3>📅 Añadir Guardia</h3>
                     <div class="form-group">
                         <label>Técnico:</label>
-                        <select id="select-tecnico-guardia" class="form-input"><option value="">Selecciona un técnico...</option><option value="ANDREU">ANDREU</option><option value="DANI">DANI</option><option value="HOLA">HOLA</option><option value="JONA">JONA</option><option value="MIGUEL">MIGUEL</option><option value="PEDRO">PEDRO</option><option value="QUIQUE">QUIQUE</option><option value="RICARDO">RICARDO</option></select>
+                        <select id="select-tecnico-guardia" class="form-input"><option value="">Selecciona un técnico...</option><option value="ANDREU">ANDREU</option><option value="DANI">DANI</option><option value="JONA">JONA</option><option value="MIGUEL">MIGUEL</option><option value="PEDRO">PEDRO</option><option value="QUIQUE">QUIQUE</option><option value="RICARDO">RICARDO</option></select>
                     </div>
                     <div class="form-group">
                         <label>Fecha inicio:</label>
@@ -2253,7 +2246,7 @@
                     <h3>🏖️ Añadir Vacaciones</h3>
                     <div class="form-group">
                         <label>Técnico:</label>
-                        <select id="select-tecnico-vacaciones" class="form-input"><option value="">Selecciona un técnico...</option><option value="ANDREU">ANDREU</option><option value="DANI">DANI</option><option value="HOLA">HOLA</option><option value="JONA">JONA</option><option value="MIGUEL">MIGUEL</option><option value="PEDRO">PEDRO</option><option value="QUIQUE">QUIQUE</option><option value="RICARDO">RICARDO</option></select>
+                        <select id="select-tecnico-vacaciones" class="form-input"><option value="">Selecciona un técnico...</option><option value="ANDREU">ANDREU</option><option value="DANI">DANI</option><option value="JONA">JONA</option><option value="MIGUEL">MIGUEL</option><option value="PEDRO">PEDRO</option><option value="QUIQUE">QUIQUE</option><option value="RICARDO">RICARDO</option></select>
                     </div>
                     <div class="form-group">
                         <label>Fecha inicio:</label>
@@ -3004,8 +2997,7 @@
                               "2026-12-30",
                               "2026-12-31"
                     ]
-          ],
-          "HOLA": []
+          ]
 };
 
         const VACACIONES = {
