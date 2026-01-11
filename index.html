@@ -604,11 +604,11 @@
         </header>
         
         <div class="controls">
-            <button class="btn active" onclick="showSection('resumen')">📊 Resumen</button>
+            <button class="btn" onclick="showSection('resumen')">📊 Resumen</button>
             <button class="btn" onclick="showSection('personas')">👥 Personas</button>
             <button class="btn" onclick="showSection('calendario')">📅 Calendario</button>
             <button class="btn" onclick="showSection('conflictos')">⚠️ Conflictos</button>
-            <button class="btn edit-controls" onclick="showSection('gestion')" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <button class="btn edit-controls active" onclick="showSection('gestion')" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                 ⚙️ Gestión
             </button>
             <button class="btn" onclick="showSection('hoy')">🎯 Hoy</button>
@@ -622,7 +622,7 @@
             </button>
         </div>
         
-        <div id="resumen" class="section active">
+        <div id="resumen" class="section">
             <h2>📊 Resumen General</h2>
             <div class="stats-grid" id="stats-grid">
                 <div class="stat-card">
@@ -1388,7 +1388,7 @@
             <h2>📅 Calendario de Guardias</h2>
             <div class="cal-controls">
                 <button class="btn" onclick="prevMonth()">◀ Anterior</button>
-                <div class="cal-title" id="calendar-title">Enero 2026</div>
+                <div class="cal-title" id="calendar-title">Abril 2026</div>
                 <button class="btn" onclick="nextMonth()">Siguiente ▶</button>
             </div>
             <table class="calendar-month" id="calendar-month">
@@ -1399,38 +1399,37 @@
                     </tr>
                 </thead>
                 <tbody>
-            <tr><td></td><td></td><td></td><td></td><td class=" festivo-day">
-                            <div class="day-number">1</div><span class="guardia-event">QUIQUE</span><span class="festivo-label">Año Nuevo</span></td><td class="">
-                            <div class="day-number">2</div><span class="guardia-event">QUIQUE</span></td><td class="">
-                            <div class="day-number">3</div><span class="guardia-event">QUIQUE</span></td></tr><tr><td class="">
-                            <div class="day-number">4</div><span class="guardia-event">QUIQUE</span></td><td class="">
-                            <div class="day-number">5</div><span class="guardia-event">QUIQUE</span></td><td class=" festivo-day">
-                            <div class="day-number">6</div><span class="guardia-event">QUIQUE</span><span class="festivo-label">Epifanía Reyes</span></td><td class="">
-                            <div class="day-number">7</div><span class="guardia-event">DANI</span></td><td class="">
-                            <div class="day-number">8</div><span class="guardia-event">DANI</span></td><td class="">
-                            <div class="day-number">9</div><span class="guardia-event">DANI</span></td><td class="">
-                            <div class="day-number">10</div><span class="guardia-event">DANI</span></td></tr><tr><td class="today">
-                            <div class="day-number">11</div><span class="guardia-event">DANI</span></td><td class="">
-                            <div class="day-number">12</div><span class="guardia-event">DANI</span></td><td class="">
-                            <div class="day-number">13</div><span class="guardia-event">DANI</span></td><td class="">
-                            <div class="day-number">14</div><span class="guardia-event">RICARDO</span></td><td class="">
-                            <div class="day-number">15</div><span class="guardia-event">RICARDO</span></td><td class="">
-                            <div class="day-number">16</div><span class="guardia-event">RICARDO</span></td><td class="">
-                            <div class="day-number">17</div><span class="guardia-event">RICARDO</span></td></tr><tr><td class="">
-                            <div class="day-number">18</div><span class="guardia-event">RICARDO</span></td><td class="">
-                            <div class="day-number">19</div><span class="guardia-event">RICARDO</span></td><td class="">
-                            <div class="day-number">20</div><span class="guardia-event">RICARDO</span></td><td class=" vacation-highlight">
-                            <div class="day-number">21</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span></td><td class=" festivo-day vacation-highlight">
-                            <div class="day-number">22</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span><span class="festivo-label">San Vicente Mártir</span></td><td class=" vacation-highlight">
-                            <div class="day-number">23</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span></td><td class=" vacation-highlight">
-                            <div class="day-number">24</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span></td></tr><tr><td class=" vacation-highlight">
-                            <div class="day-number">25</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span></td><td class=" vacation-highlight">
-                            <div class="day-number">26</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span></td><td class=" vacation-highlight">
-                            <div class="day-number">27</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span></td><td class="">
-                            <div class="day-number">28</div><span class="guardia-event">PEDRO</span></td><td class="">
+            <tr><td></td><td></td><td></td><td class=" vacation-highlight">
+                            <div class="day-number">1</div><span class="guardia-event">DANI</span><span class="vacaciones-event">RICARDO: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">2</div><span class="guardia-event">DANI</span><span class="vacaciones-event">RICARDO: Vacaciones abril</span></td><td class=" festivo-day vacation-highlight">
+                            <div class="day-number">3</div><span class="guardia-event">DANI</span><span class="vacaciones-event">RICARDO: Vacaciones abril</span><span class="festivo-label">Viernes Santo</span></td><td class=" vacation-highlight">
+                            <div class="day-number">4</div><span class="guardia-event">DANI</span><span class="vacaciones-event">RICARDO: Vacaciones abril</span></td></tr><tr><td class=" vacation-highlight">
+                            <div class="day-number">5</div><span class="guardia-event">DANI</span><span class="vacaciones-event">RICARDO: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">6</div><span class="guardia-event">DANI</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">7</div><span class="guardia-event">DANI</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">8</div><span class="guardia-event">JONA</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">9</div><span class="guardia-event">JONA</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">10</div><span class="guardia-event">JONA</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">11</div><span class="guardia-event">JONA</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td></tr><tr><td class=" vacation-highlight">
+                            <div class="day-number">12</div><span class="guardia-event">JONA</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">13</div><span class="guardia-event">JONA</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">14</div><span class="guardia-event">JONA</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">15</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" festivo-day vacation-highlight">
+                            <div class="day-number">16</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span><span class="festivo-label">San Vicente Ferrer</span></td><td class=" vacation-highlight">
+                            <div class="day-number">17</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">18</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td></tr><tr><td class=" vacation-highlight">
+                            <div class="day-number">19</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">20</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">21</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">22</div><span class="guardia-event">RICARDO</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">23</div><span class="guardia-event">RICARDO</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">24</div><span class="guardia-event">RICARDO</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
+                            <div class="day-number">25</div><span class="guardia-event">RICARDO</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td></tr><tr><td class=" vacation-highlight">
+                            <div class="day-number">26</div><span class="guardia-event">RICARDO</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class="">
+                            <div class="day-number">27</div><span class="guardia-event">RICARDO</span></td><td class="">
+                            <div class="day-number">28</div><span class="guardia-event">RICARDO</span></td><td class="">
                             <div class="day-number">29</div><span class="guardia-event">PEDRO</span></td><td class="">
-                            <div class="day-number">30</div><span class="guardia-event">PEDRO</span></td><td class="">
-                            <div class="day-number">31</div><span class="guardia-event">PEDRO</span></td></tr></tbody></table>
+                            <div class="day-number">30</div><span class="guardia-event">PEDRO</span></td><td></td><td></td></tr></tbody></table>
         </div>
         
         <div id="conflictos" class="section">
@@ -1466,7 +1465,7 @@
                 </div>
         </div>
         
-        <div id="gestion" class="section">
+        <div id="gestion" class="section active">
             <h2>⚙️ Gestión del Sistema</h2>
             <div class="alert alert-warning">
                 ⚠️ Solo disponible en modo local. Los cambios se guardan en tu navegador.
@@ -1671,6 +1670,13 @@
                             <div class="event-date">25/12/2026 - Navidad</div>
                             <div style="margin-top: 5px; color: var(--danger-color); font-weight: bold;">
                                 Guardias: ANDREU
+                            </div>
+                        </div>
+                    
+                        <div class="event-item">
+                            <div class="event-date">5/1/2026 - Noche de reyes (media jornada)</div>
+                            <div style="margin-top: 5px; color: var(--danger-color); font-weight: bold;">
+                                Guardias: QUIQUE
                             </div>
                         </div>
                     </div>
@@ -2315,7 +2321,8 @@
           "2026-11-01": "Día de todos los santos",
           "2026-12-06": "Día de la constitución",
           "2026-12-08": "Día de la Inmaculada Concepción",
-          "2026-12-25": "Navidad"
+          "2026-12-25": "Navidad",
+          "2026-01-05": "Noche de reyes (media jornada)"
 };
 
         let currentYear = 2026;
