@@ -604,11 +604,11 @@
         </header>
         
         <div class="controls">
-            <button class="btn" onclick="showSection('resumen')">📊 Resumen</button>
+            <button class="btn active" onclick="showSection('resumen')">📊 Resumen</button>
             <button class="btn" onclick="showSection('personas')">👥 Personas</button>
             <button class="btn" onclick="showSection('calendario')">📅 Calendario</button>
             <button class="btn" onclick="showSection('conflictos')">⚠️ Conflictos</button>
-            <button class="btn edit-controls active" onclick="showSection('gestion')" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <button class="btn edit-controls" onclick="showSection('gestion')" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                 ⚙️ Gestión
             </button>
             <button class="btn" onclick="showSection('hoy')">🎯 Hoy</button>
@@ -622,7 +622,7 @@
             </button>
         </div>
         
-        <div id="resumen" class="section">
+        <div id="resumen" class="section active">
             <h2>📊 Resumen General</h2>
             <div class="stats-grid" id="stats-grid">
                 <div class="stat-card">
@@ -637,7 +637,7 @@
                         <div class="stat-number">16</div>
                     </div><div class="stat-card">
                         <div class="stat-label">Festivos 2026</div>
-                        <div class="stat-number">14</div>
+                        <div class="stat-number">15</div>
                     </div></div>
             <div class="person-grid" id="resumen-grid"><div class="person-card">
                     <div class="person-name">QUIQUE</div>
@@ -668,19 +668,25 @@
             <div class="person-grid" id="personas-grid"><div class="person-card">
                     <div class="person-name">QUIQUE</div>
                     <div style="margin-top: 10px; opacity: 0.9;">
-                        8 guardias
-                         • 3 períodos de vacaciones
+                        8 guardias • 3 períodos de vacaciones
                     </div>
-                    <div style="margin-top: 10px;">
-                        
+                    <div style="margin-top: 10px;"><strong>Guardias:</strong></div>
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
                                 1/1/2026 - 6/1/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 0)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 0)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('QUIQUE', 0)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('QUIQUE', 0)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -689,9 +695,17 @@
                                 11/2/2026 - 17/2/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 1)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 1)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('QUIQUE', 1)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('QUIQUE', 1)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -700,9 +714,17 @@
                                 18/3/2026 - 24/3/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 2)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 2)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('QUIQUE', 2)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('QUIQUE', 2)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -711,9 +733,17 @@
                                 20/5/2026 - 26/5/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 3)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 3)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('QUIQUE', 3)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('QUIQUE', 3)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -722,9 +752,17 @@
                                 22/7/2026 - 28/7/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 4)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 4)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('QUIQUE', 4)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('QUIQUE', 4)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -733,9 +771,17 @@
                                 2/9/2026 - 8/9/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 5)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 5)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('QUIQUE', 5)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('QUIQUE', 5)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -744,9 +790,17 @@
                                 28/10/2026 - 3/11/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 6)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 6)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('QUIQUE', 6)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('QUIQUE', 6)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -755,13 +809,72 @@
                                 25/11/2026 - 1/12/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 7)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('QUIQUE', 7)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('QUIQUE', 7)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('QUIQUE', 7)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
-                    </div>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid rgba(255,255,255,0.3);"><strong>Vacaciones:</strong></div>
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    23/3/2026 - 29/3/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones marzo</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('QUIQUE', 0)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('QUIQUE', 0)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    8/6/2026 - 14/6/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones junio</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('QUIQUE', 1)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('QUIQUE', 1)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    28/9/2026 - 11/10/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones octubre</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('QUIQUE', 2)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('QUIQUE', 2)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
                     <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                         <button class="btn-small" onclick="exportarGuardiasCalendario('QUIQUE')">
                             📅 Exportar Guardias
@@ -775,19 +888,25 @@
                 </div><div class="person-card">
                     <div class="person-name">DANI</div>
                     <div style="margin-top: 10px; opacity: 0.9;">
-                        7 guardias
-                         • 1 períodos de vacaciones
+                        7 guardias • 1 períodos de vacaciones
                     </div>
-                    <div style="margin-top: 10px;">
-                        
+                    <div style="margin-top: 10px;"><strong>Guardias:</strong></div>
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
                                 7/1/2026 - 13/1/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 0)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 0)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('DANI', 0)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('DANI', 0)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -796,9 +915,17 @@
                                 1/4/2026 - 7/4/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 1)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 1)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('DANI', 1)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('DANI', 1)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -807,9 +934,17 @@
                                 13/5/2026 - 19/5/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 2)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 2)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('DANI', 2)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('DANI', 2)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -818,9 +953,17 @@
                                 1/7/2026 - 7/7/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 3)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 3)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('DANI', 3)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('DANI', 3)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -829,9 +972,17 @@
                                 5/8/2026 - 11/8/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 4)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 4)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('DANI', 4)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('DANI', 4)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -840,9 +991,17 @@
                                 21/10/2026 - 27/10/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 5)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 5)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('DANI', 5)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('DANI', 5)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -851,13 +1010,38 @@
                                 9/12/2026 - 15/12/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 6)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('DANI', 6)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('DANI', 6)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('DANI', 6)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
-                    </div>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid rgba(255,255,255,0.3);"><strong>Vacaciones:</strong></div>
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    17/8/2026 - 30/8/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones verano</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('DANI', 0)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('DANI', 0)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
                     <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                         <button class="btn-small" onclick="exportarGuardiasCalendario('DANI')">
                             📅 Exportar Guardias
@@ -871,19 +1055,25 @@
                 </div><div class="person-card">
                     <div class="person-name">RICARDO</div>
                     <div style="margin-top: 10px; opacity: 0.9;">
-                        8 guardias
-                         • 4 períodos de vacaciones
+                        8 guardias • 4 períodos de vacaciones
                     </div>
-                    <div style="margin-top: 10px;">
-                        
+                    <div style="margin-top: 10px;"><strong>Guardias:</strong></div>
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
                                 14/1/2026 - 20/1/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 0)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 0)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('RICARDO', 0)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('RICARDO', 0)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -892,9 +1082,17 @@
                                 18/2/2026 - 24/2/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 1)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 1)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('RICARDO', 1)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('RICARDO', 1)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -903,9 +1101,17 @@
                                 22/4/2026 - 28/4/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 2)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 2)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('RICARDO', 2)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('RICARDO', 2)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -914,9 +1120,17 @@
                                 10/6/2026 - 16/6/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 3)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 3)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('RICARDO', 3)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('RICARDO', 3)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -925,9 +1139,17 @@
                                 15/7/2026 - 21/7/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 4)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 4)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('RICARDO', 4)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('RICARDO', 4)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -936,9 +1158,17 @@
                                 12/8/2026 - 18/8/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 5)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 5)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('RICARDO', 5)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('RICARDO', 5)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -947,9 +1177,17 @@
                                 23/9/2026 - 29/9/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 6)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 6)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('RICARDO', 6)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('RICARDO', 6)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -958,13 +1196,89 @@
                                 11/11/2026 - 17/11/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 7)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('RICARDO', 7)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('RICARDO', 7)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('RICARDO', 7)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
-                    </div>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid rgba(255,255,255,0.3);"><strong>Vacaciones:</strong></div>
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    21/1/2026 - 27/1/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones enero</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('RICARDO', 0)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('RICARDO', 0)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    16/3/2026 - 22/3/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones marzo</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('RICARDO', 1)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('RICARDO', 1)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    30/3/2026 - 5/4/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones abril</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('RICARDO', 2)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('RICARDO', 2)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    29/6/2026 - 5/7/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones julio</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('RICARDO', 3)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('RICARDO', 3)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
                     <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                         <button class="btn-small" onclick="exportarGuardiasCalendario('RICARDO')">
                             📅 Exportar Guardias
@@ -978,19 +1292,25 @@
                 </div><div class="person-card">
                     <div class="person-name">JONA</div>
                     <div style="margin-top: 10px; opacity: 0.9;">
-                        7 guardias
-                         • 3 períodos de vacaciones
+                        7 guardias • 3 períodos de vacaciones
                     </div>
-                    <div style="margin-top: 10px;">
-                        
+                    <div style="margin-top: 10px;"><strong>Guardias:</strong></div>
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
                                 21/1/2026 - 27/1/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 0)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 0)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('JONA', 0)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('JONA', 0)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -999,9 +1319,17 @@
                                 25/2/2026 - 3/3/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 1)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 1)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('JONA', 1)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('JONA', 1)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1010,9 +1338,17 @@
                                 8/4/2026 - 14/4/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 2)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 2)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('JONA', 2)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('JONA', 2)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1021,9 +1357,17 @@
                                 17/6/2026 - 23/6/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 3)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 3)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('JONA', 3)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('JONA', 3)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1032,9 +1376,17 @@
                                 19/8/2026 - 25/8/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 4)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 4)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('JONA', 4)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('JONA', 4)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1043,9 +1395,17 @@
                                 30/9/2026 - 6/10/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 5)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 5)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('JONA', 5)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('JONA', 5)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1054,13 +1414,72 @@
                                 16/12/2026 - 22/12/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 6)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('JONA', 6)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('JONA', 6)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('JONA', 6)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
-                    </div>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid rgba(255,255,255,0.3);"><strong>Vacaciones:</strong></div>
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    9/2/2026 - 15/2/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones febrero</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('JONA', 0)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('JONA', 0)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    27/7/2026 - 9/8/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones verano</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('JONA', 1)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('JONA', 1)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    26/10/2026 - 1/11/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones noviembre</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('JONA', 2)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('JONA', 2)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
                     <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                         <button class="btn-small" onclick="exportarGuardiasCalendario('JONA')">
                             📅 Exportar Guardias
@@ -1074,19 +1493,25 @@
                 </div><div class="person-card">
                     <div class="person-name">PEDRO</div>
                     <div style="margin-top: 10px; opacity: 0.9;">
-                        7 guardias
-                         • 2 períodos de vacaciones
+                        7 guardias • 2 períodos de vacaciones
                     </div>
-                    <div style="margin-top: 10px;">
-                        
+                    <div style="margin-top: 10px;"><strong>Guardias:</strong></div>
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
                                 28/1/2026 - 3/2/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 0)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 0)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('PEDRO', 0)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('PEDRO', 0)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1095,9 +1520,17 @@
                                 4/3/2026 - 10/3/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 1)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 1)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('PEDRO', 1)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('PEDRO', 1)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1106,9 +1539,17 @@
                                 29/4/2026 - 5/5/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 2)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 2)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('PEDRO', 2)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('PEDRO', 2)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1117,9 +1558,17 @@
                                 24/6/2026 - 30/6/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 3)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 3)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('PEDRO', 3)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('PEDRO', 3)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1128,9 +1577,17 @@
                                 9/9/2026 - 15/9/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 4)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 4)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('PEDRO', 4)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('PEDRO', 4)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1139,9 +1596,17 @@
                                 7/10/2026 - 13/10/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 5)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 5)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('PEDRO', 5)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('PEDRO', 5)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1150,13 +1615,55 @@
                                 18/11/2026 - 24/11/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 6)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('PEDRO', 6)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('PEDRO', 6)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('PEDRO', 6)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
-                    </div>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid rgba(255,255,255,0.3);"><strong>Vacaciones:</strong></div>
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    6/4/2026 - 12/4/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones abril</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('PEDRO', 0)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('PEDRO', 0)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    6/7/2026 - 26/7/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones verano</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('PEDRO', 1)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('PEDRO', 1)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
                     <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                         <button class="btn-small" onclick="exportarGuardiasCalendario('PEDRO')">
                             📅 Exportar Guardias
@@ -1170,19 +1677,25 @@
                 </div><div class="person-card">
                     <div class="person-name">MIGUEL</div>
                     <div style="margin-top: 10px; opacity: 0.9;">
-                        8 guardias
-                         • 1 períodos de vacaciones
+                        8 guardias • 1 períodos de vacaciones
                     </div>
-                    <div style="margin-top: 10px;">
-                        
+                    <div style="margin-top: 10px;"><strong>Guardias:</strong></div>
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
                                 4/2/2026 - 10/2/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 0)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 0)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('MIGUEL', 0)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('MIGUEL', 0)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1191,9 +1704,17 @@
                                 25/3/2026 - 31/3/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 1)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 1)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('MIGUEL', 1)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('MIGUEL', 1)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1202,9 +1723,17 @@
                                 6/5/2026 - 12/5/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 2)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 2)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('MIGUEL', 2)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('MIGUEL', 2)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1213,9 +1742,17 @@
                                 3/6/2026 - 9/6/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 3)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 3)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('MIGUEL', 3)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('MIGUEL', 3)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1224,9 +1761,17 @@
                                 29/7/2026 - 4/8/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 4)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 4)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('MIGUEL', 4)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('MIGUEL', 4)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1235,9 +1780,17 @@
                                 26/8/2026 - 1/9/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 5)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 5)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('MIGUEL', 5)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('MIGUEL', 5)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1246,9 +1799,17 @@
                                 14/10/2026 - 20/10/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 6)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 6)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('MIGUEL', 6)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('MIGUEL', 6)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1257,13 +1818,38 @@
                                 2/12/2026 - 8/12/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 7)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('MIGUEL', 7)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('MIGUEL', 7)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('MIGUEL', 7)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
-                    </div>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid rgba(255,255,255,0.3);"><strong>Vacaciones:</strong></div>
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    13/4/2026 - 26/4/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones abril</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('MIGUEL', 0)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('MIGUEL', 0)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
                     <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                         <button class="btn-small" onclick="exportarGuardiasCalendario('MIGUEL')">
                             📅 Exportar Guardias
@@ -1277,19 +1863,25 @@
                 </div><div class="person-card">
                     <div class="person-name">ANDREU</div>
                     <div style="margin-top: 10px; opacity: 0.9;">
-                        8 guardias
-                         • 2 períodos de vacaciones
+                        8 guardias • 2 períodos de vacaciones
                     </div>
-                    <div style="margin-top: 10px;">
-                        
+                    <div style="margin-top: 10px;"><strong>Guardias:</strong></div>
                         <div class="guardia-item">
                             <div style="font-size: 0.9em;">
                                 11/3/2026 - 17/3/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 0)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 0)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('ANDREU', 0)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('ANDREU', 0)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1298,9 +1890,17 @@
                                 15/4/2026 - 21/4/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 1)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 1)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('ANDREU', 1)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('ANDREU', 1)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1309,9 +1909,17 @@
                                 27/5/2026 - 2/6/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 2)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 2)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('ANDREU', 2)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('ANDREU', 2)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1320,9 +1928,17 @@
                                 8/7/2026 - 14/7/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 3)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 3)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('ANDREU', 3)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('ANDREU', 3)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1331,9 +1947,17 @@
                                 16/9/2026 - 22/9/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 4)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 4)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('ANDREU', 4)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('ANDREU', 4)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1342,9 +1966,17 @@
                                 4/11/2026 - 10/11/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 5)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 5)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('ANDREU', 5)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('ANDREU', 5)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1353,9 +1985,17 @@
                                 23/12/2026 - 29/12/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 6)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 6)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('ANDREU', 6)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('ANDREU', 6)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
@@ -1364,13 +2004,55 @@
                                 30/12/2026 - 31/12/2026
                             </div>
                             
-                            <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 7)">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('ANDREU', 7)" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('ANDREU', 7)" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('ANDREU', 7)" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             
                         </div>
                     
-                    </div>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid rgba(255,255,255,0.3);"><strong>Vacaciones:</strong></div>
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    15/6/2026 - 21/6/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones junio</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('ANDREU', 0)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('ANDREU', 0)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    16/11/2026 - 29/11/2026<br>
+                                    <small style="opacity: 0.9;">Vacaciones noviembre</small>
+                                </div>
+                                
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('ANDREU', 1)">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('ANDREU', 1)">
+                                        🗑️
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        
                     <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                         <button class="btn-small" onclick="exportarGuardiasCalendario('ANDREU')">
                             📅 Exportar Guardias
@@ -1388,7 +2070,7 @@
             <h2>📅 Calendario de Guardias</h2>
             <div class="cal-controls">
                 <button class="btn" onclick="prevMonth()">◀ Anterior</button>
-                <div class="cal-title" id="calendar-title">Abril 2026</div>
+                <div class="cal-title" id="calendar-title">Enero 2026</div>
                 <button class="btn" onclick="nextMonth()">Siguiente ▶</button>
             </div>
             <table class="calendar-month" id="calendar-month">
@@ -1399,37 +2081,38 @@
                     </tr>
                 </thead>
                 <tbody>
-            <tr><td></td><td></td><td></td><td class=" vacation-highlight">
-                            <div class="day-number">1</div><span class="guardia-event">DANI</span><span class="vacaciones-event">RICARDO: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">2</div><span class="guardia-event">DANI</span><span class="vacaciones-event">RICARDO: Vacaciones abril</span></td><td class=" festivo-day vacation-highlight">
-                            <div class="day-number">3</div><span class="guardia-event">DANI</span><span class="vacaciones-event">RICARDO: Vacaciones abril</span><span class="festivo-label">Viernes Santo</span></td><td class=" vacation-highlight">
-                            <div class="day-number">4</div><span class="guardia-event">DANI</span><span class="vacaciones-event">RICARDO: Vacaciones abril</span></td></tr><tr><td class=" vacation-highlight">
-                            <div class="day-number">5</div><span class="guardia-event">DANI</span><span class="vacaciones-event">RICARDO: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">6</div><span class="guardia-event">DANI</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">7</div><span class="guardia-event">DANI</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">8</div><span class="guardia-event">JONA</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">9</div><span class="guardia-event">JONA</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">10</div><span class="guardia-event">JONA</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">11</div><span class="guardia-event">JONA</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td></tr><tr><td class=" vacation-highlight">
-                            <div class="day-number">12</div><span class="guardia-event">JONA</span><span class="vacaciones-event">PEDRO: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">13</div><span class="guardia-event">JONA</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">14</div><span class="guardia-event">JONA</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">15</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" festivo-day vacation-highlight">
-                            <div class="day-number">16</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span><span class="festivo-label">San Vicente Ferrer</span></td><td class=" vacation-highlight">
-                            <div class="day-number">17</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">18</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td></tr><tr><td class=" vacation-highlight">
-                            <div class="day-number">19</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">20</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">21</div><span class="guardia-event">ANDREU</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">22</div><span class="guardia-event">RICARDO</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">23</div><span class="guardia-event">RICARDO</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">24</div><span class="guardia-event">RICARDO</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class=" vacation-highlight">
-                            <div class="day-number">25</div><span class="guardia-event">RICARDO</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td></tr><tr><td class=" vacation-highlight">
-                            <div class="day-number">26</div><span class="guardia-event">RICARDO</span><span class="vacaciones-event">MIGUEL: Vacaciones abril</span></td><td class="">
-                            <div class="day-number">27</div><span class="guardia-event">RICARDO</span></td><td class="">
-                            <div class="day-number">28</div><span class="guardia-event">RICARDO</span></td><td class="">
+            <tr><td></td><td></td><td></td><td></td><td class=" festivo-day">
+                            <div class="day-number">1</div><span class="guardia-event">QUIQUE</span><span class="festivo-label">Año Nuevo</span></td><td class="">
+                            <div class="day-number">2</div><span class="guardia-event">QUIQUE</span></td><td class="">
+                            <div class="day-number">3</div><span class="guardia-event">QUIQUE</span></td></tr><tr><td class="">
+                            <div class="day-number">4</div><span class="guardia-event">QUIQUE</span></td><td class=" festivo-day">
+                            <div class="day-number">5</div><span class="guardia-event">QUIQUE</span><span class="festivo-label">Noche de reyes (media jornada)</span></td><td class=" festivo-day">
+                            <div class="day-number">6</div><span class="guardia-event">QUIQUE</span><span class="festivo-label">Epifanía Reyes</span></td><td class="">
+                            <div class="day-number">7</div><span class="guardia-event">DANI</span></td><td class="">
+                            <div class="day-number">8</div><span class="guardia-event">DANI</span></td><td class="">
+                            <div class="day-number">9</div><span class="guardia-event">DANI</span></td><td class="">
+                            <div class="day-number">10</div><span class="guardia-event">DANI</span></td></tr><tr><td class="today">
+                            <div class="day-number">11</div><span class="guardia-event">DANI</span></td><td class="">
+                            <div class="day-number">12</div><span class="guardia-event">DANI</span></td><td class="">
+                            <div class="day-number">13</div><span class="guardia-event">DANI</span></td><td class="">
+                            <div class="day-number">14</div><span class="guardia-event">RICARDO</span></td><td class="">
+                            <div class="day-number">15</div><span class="guardia-event">RICARDO</span></td><td class="">
+                            <div class="day-number">16</div><span class="guardia-event">RICARDO</span></td><td class="">
+                            <div class="day-number">17</div><span class="guardia-event">RICARDO</span></td></tr><tr><td class="">
+                            <div class="day-number">18</div><span class="guardia-event">RICARDO</span></td><td class="">
+                            <div class="day-number">19</div><span class="guardia-event">RICARDO</span></td><td class="">
+                            <div class="day-number">20</div><span class="guardia-event">RICARDO</span></td><td class=" vacation-highlight">
+                            <div class="day-number">21</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span></td><td class=" festivo-day vacation-highlight">
+                            <div class="day-number">22</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span><span class="festivo-label">San Vicente Mártir</span></td><td class=" vacation-highlight">
+                            <div class="day-number">23</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span></td><td class=" vacation-highlight">
+                            <div class="day-number">24</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span></td></tr><tr><td class=" vacation-highlight">
+                            <div class="day-number">25</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span></td><td class=" vacation-highlight">
+                            <div class="day-number">26</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span></td><td class=" vacation-highlight">
+                            <div class="day-number">27</div><span class="guardia-event">JONA</span><span class="vacaciones-event">RICARDO: Vacaciones enero</span></td><td class="">
+                            <div class="day-number">28</div><span class="guardia-event">PEDRO</span></td><td class="">
                             <div class="day-number">29</div><span class="guardia-event">PEDRO</span></td><td class="">
-                            <div class="day-number">30</div><span class="guardia-event">PEDRO</span></td><td></td><td></td></tr></tbody></table>
+                            <div class="day-number">30</div><span class="guardia-event">PEDRO</span></td><td class="">
+                            <div class="day-number">31</div><span class="guardia-event">PEDRO</span></td></tr></tbody></table>
         </div>
         
         <div id="conflictos" class="section">
@@ -1465,7 +2148,7 @@
                 </div>
         </div>
         
-        <div id="gestion" class="section active">
+        <div id="gestion" class="section">
             <h2>⚙️ Gestión del Sistema</h2>
             <div class="alert alert-warning">
                 ⚠️ Solo disponible en modo local. Los cambios se guardan en tu navegador.
@@ -1975,6 +2658,60 @@
                     <div class="spinner"></div>
                     <div id="github-status" style="margin-top: 20px; font-weight: 600;">Preparando archivos...</div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar vacaciones -->
+    <div id="modal-editar-vacaciones" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">✏️ Editar Vacaciones</div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Técnico:</label>
+                    <input type="text" id="edit-vacaciones-tecnico" class="form-input" readonly="" style="background: #f0f0f0;">
+                </div>
+                <div class="form-group">
+                    <label>Fecha inicio:</label>
+                    <input type="date" id="edit-vacaciones-inicio" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label>Fecha fin:</label>
+                    <input type="date" id="edit-vacaciones-fin" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label>Descripción:</label>
+                    <input type="text" id="edit-vacaciones-desc" class="form-input" placeholder="Ej: Vacaciones verano">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="cerrarModalEditarVacaciones()">Cancelar</button>
+                <button class="btn-confirm" onclick="guardarEdicionVacaciones()">💾 Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar guardias -->
+    <div id="modal-editar-guardia" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">✏️ Editar Guardia</div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Técnico:</label>
+                    <input type="text" id="edit-guardia-tecnico" class="form-input" readonly="" style="background: #f0f0f0;">
+                </div>
+                <div class="form-group">
+                    <label>Fecha inicio:</label>
+                    <input type="date" id="edit-guardia-inicio" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label>Fecha fin:</label>
+                    <input type="date" id="edit-guardia-fin" class="form-input">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="cerrarModalEditarGuardia()">Cancelar</button>
+                <button class="btn-confirm" onclick="guardarEdicionGuardia()">💾 Guardar Cambios</button>
             </div>
         </div>
     </div>
@@ -2498,7 +3235,7 @@
                 const card = document.createElement('div');
                 card.className = 'person-card';
                 
-                let guardiasHTML = '';
+                let guardiasHTML = '<div style="margin-top: 10px;"><strong>Guardias:</strong></div>';
                 guardias.forEach(([inicio, fin], index) => {
                     const inicioDate = new Date(inicio);
                     const finDate = new Date(fin);
@@ -2509,9 +3246,17 @@
                                 ${inicioDate.toLocaleDateString('es-ES')} - ${finDate.toLocaleDateString('es-ES')}
                             </div>
                             ${isLocalMode ? `
-                            <button class="btn-edit" onclick="abrirModalIntercambio('${persona}', ${index})">
-                                🔄 Cambiar
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-edit" onclick="abrirModalIntercambio('${persona}', ${index})" title="Intercambiar o pasar días">
+                                    🔄
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarGuardia('${persona}', ${index})" title="Editar fechas">
+                                    ✏️
+                                </button>
+                                <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarGuardia('${persona}', ${index})" title="Eliminar">
+                                    🗑️
+                                </button>
+                            </div>
                             ` : ''}
                         </div>
                     `;
@@ -2519,22 +3264,47 @@
                 
                 // Verificar si tiene vacaciones
                 const vacaciones = VACACIONES[persona] || [];
-                const tieneVacaciones = vacaciones.length > 0;
+                let vacacionesHTML = '';
+                
+                if (vacaciones.length > 0) {
+                    vacacionesHTML = '<div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid rgba(255,255,255,0.3);"><strong>Vacaciones:</strong></div>';
+                    vacaciones.forEach(([inicio, fin, desc], index) => {
+                        const inicioDate = new Date(inicio);
+                        const finDate = new Date(fin);
+                        
+                        vacacionesHTML += `
+                            <div class="guardia-item" style="background: rgba(33, 150, 243, 0.3);">
+                                <div style="font-size: 0.9em;">
+                                    ${inicioDate.toLocaleDateString('es-ES')} - ${finDate.toLocaleDateString('es-ES')}<br>
+                                    <small style="opacity: 0.9;">${desc || 'Vacaciones'}</small>
+                                </div>
+                                ${isLocalMode ? `
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px;" onclick="editarVacaciones('${persona}', ${index})">
+                                        ✏️
+                                    </button>
+                                    <button class="btn-edit" style="font-size: 0.8em; padding: 4px 8px; background: var(--danger-color);" onclick="eliminarVacaciones('${persona}', ${index})">
+                                        🗑️
+                                    </button>
+                                </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    });
+                }
                 
                 card.innerHTML = `
                     <div class="person-name">${persona}</div>
                     <div style="margin-top: 10px; opacity: 0.9;">
-                        ${guardias.length} guardias
-                        ${tieneVacaciones ? ` • ${vacaciones.length} períodos de vacaciones` : ''}
+                        ${guardias.length} guardias • ${vacaciones.length} períodos de vacaciones
                     </div>
-                    <div style="margin-top: 10px;">
-                        ${guardiasHTML}
-                    </div>
+                    ${guardiasHTML}
+                    ${vacacionesHTML}
                     <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                         <button class="btn-small" onclick="exportarGuardiasCalendario('${persona}')">
                             📅 Exportar Guardias
                         </button>
-                        ${tieneVacaciones ? `
+                        ${vacaciones.length > 0 ? `
                         <button class="btn-small" onclick="exportarVacacionesCalendario('${persona}')">
                             🏖️ Exportar Vacaciones
                         </button>
@@ -3438,6 +4208,81 @@ END:VEVENT
             alert(`✅ Guardia añadida a ${tecnico}`);
         }
 
+        let edicionGuardiaActual = {
+            persona: '',
+            index: -1
+        };
+
+        function editarGuardia(persona, index) {
+            const guardia = GUARDIAS[persona][index];
+            
+            edicionGuardiaActual.persona = persona;
+            edicionGuardiaActual.index = index;
+            
+            document.getElementById('edit-guardia-tecnico').value = persona;
+            document.getElementById('edit-guardia-inicio').value = guardia[0];
+            document.getElementById('edit-guardia-fin').value = guardia[1];
+            
+            document.getElementById('modal-editar-guardia').classList.add('active');
+        }
+
+        function cerrarModalEditarGuardia() {
+            document.getElementById('modal-editar-guardia').classList.remove('active');
+            edicionGuardiaActual = { persona: '', index: -1 };
+        }
+
+        function guardarEdicionGuardia() {
+            const inicio = document.getElementById('edit-guardia-inicio').value;
+            const fin = document.getElementById('edit-guardia-fin').value;
+            
+            if (!inicio || !fin) {
+                alert('Por favor completa todos los campos');
+                return;
+            }
+            
+            if (inicio > fin) {
+                alert('La fecha de inicio debe ser anterior a la fecha de fin');
+                return;
+            }
+            
+            // Actualizar la guardia
+            GUARDIAS[edicionGuardiaActual.persona][edicionGuardiaActual.index] = [inicio, fin];
+            
+            // Ordenar guardias por fecha
+            GUARDIAS[edicionGuardiaActual.persona].sort((a, b) => a[0].localeCompare(b[0]));
+            
+            guardarGuardias();
+            cargarResumen();
+            cargarPersonas();
+            updateCalendar();
+            cargarConflictos();
+            cargarHoy();
+            
+            cerrarModalEditarGuardia();
+            alert('✅ Guardia actualizada correctamente');
+        }
+
+        function eliminarGuardia(persona, index) {
+            const guardia = GUARDIAS[persona][index];
+            const inicioDate = new Date(guardia[0]);
+            const finDate = new Date(guardia[1]);
+            
+            if (!confirm(`¿Estás seguro de eliminar esta guardia?\n\n${persona}\n${inicioDate.toLocaleDateString('es-ES')} - ${finDate.toLocaleDateString('es-ES')}`)) {
+                return;
+            }
+            
+            GUARDIAS[persona].splice(index, 1);
+            
+            guardarGuardias();
+            cargarResumen();
+            cargarPersonas();
+            updateCalendar();
+            cargarConflictos();
+            cargarHoy();
+            
+            alert('✅ Guardia eliminada correctamente');
+        }
+
         // Gestión de Vacaciones
         function añadirVacaciones() {
             const tecnico = document.getElementById('select-tecnico-vacaciones').value;
@@ -3476,6 +4321,93 @@ END:VEVENT
             document.getElementById('input-vacaciones-desc').value = '';
             
             alert(`✅ Vacaciones añadidas a ${tecnico}`);
+        }
+
+        let edicionVacacionesActual = {
+            persona: '',
+            index: -1
+        };
+
+        function editarVacaciones(persona, index) {
+            const vacacion = VACACIONES[persona][index];
+            
+            edicionVacacionesActual.persona = persona;
+            edicionVacacionesActual.index = index;
+            
+            document.getElementById('edit-vacaciones-tecnico').value = persona;
+            document.getElementById('edit-vacaciones-inicio').value = vacacion[0];
+            document.getElementById('edit-vacaciones-fin').value = vacacion[1];
+            document.getElementById('edit-vacaciones-desc').value = vacacion[2] || '';
+            
+            document.getElementById('modal-editar-vacaciones').classList.add('active');
+        }
+
+        function cerrarModalEditarVacaciones() {
+            document.getElementById('modal-editar-vacaciones').classList.remove('active');
+            edicionVacacionesActual = { persona: '', index: -1 };
+        }
+
+        function guardarEdicionVacaciones() {
+            const inicio = document.getElementById('edit-vacaciones-inicio').value;
+            const fin = document.getElementById('edit-vacaciones-fin').value;
+            const descripcion = document.getElementById('edit-vacaciones-desc').value.trim();
+            
+            if (!inicio || !fin) {
+                alert('Por favor completa todos los campos');
+                return;
+            }
+            
+            if (inicio > fin) {
+                alert('La fecha de inicio debe ser anterior a la fecha de fin');
+                return;
+            }
+            
+            // Actualizar la vacación
+            VACACIONES[edicionVacacionesActual.persona][edicionVacacionesActual.index] = [
+                inicio,
+                fin,
+                descripcion || 'Vacaciones'
+            ];
+            
+            // Ordenar vacaciones por fecha
+            VACACIONES[edicionVacacionesActual.persona].sort((a, b) => a[0].localeCompare(b[0]));
+            
+            guardarVacaciones();
+            cargarResumen();
+            cargarPersonas();
+            updateCalendar();
+            cargarConflictos();
+            cargarVacacionesLista();
+            
+            cerrarModalEditarVacaciones();
+            alert('✅ Vacaciones actualizadas correctamente');
+        }
+
+        function eliminarVacaciones(persona, index) {
+            const vacacion = VACACIONES[persona][index];
+            const inicioDate = new Date(vacacion[0]);
+            const finDate = new Date(vacacion[1]);
+            const desc = vacacion[2] || 'Vacaciones';
+            
+            if (!confirm(`¿Estás seguro de eliminar estas vacaciones?\n\n${persona}\n${inicioDate.toLocaleDateString('es-ES')} - ${finDate.toLocaleDateString('es-ES')}\n${desc}`)) {
+                return;
+            }
+            
+            VACACIONES[persona].splice(index, 1);
+            
+            // Si no quedan vacaciones, eliminar el array vacío
+            if (VACACIONES[persona].length === 0) {
+                delete VACACIONES[persona];
+            }
+            
+            guardarVacaciones();
+            cargarResumen();
+            cargarPersonas();
+            updateCalendar();
+            cargarConflictos();
+            cargarVacacionesLista();
+            
+            alert('✅ Vacaciones eliminadas correctamente');
         }
 
         // Gestión de Festivos
