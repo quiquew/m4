@@ -940,127 +940,89 @@
         </div>
     </div>
 
+    <!-- Indicador de carga -->
+    <div id="loading-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; flex-direction: column;">
+        <div style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
+            <div style="font-size: 24px; margin-bottom: 15px;">⏳ Cargando datos...</div>
+            <div id="loading-status" style="font-size: 14px; color: #666;"></div>
+        </div>
+    </div>
+
     <script>
         // DATOS INTEGRADOS EN EL HTML
-        const GUARDIAS = {
-            "QUIQUE": [
-                ["2026-01-01", "2026-01-06"],
-                ["2026-02-11", "2026-02-17"],
-                ["2026-03-18", "2026-03-24"],
-                ["2026-05-20", "2026-05-26"],
-                ["2026-07-22", "2026-07-28"],
-                ["2026-09-02", "2026-09-08"],
-                ["2026-10-28", "2026-11-03"],
-                ["2026-11-25", "2026-12-01"]
-            ],
-            "DANI": [
-                ["2026-01-07", "2026-01-13"],
-                ["2026-04-01", "2026-04-07"],
-                ["2026-05-13", "2026-05-19"],
-                ["2026-07-01", "2026-07-07"],
-                ["2026-08-05", "2026-08-11"],
-                ["2026-10-21", "2026-10-27"],
-                ["2026-12-09", "2026-12-15"]
-            ],
-            "RICARDO": [
-                ["2026-01-14", "2026-01-20"],
-                ["2026-02-18", "2026-02-24"],
-                ["2026-04-22", "2026-04-28"],
-                ["2026-06-10", "2026-06-16"],
-                ["2026-07-15", "2026-07-21"],
-                ["2026-08-12", "2026-08-18"],
-                ["2026-09-23", "2026-09-29"],
-                ["2026-11-11", "2026-11-17"]
-            ],
-            "JONA": [
-                ["2026-01-21", "2026-01-27"],
-                ["2026-02-25", "2026-03-03"],
-                ["2026-04-08", "2026-04-14"],
-                ["2026-06-17", "2026-06-23"],
-                ["2026-08-19", "2026-08-25"],
-                ["2026-09-30", "2026-10-06"],
-                ["2026-12-16", "2026-12-22"]
-            ],
-            "PEDRO": [
-                ["2026-01-28", "2026-02-03"],
-                ["2026-03-04", "2026-03-10"],
-                ["2026-04-29", "2026-05-05"],
-                ["2026-06-24", "2026-06-30"],
-                ["2026-09-09", "2026-09-15"],
-                ["2026-10-07", "2026-10-13"],
-                ["2026-11-18", "2026-11-24"]
-            ],
-            "MIGUEL": [
-                ["2026-02-04", "2026-02-10"],
-                ["2026-03-25", "2026-03-31"],
-                ["2026-05-06", "2026-05-12"],
-                ["2026-06-03", "2026-06-09"],
-                ["2026-07-29", "2026-08-04"],
-                ["2026-08-26", "2026-09-01"],
-                ["2026-10-14", "2026-10-20"],
-                ["2026-12-02", "2026-12-08"]
-            ],
-            "ANDREU": [
-                ["2026-03-11", "2026-03-17"],
-                ["2026-04-15", "2026-04-21"],
-                ["2026-05-27", "2026-06-02"],
-                ["2026-07-08", "2026-07-14"],
-                ["2026-09-16", "2026-09-22"],
-                ["2026-11-04", "2026-11-10"],
-                ["2026-12-23", "2026-12-29"],
-                ["2026-12-30", "2026-12-31"]
-            ]
-        };
+        // Datos que se cargarán desde archivos JSON
+        let TECNICOS = {};
+        let GUARDIAS = {};
+        let VACACIONES = {};
+        let FESTIVOS = {};
 
-        const VACACIONES = {
-            "RICARDO": [
-                ["2026-01-21", "2026-01-27", "Vacaciones enero"],
-                ["2026-03-16", "2026-03-22", "Vacaciones marzo"],
-                ["2026-03-30", "2026-04-05", "Vacaciones abril"],
-                ["2026-06-29", "2026-07-05", "Vacaciones julio"]
-            ],
-            "JONA": [
-                ["2026-02-09", "2026-02-15", "Vacaciones febrero"],
-                ["2026-07-27", "2026-08-09", "Vacaciones verano"],
-                ["2026-10-26", "2026-11-01", "Vacaciones noviembre"]
-            ],
-            "QUIQUE": [
-                ["2026-03-23", "2026-03-29", "Vacaciones marzo"],
-                ["2026-06-08", "2026-06-14", "Vacaciones junio"],
-                ["2026-09-28", "2026-10-11", "Vacaciones octubre"]
-            ],
-            "PEDRO": [
-                ["2026-04-06", "2026-04-12", "Vacaciones abril"],
-                ["2026-07-06", "2026-07-26", "Vacaciones verano"]
-            ],
-            "MIGUEL": [
-                ["2026-04-13", "2026-04-26", "Vacaciones abril"]
-            ],
-            "ANDREU": [
-                ["2026-06-15", "2026-06-21", "Vacaciones junio"],
-                ["2026-11-16", "2026-11-29", "Vacaciones noviembre"]
-            ],
-            "DANI": [
-                ["2026-08-17", "2026-08-30", "Vacaciones verano"]
-            ]
-        };
-
-        const FESTIVOS = {
-            "2026-01-01": "Año Nuevo",
-            "2026-01-06": "Epifanía Reyes",
-            "2026-01-22": "San Vicente Mártir",
-            "2026-03-19": "San José",
-            "2026-04-03": "Viernes Santo",
-            "2026-04-16": "San Vicente Ferrer",
-            "2026-06-24": "San Juan",
-            "2026-08-15": "Asunción de la Virgen",
-            "2026-10-09": "Día de la Comunidad Valenciana",
-            "2026-10-12": "Día de la Hispanidad",
-            "2026-11-01": "Día de todos los santos",
-            "2026-12-06": "Día de la constitución",
-            "2026-12-08": "Día de la Inmaculada Concepción",
-            "2026-12-25": "Navidad"
-        };
+        // Función para cargar datos desde JSON
+        async function cargarDatosDesdeJSON() {
+            const overlay = document.getElementById('loading-overlay');
+            const status = document.getElementById('loading-status');
+            
+            overlay.style.display = 'flex';
+            
+            try {
+                console.log('🔄 Cargando datos desde archivos JSON...');
+                
+                // Cargar tecnicos.json
+                status.textContent = 'Cargando técnicos...';
+                console.log('📥 Solicitando tecnicos.json...');
+                const respTecnicos = await fetch('tecnicos.json');
+                console.log('📊 Respuesta tecnicos.json:', respTecnicos.status, respTecnicos.statusText);
+                if (!respTecnicos.ok) throw new Error(`No se pudo cargar tecnicos.json (${respTecnicos.status})`);
+                TECNICOS = await respTecnicos.json();
+                console.log('✅ Técnicos cargados:', Object.keys(TECNICOS).length, 'técnicos');
+                
+                // Cargar guardias.json
+                status.textContent = 'Cargando guardias...';
+                console.log('📥 Solicitando guardias.json...');
+                const respGuardias = await fetch('guardias.json');
+                console.log('📊 Respuesta guardias.json:', respGuardias.status, respGuardias.statusText);
+                if (!respGuardias.ok) throw new Error(`No se pudo cargar guardias.json (${respGuardias.status})`);
+                GUARDIAS = await respGuardias.json();
+                console.log('✅ Guardias cargadas:', Object.keys(GUARDIAS).length, 'técnicos');
+                
+                // Cargar vacaciones.json
+                status.textContent = 'Cargando vacaciones...';
+                console.log('📥 Solicitando vacaciones.json...');
+                const respVacaciones = await fetch('vacaciones.json');
+                console.log('📊 Respuesta vacaciones.json:', respVacaciones.status, respVacaciones.statusText);
+                if (!respVacaciones.ok) throw new Error(`No se pudo cargar vacaciones.json (${respVacaciones.status})`);
+                VACACIONES = await respVacaciones.json();
+                console.log('✅ Vacaciones cargadas:', Object.keys(VACACIONES).length, 'personas');
+                
+                // Cargar festivos.json
+                status.textContent = 'Cargando festivos...';
+                console.log('📥 Solicitando festivos.json...');
+                const respFestivos = await fetch('festivos.json');
+                console.log('📊 Respuesta festivos.json:', respFestivos.status, respFestivos.statusText);
+                if (!respFestivos.ok) throw new Error(`No se pudo cargar festivos.json (${respFestivos.status})`);
+                FESTIVOS = await respFestivos.json();
+                console.log('✅ Festivos cargados:', Object.keys(FESTIVOS).length, 'festivos');
+                
+                status.textContent = '✅ ¡Todos los datos cargados!';
+                console.log('🎉 Todos los datos cargados correctamente');
+                
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 500);
+                
+                return true;
+                
+            } catch (error) {
+                console.error('❌ Error cargando datos:', error);
+                status.textContent = '❌ Error: ' + error.message;
+                
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    alert('❌ Error cargando datos desde los archivos JSON.\n\n' + error.message + '\n\nAsegúrate de que los archivos tecnicos.json, guardias.json, vacaciones.json y festivos.json estén en la misma carpeta que index.html\n\nAbre la consola (F12) para más detalles.');
+                }, 2000);
+                
+                return false;
+            }
+        }
 
         let currentYear = 2026;
         let currentMonth = 0;
@@ -1082,11 +1044,23 @@
             }
         }
 
-        function inicializarApp() {
+        async function inicializarApp() {
             detectarEntorno();
             
-            // En modo local, cargar datos desde localStorage si existen
+            // Primero cargar datos desde JSON (GitHub Pages)
+            if (!isLocalMode) {
+                const cargado = await cargarDatosDesdeJSON();
+                if (!cargado) return; // Si falla, no continuar
+            }
+            
+            // En modo local, sobreescribir con localStorage si existe
             if (isLocalMode) {
+                const tecnicosGuardados = localStorage.getItem('tecnicos_2026');
+                if (tecnicosGuardados) {
+                    Object.assign(TECNICOS, JSON.parse(tecnicosGuardados));
+                    console.log('Técnicos cargados desde localStorage');
+                }
+                
                 const guardiasGuardadas = localStorage.getItem('guardias_2026');
                 if (guardiasGuardadas) {
                     Object.assign(GUARDIAS, JSON.parse(guardiasGuardadas));
@@ -1152,7 +1126,11 @@
                     const año = new Date(inicio).getFullYear();
                     guardiasPorAño[año] = (guardiasPorAño[año] || 0) + 1;
                 });
-                
+            }
+            
+            // Mostrar técnicos (de TECNICOS, no de GUARDIAS)
+            for (const persona of Object.keys(TECNICOS)) {
+                const guardias = GUARDIAS[persona] || [];
                 const card = document.createElement('div');
                 card.className = 'person-card';
                 card.innerHTML = `
@@ -1188,7 +1166,7 @@
             const statsGrid = document.getElementById('stats-grid');
             
             // Total personas siempre aparece
-            document.getElementById('total-personas').textContent = Object.keys(GUARDIAS).length;
+            document.getElementById('total-personas').textContent = Object.keys(TECNICOS).length;
             
             // Agregar stats por año
             añosOrdenados.forEach(año => {
@@ -1231,7 +1209,8 @@
             const grid = document.getElementById('personas-grid');
             grid.innerHTML = '';
             
-            for (const [persona, guardias] of Object.entries(GUARDIAS)) {
+            for (const persona of Object.keys(TECNICOS)) {
+                const guardias = GUARDIAS[persona] || [];
                 const card = document.createElement('div');
                 card.className = 'person-card';
                 
@@ -1325,14 +1304,16 @@
             
             const firstDay = new Date(currentYear, currentMonth, 1);
             const lastDay = new Date(currentYear, currentMonth + 1, 0);
-            const startDay = firstDay.getDay();
+            let startDay = firstDay.getDay();
+            // Ajustar para que lunes sea 0 (domingo era 0, ahora es 6)
+            startDay = startDay === 0 ? 6 : startDay - 1;
             const daysInMonth = lastDay.getDate();
             
             let html = `
                 <thead>
                     <tr>
-                        <th>Dom</th><th>Lun</th><th>Mar</th><th>Mié</th>
-                        <th>Jue</th><th>Vie</th><th>Sáb</th>
+                        <th>Lun</th><th>Mar</th><th>Mié</th><th>Jue</th>
+                        <th>Vie</th><th>Sáb</th><th>Dom</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1555,7 +1536,10 @@
             const list = document.getElementById('festivos-list');
             let html = '';
             
-            for (const [fecha, nombre] of Object.entries(FESTIVOS)) {
+            // Ordenar festivos por fecha
+            const festivosOrdenados = Object.entries(FESTIVOS).sort((a, b) => a[0].localeCompare(b[0]));
+            
+            for (const [fecha, nombre] of festivosOrdenados) {
                 // Ver si hay guardias ese día
                 let personasGuardia = [];
                 for (const [persona, guardias] of Object.entries(GUARDIAS)) {
@@ -1589,22 +1573,32 @@
             const list = document.getElementById('vacaciones-list');
             let html = '';
             
+            // Crear array con todas las vacaciones y ordenar por fecha
+            const todasVacaciones = [];
             for (const [persona, vacaciones] of Object.entries(VACACIONES)) {
                 vacaciones.forEach(([inicio, fin, desc]) => {
-                    html += `
-                        <div class="event-item">
-                            <div style="font-weight: bold; margin-bottom: 5px;">${persona}</div>
-                            <div class="event-date">
-                                ${new Date(inicio).toLocaleDateString('es-ES')} - 
-                                ${new Date(fin).toLocaleDateString('es-ES')}
-                            </div>
-                            <div style="margin-top: 5px; color: var(--secondary-color);">
-                                ${desc || 'Vacaciones'}
-                            </div>
-                        </div>
-                    `;
+                    todasVacaciones.push({ persona, inicio, fin, desc });
                 });
             }
+            
+            // Ordenar por fecha de inicio
+            todasVacaciones.sort((a, b) => a.inicio.localeCompare(b.inicio));
+            
+            // Generar HTML
+            todasVacaciones.forEach(({ persona, inicio, fin, desc }) => {
+                html += `
+                    <div class="event-item">
+                        <div style="font-weight: bold; margin-bottom: 5px;">${persona}</div>
+                        <div class="event-date">
+                            ${new Date(inicio).toLocaleDateString('es-ES')} - 
+                            ${new Date(fin).toLocaleDateString('es-ES')}
+                        </div>
+                        <div style="margin-top: 5px; color: var(--secondary-color);">
+                            ${desc || 'Vacaciones'}
+                        </div>
+                    </div>
+                `;
+            });
             
             list.innerHTML = html;
         }
@@ -2014,6 +2008,13 @@ END:VEVENT
             }
         }
 
+        function guardarTecnicos() {
+            if (isLocalMode) {
+                localStorage.setItem('tecnicos_2026', JSON.stringify(TECNICOS));
+                console.log('Técnicos guardados en localStorage');
+            }
+        }
+
         function guardarVacaciones() {
             if (isLocalMode) {
                 localStorage.setItem('vacaciones_2026', JSON.stringify(VACACIONES));
@@ -2051,12 +2052,14 @@ END:VEVENT
                 return;
             }
             
-            if (GUARDIAS[nombre]) {
+            if (TECNICOS[nombre]) {
                 alert('Este técnico ya existe');
                 return;
             }
             
+            TECNICOS[nombre] = true;
             GUARDIAS[nombre] = [];
+            guardarTecnicos();
             guardarGuardias();
             actualizarSelectsTecnicos();
             cargarResumen();
@@ -2093,11 +2096,13 @@ END:VEVENT
             guardarGuardiasHuerfanas(guardiasHuerfanas);
             
             // Eliminar técnico
+            delete TECNICOS[nombre];
             delete GUARDIAS[nombre];
             if (VACACIONES[nombre]) {
                 delete VACACIONES[nombre];
             }
             
+            guardarTecnicos();
             guardarGuardias();
             guardarVacaciones();
             actualizarSelectsTecnicos();
@@ -2436,7 +2441,7 @@ END:VEVENT
         }
 
         function actualizarSelectsTecnicos() {
-            const tecnicos = Object.keys(GUARDIAS).sort();
+            const tecnicos = Object.keys(TECNICOS).sort();
             
             // Select para eliminar técnico
             const selectEliminar = document.getElementById('select-eliminar-tecnico');
@@ -2471,6 +2476,7 @@ END:VEVENT
                 localStorage.removeItem('guardias_2026');
                 localStorage.removeItem('vacaciones_2026');
                 localStorage.removeItem('festivos_2026');
+                localStorage.removeItem('tecnicos_2026');
                 localStorage.removeItem('guardias_huerfanas');
                 location.reload();
             }
@@ -2535,7 +2541,7 @@ END:VEVENT
                 return;
             }
             
-            if (!confirm('¿Estás seguro de que quieres subir los cambios a GitHub?\n\nSe actualizarán:\n• guardias.json\n• vacaciones.json\n• festivos.json\n\n(El index.html NO se actualiza automáticamente)')) {
+            if (!confirm('¿Estás seguro de que quieres subir los cambios a GitHub?\n\nSe actualizarán:\n• tecnicos.json\n• guardias.json\n• vacaciones.json\n• festivos.json\n\n(El index.html NO se actualiza automáticamente)')) {
                 return;
             }
             
@@ -2549,6 +2555,11 @@ END:VEVENT
                 
                 // Preparar solo los JSON (sin HTML por ahora)
                 const archivos = [
+                    {
+                        path: 'tecnicos.json',
+                        content: JSON.stringify(TECNICOS, null, 2),
+                        message: 'Actualizar técnicos desde modo local'
+                    },
                     {
                         path: 'guardias.json',
                         content: JSON.stringify(GUARDIAS, null, 2),
@@ -2599,7 +2610,7 @@ END:VEVENT
                 
                 setTimeout(() => {
                     document.getElementById('modal-github-progress').classList.remove('active');
-                    alert('✅ Cambios subidos a GitHub correctamente.\n\nSe han actualizado:\n• guardias.json\n• vacaciones.json\n• festivos.json\n\n⚠️ IMPORTANTE: El index.html NO se actualiza automáticamente.\nPara actualizar el HTML, debes subirlo manualmente o usar la versión que carga desde los JSON.\n\nGitHub Pages puede tardar 1-2 minutos en actualizar.');
+                    alert('✅ Cambios subidos a GitHub correctamente.\n\nSe han actualizado:\n• tecnicos.json\n• guardias.json\n• vacaciones.json\n• festivos.json\n\n⚠️ IMPORTANTE: El index.html NO se actualiza automáticamente.\nPara actualizar el HTML, debes subirlo manualmente o usar la versión que carga desde los JSON.\n\nGitHub Pages puede tardar 1-2 minutos en actualizar.');
                 }, 2000);
                 
             } catch (error) {
