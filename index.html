@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guardias 2025-2026</title>
+    <title>Guardias 2026 - Sistema de Gestión</title>
     <style>
         * {
             margin: 0;
@@ -11,20 +11,28 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+        }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             padding: 20px;
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             padding: 30px;
         }
         
@@ -32,13 +40,13 @@
             text-align: center;
             margin-bottom: 40px;
             padding-bottom: 20px;
-            border-bottom: 3px solid #4CAF50;
+            border-bottom: 3px solid var(--primary-color);
         }
         
         h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
             font-size: 2.5em;
+            color: var(--dark-color);
+            margin-bottom: 10px;
         }
         
         .subtitle {
@@ -48,64 +56,36 @@
         
         .controls {
             display: flex;
-            justify-content: center;
+            flex-wrap: wrap;
             gap: 15px;
             margin-bottom: 30px;
-            flex-wrap: wrap;
+            justify-content: center;
         }
         
         .btn {
             padding: 12px 24px;
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 16px;
-            transition: background-color 0.3s;
-            min-width: 150px;
+            font-weight: 600;
+            transition: all 0.3s;
         }
         
         .btn:hover {
-            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         
         .btn.active {
-            background-color: #2c3e50;
-        }
-        
-        .btn-small {
-            padding: 8px 16px;
-            font-size: 14px;
-            min-width: auto;
-        }
-        
-        .cal-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-        }
-        
-        .cal-nav {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        
-        .cal-title {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #2c3e50;
-            text-align: center;
+            background: var(--primary-color);
         }
         
         .section {
             display: none;
-            animation: fadeIn 0.5s ease-in;
+            animation: fadeIn 0.5s;
         }
         
         .section.active {
@@ -117,624 +97,546 @@
             to { opacity: 1; }
         }
         
-        /* CALENDARIO MES */
-        .calendar-month {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
         
-        .calendar-month th {
-            background-color: #4CAF50;
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 15px;
+            padding: 20px;
+            border-radius: 15px;
             text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
             font-weight: bold;
-            border: 1px solid #ddd;
+            margin: 10px 0;
         }
         
-        .calendar-month td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-            height: 120px;
-            width: 14.28%;
+        .stat-label {
+            font-size: 1em;
+            opacity: 0.9;
         }
         
-        .day-header {
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 5px;
-            font-size: 1.1em;
-        }
-        
-        .day-number {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 8px;
-            display: block;
-        }
-        
-        .guardia-event {
-            background-color: #e8f5e9;
-            border-left: 3px solid #4CAF50;
-            padding: 5px 8px;
-            margin-bottom: 5px;
-            border-radius: 3px;
-            font-size: 0.85em;
-            cursor: pointer;
-        }
-        
-        .guardia-event:hover {
-            background-color: #d4edda;
-        }
-        
-        .festivo-day {
-            background-color: #ffeaea;
-            border-left: 3px solid #e74c3c;
-        }
-        
-        .media-jornada-day {
-            background-color: #fff8e1;
-            border-left: 3px solid #f39c12;
-        }
-        
-        .vacaciones-day {
-            background-color: #e3f2fd;
-            border-left: 3px solid #2196f3;
-        }
-        
-        .today {
-            background-color: #e8f5e8 !important;
-            border: 2px solid #4CAF50 !important;
-        }
-        
-        .other-month {
-            background-color: #f8f9fa;
-            color: #bdc3c7;
-        }
-        
-        /* CALENDARIO SEMANA */
-        .calendar-week {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        
-        .calendar-week th {
-            background-color: #3498db;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-weight: bold;
-            border: 1px solid #ddd;
-            width: 14.28%;
-        }
-        
-        .calendar-week td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-            height: 150px;
-        }
-        
-        .hour-row {
-            height: 40px;
-        }
-        
-        .hour-cell {
-            background-color: #f8f9fa;
-            font-weight: bold;
-            color: #2c3e50;
-            text-align: center;
-            width: 80px;
-        }
-        
-        /* PERSONAS */
         .person-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
-            margin-top: 20px;
         }
         
         .person-card {
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            border-left: 5px solid #4CAF50;
-            transition: transform 0.3s;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
             cursor: pointer;
+            transition: all 0.3s;
         }
         
         .person-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         
         .person-name {
-            font-size: 1.4em;
-            color: #2c3e50;
-            margin-bottom: 10px;
+            font-size: 1.5em;
             font-weight: bold;
-        }
-        
-        .person-guardias {
-            font-size: 1.1em;
-            color: #4CAF50;
-            font-weight: bold;
-        }
-        
-        .person-guardias-2025 {
-            color: #3498db;
-            font-size: 0.9em;
-            margin-top: 5px;
-        }
-        
-        .person-guardias-2026 {
-            color: #e74c3c;
-            font-size: 0.9em;
-            margin-top: 5px;
-        }
-        
-        .guardias-list {
-            margin-top: 30px;
-        }
-        
-        .guardia-item {
-            background-color: #f8f9fa;
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-left: 4px solid #3498db;
-        }
-        
-        .guardia-dates {
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-        
-        .guardia-year {
-            display: inline-block;
-            background-color: #e74c3c;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            margin-left: 10px;
-        }
-        
-        .guardia-year-2025 {
-            background-color: #3498db;
-        }
-        
-        .festivo {
-            color: #e74c3c;
-            font-weight: bold;
-            margin-top: 8px;
-            padding: 5px 10px;
-            background-color: #ffeaea;
-            border-radius: 4px;
-            display: inline-block;
-        }
-        
-        .media-jornada {
-            color: #f39c12;
-            font-weight: bold;
-            margin-top: 5px;
-            padding: 3px 8px;
-            background-color: #fff8e1;
-            border-radius: 4px;
-            display: inline-block;
-            font-size: 0.9em;
-        }
-        
-        .vacaciones {
-            color: #2196f3;
-            font-weight: bold;
-            margin-top: 8px;
-            padding: 5px 10px;
-            background-color: #e3f2fd;
-            border-radius: 4px;
-            display: inline-block;
-        }
-        
-        .summary-card {
-            display: flex;
-            justify-content: space-between;
-            background: linear-gradient(135deg, #4CAF50, #2c3e50);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-        
-        .summary-item {
-            text-align: center;
-        }
-        
-        .summary-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .summary-label {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-        
-        .festivos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .festivo-card {
-            background-color: #fff5f5;
-            border-radius: 8px;
-            padding: 20px;
-            border-left: 5px solid #e74c3c;
-        }
-        
-        .festivo-date {
-            font-size: 1.2em;
-            color: #e74c3c;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-        
-        .festivo-name {
-            color: #2c3e50;
             margin-bottom: 10px;
         }
         
-        .festivo-personas {
-            color: #7f8c8d;
-            font-size: 0.9em;
-        }
-        
-        .vacaciones-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .vacaciones-card {
-            background-color: #f0f8ff;
-            border-radius: 8px;
-            padding: 20px;
-            border-left: 5px solid #2196f3;
-        }
-        
-        .vacaciones-date {
-            font-size: 1.2em;
-            color: #2196f3;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-        
-        .vacaciones-name {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        
-        .vacaciones-persona {
-            color: #7f8c8d;
-            font-size: 0.9em;
-        }
-        
-        .legend {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 3px;
-        }
-        
-        table {
+        .calendar-month {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
-        table th, table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+        .calendar-month th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            font-weight: 700;
         }
         
-        table th {
-            background-color: #f2f2f2;
-            color: #333;
+        .calendar-month td {
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            vertical-align: top;
+            min-height: 100px;
+            position: relative;
+        }
+        
+        .day-number {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .today {
+            background: #fff3cd !important;
+        }
+        
+        .guardia-event {
+            background: var(--primary-color);
+            color: white;
+            padding: 3px 6px;
+            margin: 2px 0;
+            border-radius: 5px;
+            font-size: 0.75em;
+            display: block;
+        }
+        
+        .festivo-day {
+            background: rgba(231, 76, 60, 0.1) !important;
+        }
+        
+        .festivo-label {
+            background: var(--danger-color);
+            color: white;
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-size: 0.7em;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .vacaciones-event {
+            background: var(--secondary-color);
+            color: white;
+            padding: 3px 6px;
+            margin: 2px 0;
+            border-radius: 5px;
+            font-size: 0.75em;
+            display: block;
+        }
+        
+        .cal-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .cal-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+        
+        .event-list {
+            margin-top: 20px;
+        }
+        
+        .event-item {
+            background: var(--light-color);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .event-date {
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+        
+        .btn-small {
+            padding: 8px 16px;
+            background: white;
+            color: var(--dark-color);
+            border: 2px solid white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-small:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        /* Controles de edición solo en modo local */
+        .edit-controls {
+            display: none;
+        }
+        
+        .local-mode .edit-controls {
+            display: block;
+        }
+        
+        .btn-edit {
+            padding: 6px 12px;
+            background: var(--warning-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-top: 5px;
+            transition: all 0.3s;
+        }
+        
+        .btn-edit:hover {
+            background: #e67e22;
+            transform: scale(1.05);
+        }
+        
+        .guardia-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* Modal para intercambio */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+        
+        .modal-body {
+            margin-bottom: 20px;
+        }
+        
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        
+        .btn-cancel {
+            padding: 10px 20px;
+            background: #95a5a6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-confirm {
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .conflict-item {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .conflict-header {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .conflict-details {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .conflict-badge {
+            background: var(--warning-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
             font-weight: bold;
         }
         
-        table tr:hover {
-            background-color: #f5f5f5;
+        .no-conflicts {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            border-radius: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .vacation-highlight {
+            background: rgba(33, 150, 243, 0.3) !important;
+            border: 2px solid var(--secondary-color) !important;
+        }
+        
+        .conflict-highlight {
+            background: rgba(255, 107, 107, 0.3) !important;
+            border: 2px solid #ff6b6b !important;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
         
         @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
             .controls {
                 flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .person-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .summary-card {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .festivos-grid, .vacaciones-grid {
-                grid-template-columns: 1fr;
             }
             
             .calendar-month td {
-                height: 80px;
                 padding: 5px;
-                font-size: 0.9em;
-            }
-            
-            .guardia-event {
-                font-size: 0.7em;
-                padding: 2px 4px;
-            }
-            
-            .cal-controls {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            table {
-                display: block;
-                overflow-x: auto;
+                font-size: 0.85em;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Alerta de modo local -->
+        <div class="edit-controls">
+            <div class="alert alert-info">
+                ℹ️ <strong>Modo Local:</strong> Puedes intercambiar guardias entre técnicos. Los cambios se guardarán en tu navegador.
+            </div>
+        </div>
+        
         <header>
-            <h1>📅 Guardias 2025-2026</h1>
+            <h1>📅 Guardias 2026</h1>
             <div class="subtitle">Sistema de visualización de guardias, festivos y vacaciones</div>
         </header>
         
         <div class="controls">
             <button class="btn active" onclick="showSection('resumen')">📊 Resumen</button>
-            <button class="btn" onclick="showSection('personas')">👤 Por Persona</button>
+            <button class="btn" onclick="showSection('personas')">👥 Personas</button>
             <button class="btn" onclick="showSection('calendario')">📅 Calendario</button>
-            <button class="btn" onclick="showSection('hoy')">❓ ¿Quién Hoy?</button>
-            <button class="btn" onclick="showSection('festivos')">🎪 Festivos</button>
+            <button class="btn" onclick="showSection('conflictos')">⚠️ Conflictos</button>
+            <button class="btn" onclick="showSection('hoy')">🎯 Hoy</button>
+            <button class="btn" onclick="showSection('festivos')">🎊 Festivos</button>
             <button class="btn" onclick="showSection('vacaciones')">🏖️ Vacaciones</button>
+            <button class="btn edit-controls" onclick="resetearGuardias()" style="background: var(--danger-color);">
+                🔄 Resetear Cambios
+            </button>
         </div>
         
-        <!-- SECCIÓN RESUMEN -->
         <div id="resumen" class="section active">
-            <h2>Resumen General de Guardias</h2>
-            <div class="summary-card">
-                <div class="summary-item">
-                    <div class="summary-number" id="total-guardias-2025">0</div>
-                    <div class="summary-label">Guardias 2025</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-number" id="total-guardias-2026">0</div>
-                    <div class="summary-label">Guardias 2026</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-number" id="total-personas">7</div>
-                    <div class="summary-label">Personas</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-number" id="total-vacaciones">0</div>
-                    <div class="summary-label">Períodos vacacionales</div>
+            <h2>📊 Resumen General</h2>
+            <div class="stats-grid" id="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Personas</div>
+                    <div class="stat-number" id="total-personas">0</div>
                 </div>
             </div>
-            
-            <div class="person-grid" id="resumen-grid">
-                <!-- Las tarjetas de personas se generarán aquí -->
-            </div>
+            <div class="person-grid" id="resumen-grid"></div>
         </div>
         
-        <!-- SECCIÓN POR PERSONA -->
         <div id="personas" class="section">
-            <h2>Selecciona una persona</h2>
-            <div class="person-grid" id="personas-grid">
-                <!-- Las tarjetas de selección se generarán aquí -->
-            </div>
-            
-            <div id="persona-detalle" class="guardias-list" style="display: none;">
-                <h3 id="persona-nombre"></h3>
-                <div id="persona-lista"></div>
-            </div>
+            <h2>👥 Personas y sus Guardias</h2>
+            <div class="person-grid" id="personas-grid"></div>
         </div>
         
-        <!-- SECCIÓN CALENDARIO -->
         <div id="calendario" class="section">
-            <h2>Calendario de Guardias</h2>
-            
+            <h2>📅 Calendario de Guardias</h2>
             <div class="cal-controls">
-                <div class="cal-nav">
-                    <button class="btn btn-small" onclick="changeView('month')" id="btn-month">📅 Mes</button>
-                    <button class="btn btn-small" onclick="changeView('week')" id="btn-week">📆 Semana</button>
+                <button class="btn" onclick="prevMonth()">◀ Anterior</button>
+                <div class="cal-title" id="calendar-title"></div>
+                <button class="btn" onclick="nextMonth()">Siguiente ▶</button>
+            </div>
+            <table class="calendar-month" id="calendar-month"></table>
+        </div>
+        
+        <div id="conflictos" class="section">
+            <h2>⚠️ Detección de Conflictos</h2>
+            <div class="alert alert-info">
+                Esta sección detecta automáticamente cuando un técnico tiene guardia durante sus vacaciones.
+            </div>
+            <div id="conflictos-list"></div>
+        </div>
+        
+        <div id="hoy" class="section">
+            <h2>🎯 ¿Quién tiene guardia hoy?</h2>
+            <div id="hoy-content"></div>
+        </div>
+        
+        <div id="festivos" class="section">
+            <h2>🎊 Festivos durante guardias</h2>
+            <div class="event-list" id="festivos-list"></div>
+        </div>
+        
+        <div id="vacaciones" class="section">
+            <h2>🏖️ Períodos de Vacaciones</h2>
+            <div class="event-list" id="vacaciones-list"></div>
+        </div>
+    </div>
+
+    <!-- Modal para intercambio de guardias -->
+    <div id="modal-intercambio" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">🔄 Intercambiar Guardia</div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Guardia a intercambiar:</label>
+                    <div id="guardia-origen" style="padding: 10px; background: #f0f0f0; border-radius: 6px; margin-bottom: 15px;"></div>
                 </div>
-                
-                <div class="cal-nav">
-                    <button class="btn btn-small" onclick="prevPeriod()">◀ Anterior</button>
-                    <div class="cal-title" id="calendar-title"></div>
-                    <button class="btn btn-small" onclick="nextPeriod()">Siguiente ▶</button>
+                <div class="form-group">
+                    <label>Intercambiar con:</label>
+                    <select id="select-persona-destino" class="form-control">
+                        <option value="">Selecciona un técnico...</option>
+                    </select>
                 </div>
-                
-                <div class="cal-nav">
-                    <button class="btn btn-small" onclick="goToday()">Hoy</button>
-                    <select class="btn btn-small" id="year-select" onchange="changeYear()" style="background-color: white; color: #333; border: 1px solid #ddd;">
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
+                <div class="form-group">
+                    <label>Guardia del otro técnico:</label>
+                    <select id="select-guardia-destino" class="form-control">
+                        <option value="">Selecciona una guardia...</option>
                     </select>
                 </div>
             </div>
-            
-            <!-- VISTA MES -->
-            <div id="month-view" style="display: block;">
-                <table class="calendar-month" id="calendar-month">
-                    <!-- Calendario mensual se generará aquí -->
-                </table>
-            </div>
-            
-            <!-- VISTA SEMANA -->
-            <div id="week-view" style="display: none;">
-                <table class="calendar-week" id="calendar-week">
-                    <!-- Calendario semanal se generará aquí -->
-                </table>
-            </div>
-            
-            <div class="legend">
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #e8f5e9; border-left: 3px solid #4CAF50;"></div>
-                    <span>Guardia</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #ffeaea; border-left: 3px solid #e74c3c;"></div>
-                    <span>Festivo</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #fff8e1; border-left: 3px solid #f39c12;"></div>
-                    <span>Media Jornada</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #e3f2fd; border-left: 3px solid #2196f3;"></div>
-                    <span>Vacaciones</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #e8f5e8; border: 2px solid #4CAF50;"></div>
-                    <span>Hoy</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- SECCIÓN QUIÉN HOY -->
-        <div id="hoy" class="section">
-            <h2>¿Quién tiene guardia hoy?</h2>
-            <div id="hoy-content">
-                <!-- Contenido dinámico -->
-            </div>
-        </div>
-        
-        <!-- SECCIÓN FESTIVOS -->
-        <div id="festivos" class="section">
-            <h2>Festivos durante guardias</h2>
-            <div class="festivos-grid" id="festivos-grid">
-                <!-- Tarjetas de festivos -->
-            </div>
-            
-            <h3 style="margin-top: 40px;">Personas más afectadas por festivos</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Persona</th>
-                        <th>Festivos 2025</th>
-                        <th>Festivos 2026</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody id="festivos-ranking">
-                    <!-- Ranking de personas -->
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- SECCIÓN VACACIONES -->
-        <div id="vacaciones" class="section">
-            <h2>Períodos vacacionales</h2>
-            <div class="vacaciones-grid" id="vacaciones-grid">
-                <!-- Tarjetas de vacaciones se generarán aquí -->
-            </div>
-            
-            <div id="vacaciones-message" style="text-align: center; padding: 40px; color: #7f8c8d; display: none;">
-                No hay períodos vacacionales registrados actualmente.
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="cerrarModalIntercambio()">Cancelar</button>
+                <button class="btn-confirm" onclick="confirmarIntercambio()">Confirmar Intercambio</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Datos de las guardias
+        // DATOS INTEGRADOS EN EL HTML
         const GUARDIAS = {
             "QUIQUE": [
-                ["2025-12-31", "2026-01-01"],  // Incluye 1 enero y media jornada 31
-				["2026-01-01", "2026-01-06"],
+                ["2026-01-01", "2026-01-06"],
                 ["2026-02-11", "2026-02-17"],
-                ["2026-03-18", "2026-03-24"],  // Incluye 19 marzo (San José)
+                ["2026-03-18", "2026-03-24"],
                 ["2026-05-20", "2026-05-26"],
                 ["2026-07-22", "2026-07-28"],
                 ["2026-09-02", "2026-09-08"],
                 ["2026-10-28", "2026-11-03"],
-                ["2026-11-25", "2026-12-01"],
+                ["2026-11-25", "2026-12-01"]
             ],
             "DANI": [
-                ["2025-12-24", "2025-12-30"],  // Nueva guardia 2025 - Incluye Navidad
                 ["2026-01-07", "2026-01-13"],
                 ["2026-04-01", "2026-04-07"],
                 ["2026-05-13", "2026-05-19"],
                 ["2026-07-01", "2026-07-07"],
                 ["2026-08-05", "2026-08-11"],
                 ["2026-10-21", "2026-10-27"],
-                ["2026-12-09", "2026-12-15"],
+                ["2026-12-09", "2026-12-15"]
             ],
             "RICARDO": [
-				["2025-12-03", "2025-12-09"],
                 ["2026-01-14", "2026-01-20"],
                 ["2026-02-18", "2026-02-24"],
-                ["2026-04-22", "2026-04-28"],  // Incluye San Vicente Ferrer (16/4) y Semana Santa (3/4)
+                ["2026-04-22", "2026-04-28"],
                 ["2026-06-10", "2026-06-16"],
                 ["2026-07-15", "2026-07-21"],
-                ["2026-08-12", "2026-08-18"],  // Cerca de Asunción (15/8)
+                ["2026-08-12", "2026-08-18"],
                 ["2026-09-23", "2026-09-29"],
-                ["2026-11-11", "2026-11-17"],
-                ["2026-12-16", "2026-12-22"],
+                ["2026-11-11", "2026-11-17"]
             ],
             "JONA": [
-                ["2025-12-10", "2025-12-16"],  // Nueva guardia 2025
                 ["2026-01-21", "2026-01-27"],
                 ["2026-02-25", "2026-03-03"],
                 ["2026-04-08", "2026-04-14"],
-                ["2026-06-17", "2026-06-23"],  // Cerca de San Juan (24/6)
+                ["2026-06-17", "2026-06-23"],
                 ["2026-08-19", "2026-08-25"],
                 ["2026-09-30", "2026-10-06"],
+                ["2026-12-16", "2026-12-22"]
             ],
             "PEDRO": [
-                ["2025-12-17", "2025-12-23"],  // Nueva guardia 2025
                 ["2026-01-28", "2026-02-03"],
                 ["2026-03-04", "2026-03-10"],
                 ["2026-04-29", "2026-05-05"],
-                ["2026-06-24", "2026-06-30"],  // Incluye San Juan (24/6)
+                ["2026-06-24", "2026-06-30"],
                 ["2026-09-09", "2026-09-15"],
                 ["2026-10-07", "2026-10-13"],
-                ["2026-11-18", "2026-11-24"],
+                ["2026-11-18", "2026-11-24"]
             ],
             "MIGUEL": [
                 ["2026-02-04", "2026-02-10"],
@@ -744,27 +646,54 @@
                 ["2026-07-29", "2026-08-04"],
                 ["2026-08-26", "2026-09-01"],
                 ["2026-10-14", "2026-10-20"],
-                ["2026-12-02", "2026-12-08"],
+                ["2026-12-02", "2026-12-08"]
             ],
             "ANDREU": [
                 ["2026-03-11", "2026-03-17"],
                 ["2026-04-15", "2026-04-21"],
-                ["2026-05-27", "2026-05-02"],
+                ["2026-05-27", "2026-06-02"],
                 ["2026-07-08", "2026-07-14"],
                 ["2026-09-16", "2026-09-22"],
                 ["2026-11-04", "2026-11-10"],
                 ["2026-12-23", "2026-12-29"],
+                ["2026-12-30", "2026-12-31"]
             ]
         };
 
-        // Festivos de Valencia (2025-2026) actualizados
-        const FESTIVOS_VALENCIA = {
-            // 2025
-            "2025-12-24": "Nochebuena (media jornada)",
-            "2025-12-25": "Navidad",
-            "2025-12-31": "Nochevieja (media jornada)",
-            
-            // 2026
+        const VACACIONES = {
+            "RICARDO": [
+                ["2026-01-21", "2026-01-27", "Vacaciones enero"],
+                ["2026-03-16", "2026-03-22", "Vacaciones marzo"],
+                ["2026-03-30", "2026-04-05", "Vacaciones abril"],
+                ["2026-06-29", "2026-07-05", "Vacaciones julio"]
+            ],
+            "JONA": [
+                ["2026-02-09", "2026-02-15", "Vacaciones febrero"],
+                ["2026-07-27", "2026-08-09", "Vacaciones verano"],
+                ["2026-10-26", "2026-11-01", "Vacaciones noviembre"]
+            ],
+            "QUIQUE": [
+                ["2026-03-23", "2026-03-29", "Vacaciones marzo"],
+                ["2026-06-08", "2026-06-14", "Vacaciones junio"],
+                ["2026-09-28", "2026-10-11", "Vacaciones octubre"]
+            ],
+            "PEDRO": [
+                ["2026-04-06", "2026-04-12", "Vacaciones abril"],
+                ["2026-07-06", "2026-07-26", "Vacaciones verano"]
+            ],
+            "MIGUEL": [
+                ["2026-04-13", "2026-04-26", "Vacaciones abril"]
+            ],
+            "ANDREU": [
+                ["2026-06-15", "2026-06-21", "Vacaciones junio"],
+                ["2026-11-16", "2026-11-29", "Vacaciones noviembre"]
+            ],
+            "DANI": [
+                ["2026-08-17", "2026-08-30", "Vacaciones verano"]
+            ]
+        };
+
+        const FESTIVOS = {
             "2026-01-01": "Año Nuevo",
             "2026-01-06": "Epifanía Reyes",
             "2026-01-22": "San Vicente Mártir",
@@ -773,7 +702,7 @@
             "2026-04-16": "San Vicente Ferrer",
             "2026-06-24": "San Juan",
             "2026-08-15": "Asunción de la Virgen",
-            "2026-10-09": "Día de la Cominidad Valenciana",
+            "2026-10-09": "Día de la Comunidad Valenciana",
             "2026-10-12": "Día de la Hispanidad",
             "2026-11-01": "Día de todos los santos",
             "2026-12-06": "Día de la constitución",
@@ -781,963 +710,761 @@
             "2026-12-25": "Navidad"
         };
 
-        // Días de media jornada
-        const MEDIA_JORNADA = {
-            "2025-12-24": "Nochebuena",
-            "2025-12-31": "Nochevieja"
-        };
+        let currentYear = 2026;
+        let currentMonth = 0;
+        let isLocalMode = false;
 
-        // VACACIONES - Estructura para añadir períodos vacacionales
-        const VACACIONES = {
-            "PEDRO": [
-                ["2026-07-06", "2026-07-26", "Vacaciones verano"]
-            ]
-        };
-
-        // Variables para el calendario
-        let currentDate = new Date();
-        let currentView = 'month'; // 'month' o 'week'
-        let currentYear = currentDate.getFullYear();
-        let currentMonth = currentDate.getMonth();
-
-        // Funciones de utilidad
-        function formatDate(dateStr) {
-            const date = new Date(dateStr);
-            return date.toLocaleDateString('es-ES', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
-            });
-        }
-
-        function getYearFromDate(dateStr) {
-            return new Date(dateStr).getFullYear();
-        }
-
-        function getFestivosEnGuardia(inicioStr, finStr) {
-            const festivos = [];
-            const inicio = new Date(inicioStr);
-            const fin = new Date(finStr);
+        // Detectar si estamos en modo local o GitHub Pages
+        function detectarEntorno() {
+            // Detectar si estamos en local (file:// o localhost)
+            isLocalMode = window.location.protocol === 'file:' || 
+                         window.location.hostname === 'localhost' || 
+                         window.location.hostname === '127.0.0.1' ||
+                         window.location.hostname === '';
             
-            let currentDate = new Date(inicio);
-            while (currentDate <= fin) {
-                const fechaStr = currentDate.toISOString().split('T')[0];
-                if (FESTIVOS_VALENCIA[fechaStr]) {
-                    festivos.push({
-                        fecha: formatDate(fechaStr),
-                        nombre: FESTIVOS_VALENCIA[fechaStr],
-                        fechaStr: fechaStr
-                    });
+            console.log('Modo:', isLocalMode ? 'LOCAL (edición habilitada)' : 'GITHUB (solo lectura)');
+            
+            // Mostrar/ocultar controles de edición
+            if (isLocalMode) {
+                document.body.classList.add('local-mode');
+            }
+        }
+
+        function inicializarApp() {
+            detectarEntorno();
+            
+            // En modo local, cargar guardias desde localStorage si existen
+            if (isLocalMode) {
+                const guardiasGuardadas = localStorage.getItem('guardias_2026');
+                if (guardiasGuardadas) {
+                    Object.assign(GUARDIAS, JSON.parse(guardiasGuardadas));
+                    console.log('Guardias cargadas desde localStorage');
                 }
-                currentDate.setDate(currentDate.getDate() + 1);
             }
             
-            return festivos;
-        }
-
-        function getMediaJornadaEnGuardia(inicioStr, finStr) {
-            const mediaJornadas = [];
-            const inicio = new Date(inicioStr);
-            const fin = new Date(finStr);
-            
-            let currentDate = new Date(inicio);
-            while (currentDate <= fin) {
-                const fechaStr = currentDate.toISOString().split('T')[0];
-                if (MEDIA_JORNADA[fechaStr]) {
-                    mediaJornadas.push({
-                        fecha: formatDate(fechaStr),
-                        nombre: MEDIA_JORNADA[fechaStr]
-                    });
-                }
-                currentDate.setDate(currentDate.getDate() + 1);
-            }
-            
-            return mediaJornadas;
-        }
-
-        function getVacacionesParaPersona(persona) {
-            if (VACACIONES[persona]) {
-                return VACACIONES[persona];
-            }
-            return [];
-        }
-
-        function quienTieneGuardiaHoy() {
             const hoy = new Date();
-            const hoyStr = hoy.toISOString().split('T')[0];
+            currentYear = hoy.getFullYear();
+            currentMonth = hoy.getMonth();
             
-            for (const [persona, guardias] of Object.entries(GUARDIAS)) {
-                for (const [inicio, fin] of guardias) {
-                    if (inicio <= hoyStr && hoyStr <= fin) {
-                        return { persona, inicio, fin };
-                    }
-                }
-            }
-            
-            return null;
-        }
-
-        function getGuardiasPorAño(persona) {
-            const guardias2025 = [];
-            const guardias2026 = [];
-            
-            if (GUARDIAS[persona]) {
-                GUARDIAS[persona].forEach(([inicio, fin]) => {
-                    const año = getYearFromDate(inicio);
-                    if (año === 2025) {
-                        guardias2025.push([inicio, fin]);
-                    } else if (año === 2026) {
-                        guardias2026.push([inicio, fin]);
-                    }
-                });
-            }
-            
-            return { guardias2025, guardias2026 };
-        }
-
-        // FUNCIONES DEL CALENDARIO
-        function changeView(view) {
-            currentView = view;
-            
-            // Actualizar botones
-            document.getElementById('btn-month').classList.toggle('active', view === 'month');
-            document.getElementById('btn-week').classList.toggle('active', view === 'week');
-            
-            // Mostrar/ocultar vistas
-            document.getElementById('month-view').style.display = view === 'month' ? 'block' : 'none';
-            document.getElementById('week-view').style.display = view === 'week' ? 'block' : 'none';
-            
-            // Actualizar calendario
+            cargarResumen();
+            cargarPersonas();
             updateCalendar();
+            cargarConflictos();
+            cargarHoy();
+            cargarFestivos();
+            cargarVacacionesLista();
         }
 
-        function prevPeriod() {
-            if (currentView === 'month') {
-                currentMonth--;
-                if (currentMonth < 0) {
-                    currentMonth = 11;
-                    currentYear--;
-                }
-            } else {
-                // Para semana: retroceder 7 días
-                currentDate.setDate(currentDate.getDate() - 7);
-                currentYear = currentDate.getFullYear();
-                currentMonth = currentDate.getMonth();
-            }
-            updateCalendar();
-        }
-
-        function nextPeriod() {
-            if (currentView === 'month') {
-                currentMonth++;
-                if (currentMonth > 11) {
-                    currentMonth = 0;
-                    currentYear++;
-                }
-            } else {
-                // Para semana: avanzar 7 días
-                currentDate.setDate(currentDate.getDate() + 7);
-                currentYear = currentDate.getFullYear();
-                currentMonth = currentDate.getMonth();
-            }
-            updateCalendar();
-        }
-
-        function goToday() {
-            currentDate = new Date();
-            currentYear = currentDate.getFullYear();
-            currentMonth = currentDate.getMonth();
-            updateCalendar();
-        }
-
-        function changeYear() {
-            const yearSelect = document.getElementById('year-select');
-            currentYear = parseInt(yearSelect.value);
-            updateCalendar();
-        }
-
-        function updateCalendar() {
-            // Actualizar título
-            const title = document.getElementById('calendar-title');
-            const yearSelect = document.getElementById('year-select');
-            
-            yearSelect.value = currentYear;
-            
-            if (currentView === 'month') {
-                const monthNames = [
-                    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-                ];
-                title.textContent = `${monthNames[currentMonth]} ${currentYear}`;
-                renderMonthCalendar();
-            } else {
-                renderWeekCalendar();
-            }
-        }
-
-        function renderMonthCalendar() {
-            const calendar = document.getElementById('calendar-month');
-            const hoy = new Date();
-            const hoyStr = hoy.toISOString().split('T')[0];
-            
-            // Obtener primer día del mes
-            const firstDay = new Date(currentYear, currentMonth, 1);
-            const lastDay = new Date(currentYear, currentMonth + 1, 0);
-            
-            // Días de la semana en español
-            const daysOfWeek = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
-            
-            // Crear encabezado
-            let html = '<thead><tr>';
-            daysOfWeek.forEach(day => {
-                html += `<th>${day}</th>`;
-            });
-            html += '</tr></thead><tbody>';
-            
-            // Calcular día de inicio (0 = domingo, 1 = lunes, etc.)
-            let startDay = firstDay.getDay();
-            
-            // Calcular total de días del mes
-            const totalDays = lastDay.getDate();
-            
-            // Calcular celdas vacías al inicio
-            let dayCounter = 1;
-            let htmlRows = '';
-            
-            for (let i = 0; i < 6; i++) { // Máximo 6 semanas
-                htmlRows += '<tr>';
-                
-                for (let j = 0; j < 7; j++) {
-                    const dayNumber = (i * 7) + j - startDay + 1;
-                    
-                    if (dayNumber < 1 || dayNumber > totalDays) {
-                        // Celda vacía (mes anterior o siguiente)
-                        const prevMonth = currentMonth === 0 ? 11 : currentMonth - 1;
-                        const prevYear = currentMonth === 0 ? currentYear - 1 : currentYear;
-                        const nextMonth = currentMonth === 11 ? 0 : currentMonth + 1;
-                        const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
-                        
-                        let date;
-                        if (dayNumber < 1) {
-                            // Mes anterior
-                            const prevLastDay = new Date(currentYear, currentMonth, 0).getDate();
-                            date = new Date(prevYear, prevMonth, prevLastDay + dayNumber);
-                        } else {
-                            // Mes siguiente
-                            date = new Date(nextYear, nextMonth, dayNumber - totalDays);
-                        }
-                        
-                        const dateStr = date.toISOString().split('T')[0];
-                        htmlRows += `<td class="other-month">
-                            <div class="day-number">${date.getDate()}</div>
-                            ${getEventsForDay(dateStr)}
-                        </td>`;
-                    } else {
-                        // Día del mes actual
-                        const date = new Date(currentYear, currentMonth, dayNumber);
-                        const dateStr = date.toISOString().split('T')[0];
-                        const isToday = dateStr === hoyStr;
-                        
-                        let cellClass = '';
-                        if (isToday) cellClass = 'today';
-                        if (FESTIVOS_VALENCIA[dateStr]) cellClass += ' festivo-day';
-                        if (MEDIA_JORNADA[dateStr]) cellClass += ' media-jornada-day';
-                        if (esDiaDeVacaciones(dateStr)) cellClass += ' vacaciones-day';
-                        
-                        htmlRows += `<td${cellClass ? ` class="${cellClass.trim()}"` : ''}>
-                            <div class="day-number">${dayNumber}</div>
-                            ${getEventsForDay(dateStr)}
-                        </td>`;
-                        
-                        dayCounter++;
-                    }
-                }
-                
-                htmlRows += '</tr>';
-                
-                // Si ya hemos mostrado todos los días, salir
-                if (dayCounter > totalDays) break;
-            }
-            
-            html += htmlRows + '</tbody>';
-            calendar.innerHTML = html;
-        }
-
-        function esDiaDeVacaciones(dateStr) {
-            for (const [persona, vacaciones] of Object.entries(VACACIONES)) {
-                for (const [inicio, fin] of vacaciones) {
-                    if (dateStr >= inicio && dateStr <= fin) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        function renderWeekCalendar() {
-            const calendar = document.getElementById('calendar-week');
-            const hoy = new Date();
-            const hoyStr = hoy.toISOString().split('T')[0];
-            
-            // Encontrar el lunes de la semana actual
-            const monday = new Date(currentDate);
-            monday.setDate(currentDate.getDate() - currentDate.getDay() + (currentDate.getDay() === 0 ? -6 : 1));
-            
-            // Actualizar título
-            const title = document.getElementById('calendar-title');
-            const sunday = new Date(monday);
-            sunday.setDate(monday.getDate() + 6);
-            
-            const monthNames = [
-                "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-            ];
-            
-            title.textContent = `Semana ${monday.getDate()}-${sunday.getDate()} de ${monthNames[monday.getMonth()]} ${monday.getFullYear()}`;
-            
-            // Días de la semana
-            const daysOfWeek = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
-            
-            // Crear encabezado
-            let html = '<thead><tr><th class="hour-cell">Hora</th>';
-            
-            // Crear columnas para cada día
-            const weekDates = [];
-            for (let i = 0; i < 7; i++) {
-                const date = new Date(monday);
-                date.setDate(monday.getDate() + i);
-                weekDates.push(date);
-                
-                const dateStr = date.toISOString().split('T')[0];
-                const isToday = dateStr === hoyStr;
-                
-                let dayClass = '';
-                if (isToday) dayClass = 'today';
-                
-                html += `<th${dayClass ? ` class="${dayClass}"` : ''}>
-                    <div>${daysOfWeek[i]}</div>
-                    <div>${date.getDate()}/${date.getMonth() + 1}</div>
-                </th>`;
-            }
-            
-            html += '</tr></thead><tbody>';
-            
-            // Crear filas para el día (sin horas específicas, solo eventos del día)
-            html += '<tr>';
-            html += '<td class="hour-cell">Todo el día</td>';
-            
-            for (let i = 0; i < 7; i++) {
-                const date = weekDates[i];
-                const dateStr = date.toISOString().split('T')[0];
-                
-                let cellClass = '';
-                if (dateStr === hoyStr) cellClass = 'today';
-                if (FESTIVOS_VALENCIA[dateStr]) cellClass += ' festivo-day';
-                if (MEDIA_JORNADA[dateStr]) cellClass += ' media-jornada-day';
-                if (esDiaDeVacaciones(dateStr)) cellClass += ' vacaciones-day';
-                
-                html += `<td${cellClass ? ` class="${cellClass.trim()}"` : ''}>
-                    ${getEventsForDay(dateStr)}
-                </td>`;
-            }
-            
-            html += '</tr></tbody>';
-            calendar.innerHTML = html;
-        }
-
-        function getEventsForDay(dateStr) {
-            let events = '';
-            
-            // Buscar guardias para este día
-            for (const [persona, guardias] of Object.entries(GUARDIAS)) {
-                for (const [inicio, fin] of guardias) {
-                    if (dateStr >= inicio && dateStr <= fin) {
-                        // Verificar si es festivo o media jornada
-                        let eventClass = 'guardia-event';
-                        if (FESTIVOS_VALENCIA[dateStr]) {
-                            eventClass += ' festivo-day';
-                        } else if (MEDIA_JORNADA[dateStr]) {
-                            eventClass += ' media-jornada-day';
-                        } else if (esDiaDeVacacionesParaPersona(persona, dateStr)) {
-                            eventClass += ' vacaciones-day';
-                        }
-                        
-                        events += `<div class="${eventClass}" title="${persona}: ${formatDate(inicio)} - ${formatDate(fin)}">${persona}</div>`;
-                        break; // Solo mostrar una vez por persona
-                    }
-                }
-            }
-            
-            // Buscar vacaciones para este día (solo si no hay guardia de esa persona)
-            for (const [persona, vacaciones] of Object.entries(VACACIONES)) {
-                for (const [inicio, fin, descripcion] of vacaciones) {
-                    if (dateStr >= inicio && dateStr <= fin && !events.includes(persona)) {
-                        events += `<div class="guardia-event vacaciones-day" title="${persona}: ${descripcion}">${persona} 🏖️</div>`;
-                        break;
-                    }
-                }
-            }
-            
-            // Añadir indicador de festivo si no hay guardia
-            if (FESTIVOS_VALENCIA[dateStr] && !events.includes('festivo-day')) {
-                events += `<div class="guardia-event festivo-day" title="${FESTIVOS_VALENCIA[dateStr]}">${FESTIVOS_VALENCIA[dateStr]}</div>`;
-            }
-            
-            // Añadir indicador de media jornada
-            if (MEDIA_JORNADA[dateStr] && !events.includes('media-jornada-day')) {
-                events += `<div class="guardia-event media-jornada-day" title="${MEDIA_JORNADA[dateStr]}">${MEDIA_JORNADA[dateStr]}</div>`;
-            }
-            
-            return events;
-        }
-
-        function esDiaDeVacacionesParaPersona(persona, dateStr) {
-            if (VACACIONES[persona]) {
-                for (const [inicio, fin] of VACACIONES[persona]) {
-                    if (dateStr >= inicio && dateStr <= fin) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        // Funciones de la interfaz
         function showSection(sectionId) {
-            // Ocultar todas las secciones
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Mostrar la sección seleccionada
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
             
-            // Actualizar botones activos
-            document.querySelectorAll('.btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Cargar datos de la sección
-            switch(sectionId) {
-                case 'resumen':
-                    cargarResumen();
-                    break;
-                case 'personas':
-                    cargarPersonas();
-                    break;
-                case 'calendario':
-                    cargarCalendario();
-                    break;
-                case 'hoy':
-                    cargarHoy();
-                    break;
-                case 'festivos':
-                    cargarFestivos();
-                    break;
-                case 'vacaciones':
-                    cargarVacaciones();
-                    break;
+            // Cargar contenido específico de la sección
+            if (sectionId === 'conflictos') {
+                cargarConflictos();
             }
-        }
-
-        function cargarCalendario() {
-            // Configurar año actual
-            document.getElementById('year-select').value = currentYear;
-            
-            // Actualizar calendario
-            updateCalendar();
         }
 
         function cargarResumen() {
-            let totalGuardias2025 = 0;
-            let totalGuardias2026 = 0;
-            const resumenGrid = document.getElementById('resumen-grid');
+            const grid = document.getElementById('resumen-grid');
+            grid.innerHTML = '';
             
-            resumenGrid.innerHTML = '';
+            // Contar guardias, vacaciones y festivos por año
+            const guardiasPorAño = {};
+            const vacacionesPorAño = {};
+            const festivosPorAño = {};
             
-            // Calcular totales
+            // Contar guardias
             for (const [persona, guardias] of Object.entries(GUARDIAS)) {
-                let guardias2025 = 0;
-                let guardias2026 = 0;
-                
-                // Contar TODAS las guardias por año
-                guardias.forEach(([inicio, fin]) => {
-                    const año = getYearFromDate(inicio);
-                    if (año === 2025) {
-                        guardias2025++;
-                        totalGuardias2025++;
-                    } else if (año === 2026) {
-                        guardias2026++;
-                        totalGuardias2026++;
-                    }
+                guardias.forEach(([inicio]) => {
+                    const año = new Date(inicio).getFullYear();
+                    guardiasPorAño[año] = (guardiasPorAño[año] || 0) + 1;
                 });
                 
-                // Obtener vacaciones de la persona
-                const vacacionesPersona = getVacacionesParaPersona(persona);
-                
-                // Crear tarjeta
                 const card = document.createElement('div');
                 card.className = 'person-card';
                 card.innerHTML = `
                     <div class="person-name">${persona}</div>
-                    <div class="person-guardias">${guardias2025 + guardias2026} guardias total</div>
-                    ${guardias2025 > 0 ? `<div class="person-guardias-2025">${guardias2025} en 2025</div>` : ''}
-                    ${guardias2026 > 0 ? `<div class="person-guardias-2026">${guardias2026} en 2026</div>` : ''}
-                    ${vacacionesPersona.length > 0 ? `<div style="color: #2196f3; font-size: 0.9em; margin-top: 5px;">🏖️ ${vacacionesPersona.length} período(s) vacacional(es)</div>` : ''}
+                    <div>${guardias.length} guardias asignadas</div>
                 `;
-                card.onclick = () => mostrarDetallePersona(persona);
-                resumenGrid.appendChild(card);
+                grid.appendChild(card);
             }
             
-            // Calcular total de períodos vacacionales
-            let totalVacaciones = 0;
-            for (const persona in VACACIONES) {
-                totalVacaciones += VACACIONES[persona].length;
+            // Contar vacaciones
+            for (const [persona, vacaciones] of Object.entries(VACACIONES)) {
+                vacaciones.forEach(([inicio]) => {
+                    const año = new Date(inicio).getFullYear();
+                    vacacionesPorAño[año] = (vacacionesPorAño[año] || 0) + 1;
+                });
             }
             
-            // Actualizar números
-            document.getElementById('total-guardias-2025').textContent = totalGuardias2025;
-            document.getElementById('total-guardias-2026').textContent = totalGuardias2026;
+            // Contar festivos
+            for (const fecha of Object.keys(FESTIVOS)) {
+                const año = new Date(fecha).getFullYear();
+                festivosPorAño[año] = (festivosPorAño[año] || 0) + 1;
+            }
+            
+            // Obtener todos los años únicos y ordenarlos
+            const todosLosAños = new Set([
+                ...Object.keys(guardiasPorAño),
+                ...Object.keys(vacacionesPorAño),
+                ...Object.keys(festivosPorAño)
+            ]);
+            const añosOrdenados = Array.from(todosLosAños).sort();
+            
+            // Generar stats dinámicamente
+            const statsGrid = document.getElementById('stats-grid');
+            
+            // Total personas siempre aparece
             document.getElementById('total-personas').textContent = Object.keys(GUARDIAS).length;
-            document.getElementById('total-vacaciones').textContent = totalVacaciones;
+            
+            // Agregar stats por año
+            añosOrdenados.forEach(año => {
+                // Guardias
+                if (guardiasPorAño[año]) {
+                    const card = document.createElement('div');
+                    card.className = 'stat-card';
+                    card.innerHTML = `
+                        <div class="stat-label">Guardias ${año}</div>
+                        <div class="stat-number">${guardiasPorAño[año]}</div>
+                    `;
+                    statsGrid.appendChild(card);
+                }
+                
+                // Vacaciones
+                if (vacacionesPorAño[año]) {
+                    const card = document.createElement('div');
+                    card.className = 'stat-card';
+                    card.innerHTML = `
+                        <div class="stat-label">Vacaciones ${año}</div>
+                        <div class="stat-number">${vacacionesPorAño[año]}</div>
+                    `;
+                    statsGrid.appendChild(card);
+                }
+                
+                // Festivos
+                if (festivosPorAño[año]) {
+                    const card = document.createElement('div');
+                    card.className = 'stat-card';
+                    card.innerHTML = `
+                        <div class="stat-label">Festivos ${año}</div>
+                        <div class="stat-number">${festivosPorAño[año]}</div>
+                    `;
+                    statsGrid.appendChild(card);
+                }
+            });
         }
 
         function cargarPersonas() {
-            const personasGrid = document.getElementById('personas-grid');
+            const grid = document.getElementById('personas-grid');
+            grid.innerHTML = '';
             
-            personasGrid.innerHTML = '';
-            
-            for (const persona of Object.keys(GUARDIAS)) {
-                let guardias2025 = 0;
-                let guardias2026 = 0;
-                
-                // Contar TODAS las guardias por año
-                GUARDIAS[persona].forEach(([inicio, fin]) => {
-                    const año = getYearFromDate(inicio);
-                    if (año === 2025) guardias2025++;
-                    else if (año === 2026) guardias2026++;
-                });
-                
-                const vacacionesPersona = getVacacionesParaPersona(persona);
-                
+            for (const [persona, guardias] of Object.entries(GUARDIAS)) {
                 const card = document.createElement('div');
                 card.className = 'person-card';
+                
+                let guardiasHTML = '';
+                guardias.forEach(([inicio, fin], index) => {
+                    const inicioDate = new Date(inicio);
+                    const finDate = new Date(fin);
+                    
+                    guardiasHTML += `
+                        <div class="guardia-item">
+                            <div style="font-size: 0.9em;">
+                                ${inicioDate.toLocaleDateString('es-ES')} - ${finDate.toLocaleDateString('es-ES')}
+                            </div>
+                            ${isLocalMode ? `
+                            <button class="btn-edit" onclick="abrirModalIntercambio('${persona}', ${index})">
+                                🔄 Cambiar
+                            </button>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+                
+                // Verificar si tiene vacaciones
+                const vacaciones = VACACIONES[persona] || [];
+                const tieneVacaciones = vacaciones.length > 0;
+                
                 card.innerHTML = `
                     <div class="person-name">${persona}</div>
-                    <div class="person-guardias">${guardias2025 + guardias2026} guardias</div>
-                    ${guardias2025 > 0 ? `<div class="person-guardias-2025">${guardias2025} en 2025</div>` : ''}
-                    ${guardias2026 > 0 ? `<div class="person-guardias-2026">${guardias2026} en 2026</div>` : ''}
-                    ${vacacionesPersona.length > 0 ? `<div style="color: #2196f3; font-size: 0.9em; margin-top: 5px;">🏖️ ${vacacionesPersona.length} período(s) vacacional(es)</div>` : ''}
+                    <div style="margin-top: 10px; opacity: 0.9;">
+                        ${guardias.length} guardias
+                        ${tieneVacaciones ? ` • ${vacaciones.length} períodos de vacaciones` : ''}
+                    </div>
+                    <div style="margin-top: 10px;">
+                        ${guardiasHTML}
+                    </div>
+                    <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn-small" onclick="exportarGuardiasCalendario('${persona}')">
+                            📅 Exportar Guardias
+                        </button>
+                        ${tieneVacaciones ? `
+                        <button class="btn-small" onclick="exportarVacacionesCalendario('${persona}')">
+                            🏖️ Exportar Vacaciones
+                        </button>
+                        ` : ''}
+                    </div>
                 `;
-                card.onclick = () => mostrarDetallePersona(persona);
-                personasGrid.appendChild(card);
+                grid.appendChild(card);
             }
         }
 
-        function mostrarDetallePersona(persona) {
-            const { guardias2025, guardias2026 } = getGuardiasPorAño(persona);
-            const vacacionesPersona = getVacacionesParaPersona(persona);
-            const lista = document.getElementById('persona-lista');
-            const detalle = document.getElementById('persona-detalle');
+        function updateCalendar() {
+            const calendar = document.getElementById('calendar-month');
+            const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
             
-            document.getElementById('persona-nombre').textContent = `Detalles de ${persona}`;
-            lista.innerHTML = '';
+            document.getElementById('calendar-title').textContent = 
+                `${monthNames[currentMonth]} ${currentYear}`;
             
-            // Mostrar guardias 2025
-            if (guardias2025.length > 0) {
-                const titulo2025 = document.createElement('h4');
-                titulo2025.textContent = 'Guardias 2025';
-                titulo2025.style.color = '#3498db';
-                titulo2025.style.marginTop = '20px';
-                lista.appendChild(titulo2025);
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const startDay = firstDay.getDay();
+            const daysInMonth = lastDay.getDate();
+            
+            let html = `
+                <thead>
+                    <tr>
+                        <th>Dom</th><th>Lun</th><th>Mar</th><th>Mié</th>
+                        <th>Jue</th><th>Vie</th><th>Sáb</th>
+                    </tr>
+                </thead>
+                <tbody>
+            `;
+            
+            let day = 1;
+            const hoy = new Date().toISOString().split('T')[0];
+            
+            for (let i = 0; i < 6; i++) {
+                html += '<tr>';
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < startDay || day > daysInMonth) {
+                        html += '<td></td>';
+                    } else {
+                        const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                        const isToday = dateStr === hoy;
+                        const isFestivo = FESTIVOS[dateStr];
+                        
+                        // Detectar conflictos para este día
+                        const conflictos = detectarConflictosDelDia(dateStr);
+                        const tieneVacaciones = tieneVacacionesDelDia(dateStr);
+                        
+                        let cellClass = isToday ? 'today' : '';
+                        if (isFestivo) cellClass += ' festivo-day';
+                        if (conflictos.length > 0) cellClass += ' conflict-highlight';
+                        else if (tieneVacaciones) cellClass += ' vacation-highlight';
+                        
+                        html += `<td class="${cellClass}">
+                            <div class="day-number">${day}</div>`;
+                        
+                        // Agregar guardias
+                        for (const [persona, guardias] of Object.entries(GUARDIAS)) {
+                            guardias.forEach(([inicio, fin]) => {
+                                if (dateStr >= inicio && dateStr <= fin) {
+                                    const tieneConflicto = conflictos.some(c => c.persona === persona);
+                                    const estiloConflicto = tieneConflicto ? 'style="background: #ff6b6b; font-weight: bold;"' : '';
+                                    html += `<span class="guardia-event" ${estiloConflicto}>${persona}${tieneConflicto ? ' ⚠️' : ''}</span>`;
+                                }
+                            });
+                        }
+                        
+                        // Agregar vacaciones
+                        for (const [persona, vacaciones] of Object.entries(VACACIONES)) {
+                            vacaciones.forEach(([inicio, fin, desc]) => {
+                                if (dateStr >= inicio && dateStr <= fin) {
+                                    html += `<span class="vacaciones-event">${persona}: ${desc || 'Vacaciones'}</span>`;
+                                }
+                            });
+                        }
+                        
+                        // Agregar festivo
+                        if (isFestivo) {
+                            html += `<span class="festivo-label">${isFestivo}</span>`;
+                        }
+                        
+                        html += '</td>';
+                        day++;
+                    }
+                }
+                html += '</tr>';
+                if (day > daysInMonth) break;
+            }
+            
+            html += '</tbody>';
+            calendar.innerHTML = html;
+        }
+
+        function detectarConflictosDelDia(fecha) {
+            const conflictos = [];
+            
+            for (const [persona, guardias] of Object.entries(GUARDIAS)) {
+                const vacaciones = VACACIONES[persona] || [];
                 
-                guardias2025.forEach(([inicio, fin], index) => {
-                    const festivos = getFestivosEnGuardia(inicio, fin);
-                    const mediaJornadas = getMediaJornadaEnGuardia(inicio, fin);
-                    const item = document.createElement('div');
-                    item.className = 'guardia-item';
-                    
-                    let festivosHTML = '';
-                    if (festivos.length > 0) {
-                        festivosHTML = '<div style="margin-top: 10px;">';
-                        festivos.forEach(festivo => {
-                            festivosHTML += `<div class="festivo">🎪 ${festivo.fecha}: ${festivo.nombre}</div>`;
+                guardias.forEach(([guardiaInicio, guardiaFin]) => {
+                    if (fecha >= guardiaInicio && fecha <= guardiaFin) {
+                        // Verificar si está de vacaciones en esta fecha
+                        vacaciones.forEach(([vacInicio, vacFin]) => {
+                            if (fecha >= vacInicio && fecha <= vacFin) {
+                                conflictos.push({ persona });
+                            }
                         });
-                        festivosHTML += '</div>';
                     }
-                    
-                    let mediaJornadaHTML = '';
-                    if (mediaJornadas.length > 0) {
-                        mediaJornadaHTML = '<div style="margin-top: 5px;">';
-                        mediaJornadas.forEach(mj => {
-                            mediaJornadaHTML += `<div class="media-jornada">⏰ ${mj.fecha}: ${mj.nombre} (media jornada)</div>`;
-                        });
-                        mediaJornadaHTML += '</div>';
-                    }
-                    
-                    item.innerHTML = `
-                        <div class="guardia-dates">
-                            ${index + 1}. ${formatDate(inicio)} al ${formatDate(fin)}
-                            <span class="guardia-year guardia-year-2025">2025</span>
-                        </div>
-                        ${festivosHTML}
-                        ${mediaJornadaHTML}
-                    `;
-                    lista.appendChild(item);
                 });
             }
             
-            // Mostrar guardias 2026
-            if (guardias2026.length > 0) {
-                const titulo2026 = document.createElement('h4');
-                titulo2026.textContent = 'Guardias 2026';
-                titulo2026.style.color = '#e74c3c';
-                titulo2026.style.marginTop = '20px';
-                lista.appendChild(titulo2026);
-                
-                guardias2026.forEach(([inicio, fin], index) => {
-                    const festivos = getFestivosEnGuardia(inicio, fin);
-                    const item = document.createElement('div');
-                    item.className = 'guardia-item';
-                    
-                    let festivosHTML = '';
-                    if (festivos.length > 0) {
-                        festivosHTML = '<div style="margin-top: 10px;">';
-                        festivos.forEach(festivo => {
-                            festivosHTML += `<div class="festivo">🎪 ${festivo.fecha}: ${festivo.nombre}</div>`;
-                        });
-                        festivosHTML += '</div>';
+            return conflictos;
+        }
+
+        function tieneVacacionesDelDia(fecha) {
+            for (const vacaciones of Object.values(VACACIONES)) {
+                for (const [inicio, fin] of vacaciones) {
+                    if (fecha >= inicio && fecha <= fin) {
+                        return true;
                     }
-                    
-                    item.innerHTML = `
-                        <div class="guardia-dates">
-                            ${index + 1}. ${formatDate(inicio)} al ${formatDate(fin)}
-                            <span class="guardia-year">2026</span>
-                        </div>
-                        ${festivosHTML}
-                    `;
-                    lista.appendChild(item);
-                });
+                }
             }
+            return false;
+        }
+
+        function detectarTodosLosConflictos() {
+            const conflictos = [];
             
-            // Mostrar vacaciones
-            if (vacacionesPersona.length > 0) {
-                const tituloVacaciones = document.createElement('h4');
-                tituloVacaciones.textContent = 'Períodos Vacacionales';
-                tituloVacaciones.style.color = '#2196f3';
-                tituloVacaciones.style.marginTop = '20px';
-                lista.appendChild(tituloVacaciones);
+            for (const [persona, guardias] of Object.entries(GUARDIAS)) {
+                const vacaciones = VACACIONES[persona] || [];
                 
-                vacacionesPersona.forEach(([inicio, fin, descripcion], index) => {
-                    const item = document.createElement('div');
-                    item.className = 'guardia-item';
-                    item.style.borderLeftColor = '#2196f3';
-                    
-                    item.innerHTML = `
-                        <div class="guardia-dates">
-                            ${index + 1}. ${formatDate(inicio)} al ${formatDate(fin)}
-                            <span style="background-color: #2196f3; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; margin-left: 10px;">🏖️ VACACIONES</span>
-                        </div>
-                        <div class="vacaciones" style="margin-top: 8px;">${descripcion || 'Vacaciones'}</div>
-                    `;
-                    lista.appendChild(item);
+                guardias.forEach(([guardiaInicio, guardiaFin]) => {
+                    vacaciones.forEach(([vacInicio, vacFin, descripcion]) => {
+                        // Verificar si hay solapamiento
+                        const hayConflicto = !(guardiaFin < vacInicio || guardiaInicio > vacFin);
+                        
+                        if (hayConflicto) {
+                            // Calcular días de solapamiento
+                            const inicio = guardiaInicio > vacInicio ? guardiaInicio : vacInicio;
+                            const fin = guardiaFin < vacFin ? guardiaFin : vacFin;
+                            
+                            const diasConflicto = Math.floor(
+                                (new Date(fin) - new Date(inicio)) / (1000 * 60 * 60 * 24)
+                            ) + 1;
+                            
+                            conflictos.push({
+                                persona,
+                                guardiaInicio,
+                                guardiaFin,
+                                vacInicio,
+                                vacFin,
+                                descripcion,
+                                inicio,
+                                fin,
+                                diasConflicto
+                            });
+                        }
+                    });
                 });
             }
             
-            if (guardias2025.length === 0 && guardias2026.length === 0 && vacacionesPersona.length === 0) {
-                lista.innerHTML = '<div style="text-align: center; padding: 20px; color: #7f8c8d;">No hay guardias ni vacaciones asignadas</div>';
+            return conflictos;
+        }
+
+        function cargarConflictos() {
+            const list = document.getElementById('conflictos-list');
+            const conflictos = detectarTodosLosConflictos();
+            
+            if (conflictos.length === 0) {
+                list.innerHTML = `
+                    <div class="no-conflicts">
+                        ✅ ¡Perfecto! No hay conflictos entre guardias y vacaciones
+                    </div>
+                `;
+                return;
             }
             
-            // Ocultar grid y mostrar detalle
-            document.getElementById('personas-grid').style.display = 'none';
-            detalle.style.display = 'block';
+            let html = '';
             
-            // Agregar botón para volver
-            if (!document.getElementById('btn-volver')) {
-                const btnVolver = document.createElement('button');
-                btnVolver.id = 'btn-volver';
-                btnVolver.className = 'btn';
-                btnVolver.textContent = '← Volver al listado';
-                btnVolver.onclick = () => {
-                    detalle.style.display = 'none';
-                    document.getElementById('personas-grid').style.display = 'grid';
-                };
-                detalle.insertBefore(btnVolver, lista);
-            }
+            conflictos.forEach(conf => {
+                html += `
+                    <div class="conflict-item">
+                        <div class="conflict-header">
+                            ⚠️ ${conf.persona}
+                            <span class="conflict-badge">${conf.diasConflicto} día${conf.diasConflicto > 1 ? 's' : ''}</span>
+                        </div>
+                        <div class="conflict-details">
+                            <div style="margin-bottom: 8px;">
+                                <strong>Guardia:</strong> 
+                                ${new Date(conf.guardiaInicio).toLocaleDateString('es-ES')} - 
+                                ${new Date(conf.guardiaFin).toLocaleDateString('es-ES')}
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <strong>Vacaciones:</strong> 
+                                ${new Date(conf.vacInicio).toLocaleDateString('es-ES')} - 
+                                ${new Date(conf.vacFin).toLocaleDateString('es-ES')}
+                                ${conf.descripcion ? `(${conf.descripcion})` : ''}
+                            </div>
+                            <div style="background: rgba(255, 255, 255, 0.3); padding: 8px; border-radius: 5px; margin-top: 10px;">
+                                <strong>⚡ Conflicto:</strong> 
+                                ${new Date(conf.inicio).toLocaleDateString('es-ES')} - 
+                                ${new Date(conf.fin).toLocaleDateString('es-ES')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            list.innerHTML = html;
         }
 
         function cargarHoy() {
-            const hoyContent = document.getElementById('hoy-content');
-            const hoy = new Date();
-            const hoyStr = hoy.toISOString().split('T')[0];
-            const hoyFormateado = formatDate(hoyStr);
+            const content = document.getElementById('hoy-content');
+            const hoy = new Date().toISOString().split('T')[0];
             
-            const guardiaHoy = quienTieneGuardiaHoy();
+            let html = '';
+            let hayGuardia = false;
             
-            let contenido = `
-                <div style="text-align: center; padding: 30px;">
-                    <div style="font-size: 1.2em; margin-bottom: 20px; color: #7f8c8d;">
-                        Fecha: ${hoyFormateado}
-                    </div>
-            `;
-            
-            if (guardiaHoy) {
-                const festivosHoy = FESTIVOS_VALENCIA[hoyStr] ? `<div class="festivo" style="margin: 15px 0;">🎪 ¡Hoy es festivo!: ${FESTIVOS_VALENCIA[hoyStr]}</div>` : '';
-                const mediaJornadaHoy = MEDIA_JORNADA[hoyStr] ? `<div class="media-jornada" style="margin: 10px 0;">⏰ Hoy: ${MEDIA_JORNADA[hoyStr]} (media jornada)</div>` : '';
-                const festivosGuardia = getFestivosEnGuardia(guardiaHoy.inicio, guardiaHoy.fin);
-                const mediaJornadasGuardia = getMediaJornadaEnGuardia(guardiaHoy.inicio, guardiaHoy.fin);
-                
-                // Verificar si la persona tiene vacaciones hoy
-                const personaVacaciones = VACACIONES[guardiaHoy.persona] || [];
-                let vacacionesHoy = '';
-                for (const [inicio, fin, descripcion] of personaVacaciones) {
-                    if (hoyStr >= inicio && hoyStr <= fin) {
-                        vacacionesHoy = `<div class="vacaciones" style="margin: 15px 0;">🏖️ ${guardiaHoy.persona} está de vacaciones hoy: ${descripcion || 'Vacaciones'}</div>`;
-                        break;
-                    }
-                }
-                
-                let festivosGuardiaHTML = '';
-                if (festivosGuardia.length > 0) {
-                    festivosGuardiaHTML = '<div style="margin-top: 20px;"><strong>Festivos en esta guardia:</strong><br>';
-                    festivosGuardia.forEach(festivo => {
-                        festivosGuardiaHTML += `<div style="color: #e74c3c; margin-top: 5px;">• ${festivo.fecha}: ${festivo.nombre}</div>`;
-                    });
-                    festivosGuardiaHTML += '</div>';
-                }
-                
-                let mediaJornadasHTML = '';
-                if (mediaJornadasGuardia.length > 0) {
-                    mediaJornadasHTML = '<div style="margin-top: 15px;"><strong>Días de media jornada:</strong><br>';
-                    mediaJornadasGuardia.forEach(mj => {
-                        mediaJornadasHTML += `<div style="color: #f39c12; margin-top: 5px;">• ${mj.fecha}: ${mj.nombre}</div>`;
-                    });
-                    mediaJornadasHTML += '</div>';
-                }
-                
-                contenido += `
-                    <div style="background-color: #e8f5e8; padding: 30px; border-radius: 10px; margin-top: 20px;">
-                        <div style="font-size: 2em; color: #2c3e50; margin-bottom: 10px;">
-                            ✅ ${guardiaHoy.persona} tiene guardia hoy
-                        </div>
-                        <div style="font-size: 1.3em; color: #4CAF50; margin-bottom: 20px;">
-                            Período: ${formatDate(guardiaHoy.inicio)} al ${formatDate(guardiaHoy.fin)}
-                        </div>
-                        ${festivosHoy}
-                        ${mediaJornadaHoy}
-                        ${vacacionesHoy}
-                        ${festivosGuardiaHTML}
-                        ${mediaJornadasHTML}
-                    </div>
-                `;
-            } else {
-                // Buscar próxima guardia
-                let proximaGuardia = null;
-                let diasFaltan = null;
-                
-                for (const [persona, guardias] of Object.entries(GUARDIAS)) {
-                    for (const [inicio, fin] of guardias) {
-                        const inicioDate = new Date(inicio);
-                        if (inicioDate > hoy) {
-                            const dias = Math.ceil((inicioDate - hoy) / (1000 * 60 * 60 * 24));
-                            if (!proximaGuardia || inicioDate < new Date(proximaGuardia.inicio)) {
-                                proximaGuardia = { persona, inicio, fin };
-                                diasFaltan = dias;
-                            }
-                        }
-                    }
-                }
-                
-                let proximaInfo = '';
-                if (proximaGuardia) {
-                    const festivosGuardia = getFestivosEnGuardia(proximaGuardia.inicio, proximaGuardia.fin);
-                    let festivosHTML = '';
-                    
-                    if (festivosGuardia.length > 0) {
-                        festivosHTML = '<div style="margin-top: 10px;"><strong>Festivos:</strong><br>';
-                        festivosGuardia.forEach(festivo => {
-                            festivosHTML += `<div style="color: #e74c3c;">• ${festivo.fecha}: ${festivo.nombre}</div>`;
-                        });
-                        festivosHTML += '</div>';
-                    }
-                    
-                    proximaInfo = `
-                        <div style="background-color: #f0f8ff; padding: 20px; border-radius: 10px; margin-top: 20px;">
-                            <div style="font-size: 1.3em; color: #3498db; margin-bottom: 10px;">
-                                📅 PRÓXIMA GUARDIA
+            for (const [persona, guardias] of Object.entries(GUARDIAS)) {
+                guardias.forEach(([inicio, fin]) => {
+                    if (hoy >= inicio && hoy <= fin) {
+                        hayGuardia = true;
+                        html += `
+                            <div class="event-item">
+                                <div style="font-size: 1.3em; font-weight: bold; margin-bottom: 5px;">
+                                    ${persona}
+                                </div>
+                                <div class="event-date">
+                                    Del ${new Date(inicio).toLocaleDateString('es-ES')} 
+                                    al ${new Date(fin).toLocaleDateString('es-ES')}
+                                </div>
                             </div>
-                            <div style="font-size: 1.1em;">
-                                <strong>Persona:</strong> ${proximaGuardia.persona}<br>
-                                <strong>Fecha:</strong> ${formatDate(proximaGuardia.inicio)} al ${formatDate(proximaGuardia.fin)}<br>
-                                <strong>Faltan:</strong> ${diasFaltan} días
-                                ${festivosHTML}
-                            </div>
-                        </div>
-                    `;
-                }
-                
-                contenido += `
-                    <div style="background-color: #fff3cd; padding: 30px; border-radius: 10px; margin-top: 20px;">
-                        <div style="font-size: 1.8em; color: #856404; margin-bottom: 10px;">
-                            ℹ️ Nadie tiene guardia hoy
-                        </div>
-                        ${proximaInfo}
-                    </div>
-                `;
-            }
-            
-            contenido += '</div>';
-            hoyContent.innerHTML = contenido;
-        }
-
-        function cargarFestivos() {
-            const festivosGrid = document.getElementById('festivos-grid');
-            const rankingBody = document.getElementById('festivos-ranking');
-            
-            festivosGrid.innerHTML = '';
-            rankingBody.innerHTML = '';
-            
-            // Agrupar festivos por persona y año
-            const festivosConGuardia = {};
-            const contadorFestivos2025 = {};
-            const contadorFestivos2026 = {};
-            
-            // Inicializar contadores
-            for (const persona of Object.keys(GUARDIAS)) {
-                contadorFestivos2025[persona] = 0;
-                contadorFestivos2026[persona] = 0;
-            }
-            
-            // Procesar festivos
-            for (const [fecha, nombre] of Object.entries(FESTIVOS_VALENCIA)) {
-                const año = getYearFromDate(fecha);
-                
-                for (const [persona, guardias] of Object.entries(GUARDIAS)) {
-                    for (const [inicio, fin] of guardias) {
-                        if (inicio <= fecha && fecha <= fin) {
-                            if (!festivosConGuardia[fecha]) {
-                                festivosConGuardia[fecha] = {
-                                    nombre: nombre,
-                                    personas: [],
-                                    año: año
-                                };
-                            }
-                            festivosConGuardia[fecha].personas.push(persona);
-                            
-                            if (año === 2025) {
-                                contadorFestivos2025[persona]++;
-                            } else if (año === 2026) {
-                                contadorFestivos2026[persona]++;
-                            }
-                            break;
-                        }
+                        `;
                     }
-                }
-            }
-            
-            // Mostrar festivos en tarjetas
-            for (const [fecha, datos] of Object.entries(festivosConGuardia)) {
-                const card = document.createElement('div');
-                card.className = 'festivo-card';
-                card.innerHTML = `
-                    <div class="festivo-date">${formatDate(fecha)} (${datos.año})</div>
-                    <div class="festivo-name">${datos.nombre}</div>
-                    <div class="festivo-personas">
-                        <strong>Tiene guardia:</strong> ${datos.personas.join(', ')}
-                    </div>
-                `;
-                festivosGrid.appendChild(card);
-            }
-            
-            if (Object.keys(festivosConGuardia).length === 0) {
-                festivosGrid.innerHTML = '<div style="text-align: center; padding: 40px; color: #7f8c8d; grid-column: 1 / -1;">No hay festivos durante guardias</div>';
-            }
-            
-            // Mostrar ranking
-            const ranking = Object.entries(contadorFestivos2025)
-                .map(([persona, count2025]) => {
-                    const count2026 = contadorFestivos2026[persona] || 0;
-                    return {
-                        persona,
-                        count2025,
-                        count2026,
-                        total: count2025 + count2026
-                    };
-                })
-                .filter(item => item.total > 0)
-                .sort((a, b) => b.total - a.total);
-            
-            ranking.forEach(({ persona, count2025, count2026, total }) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><strong>${persona}</strong></td>
-                    <td>${count2025}</td>
-                    <td>${count2026}</td>
-                    <td><strong>${total}</strong></td>
-                `;
-                rankingBody.appendChild(row);
-            });
-            
-            if (ranking.length === 0) {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td colspan="4" style="text-align: center; color: #7f8c8d; padding: 20px;">
-                        No hay festivos durante guardias
-                    </td>
-                `;
-                rankingBody.appendChild(row);
-            }
-        }
-
-        function cargarVacaciones() {
-            const vacacionesGrid = document.getElementById('vacaciones-grid');
-            const mensaje = document.getElementById('vacaciones-message');
-            
-            vacacionesGrid.innerHTML = '';
-            
-            // Verificar si hay vacaciones
-            let totalVacaciones = 0;
-            
-            for (const [persona, vacaciones] of Object.entries(VACACIONES)) {
-                vacaciones.forEach(([inicio, fin, descripcion]) => {
-                    totalVacaciones++;
-                    
-                    const card = document.createElement('div');
-                    card.className = 'vacaciones-card';
-                    card.innerHTML = `
-                        <div class="vacaciones-date">${formatDate(inicio)} al ${formatDate(fin)}</div>
-                        <div class="vacaciones-name"><strong>${persona}</strong></div>
-                        <div class="vacaciones-persona">
-                            ${descripcion || 'Vacaciones'}
-                        </div>
-                    `;
-                    vacacionesGrid.appendChild(card);
                 });
             }
             
-            if (totalVacaciones === 0) {
-                vacacionesGrid.style.display = 'none';
-                mensaje.style.display = 'block';
-            } else {
-                vacacionesGrid.style.display = 'grid';
-                mensaje.style.display = 'none';
+            if (!hayGuardia) {
+                html = '<div class="event-item">No hay guardias asignadas para hoy</div>';
+            }
+            
+            content.innerHTML = html;
+        }
+
+        function cargarFestivos() {
+            const list = document.getElementById('festivos-list');
+            let html = '';
+            
+            for (const [fecha, nombre] of Object.entries(FESTIVOS)) {
+                // Ver si hay guardias ese día
+                let personasGuardia = [];
+                for (const [persona, guardias] of Object.entries(GUARDIAS)) {
+                    guardias.forEach(([inicio, fin]) => {
+                        if (fecha >= inicio && fecha <= fin) {
+                            personasGuardia.push(persona);
+                        }
+                    });
+                }
+                
+                if (personasGuardia.length > 0) {
+                    html += `
+                        <div class="event-item">
+                            <div class="event-date">${new Date(fecha).toLocaleDateString('es-ES')} - ${nombre}</div>
+                            <div style="margin-top: 5px; color: var(--danger-color); font-weight: bold;">
+                                Guardias: ${personasGuardia.join(', ')}
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            if (!html) {
+                html = '<div class="event-item">No hay festivos durante guardias</div>';
+            }
+            
+            list.innerHTML = html;
+        }
+
+        function cargarVacacionesLista() {
+            const list = document.getElementById('vacaciones-list');
+            let html = '';
+            
+            for (const [persona, vacaciones] of Object.entries(VACACIONES)) {
+                vacaciones.forEach(([inicio, fin, desc]) => {
+                    html += `
+                        <div class="event-item">
+                            <div style="font-weight: bold; margin-bottom: 5px;">${persona}</div>
+                            <div class="event-date">
+                                ${new Date(inicio).toLocaleDateString('es-ES')} - 
+                                ${new Date(fin).toLocaleDateString('es-ES')}
+                            </div>
+                            <div style="margin-top: 5px; color: var(--secondary-color);">
+                                ${desc || 'Vacaciones'}
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            list.innerHTML = html;
+        }
+
+        function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            updateCalendar();
+        }
+
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            updateCalendar();
+        }
+
+        // Funciones para exportar a calendario
+        function generarICS(eventos, titulo) {
+            // Formato ICS (iCalendar)
+            let ics = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Guardias 2026//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:${titulo}
+X-WR-TIMEZONE:Europe/Madrid
+BEGIN:VTIMEZONE
+TZID:Europe/Madrid
+X-LIC-LOCATION:Europe/Madrid
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+`;
+
+            eventos.forEach(evento => {
+                const uid = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}@guardias.local`;
+                const dtstamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+                
+                // Convertir fechas a formato ICS (YYYYMMDD)
+                const dtstart = evento.inicio.replace(/-/g, '');
+                const dtend = evento.fin.replace(/-/g, '');
+                
+                ics += `BEGIN:VEVENT
+DTSTART;VALUE=DATE:${dtstart}
+DTEND;VALUE=DATE:${dtend}
+DTSTAMP:${dtstamp}
+UID:${uid}
+SUMMARY:${evento.titulo}
+DESCRIPTION:${evento.descripcion || ''}
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+END:VEVENT
+`;
+            });
+
+            ics += `END:VCALENDAR`;
+            return ics;
+        }
+
+        function descargarICS(contenido, nombreArchivo) {
+            const blob = new Blob([contenido], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = nombreArchivo;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function exportarGuardiasCalendario(persona) {
+            const guardias = GUARDIAS[persona];
+            if (!guardias || guardias.length === 0) {
+                alert('No hay guardias para exportar');
+                return;
+            }
+
+            const eventos = guardias.map(([inicio, fin]) => {
+                // Ajustar fecha de fin para que sea inclusive (añadir 1 día)
+                const fechaFin = new Date(fin);
+                fechaFin.setDate(fechaFin.getDate() + 1);
+                const finAjustado = fechaFin.toISOString().split('T')[0];
+                
+                return {
+                    inicio: inicio,
+                    fin: finAjustado,
+                    titulo: `Guardia - ${persona}`,
+                    descripcion: `Período de guardia asignado a ${persona}`
+                };
+            });
+
+            const ics = generarICS(eventos, `Guardias ${persona}`);
+            descargarICS(ics, `guardias_${persona.toLowerCase()}.ics`);
+        }
+
+        function exportarVacacionesCalendario(persona) {
+            const vacaciones = VACACIONES[persona];
+            if (!vacaciones || vacaciones.length === 0) {
+                alert('No hay vacaciones para exportar');
+                return;
+            }
+
+            const eventos = vacaciones.map(([inicio, fin, descripcion]) => {
+                // Ajustar fecha de fin para que sea inclusive (añadir 1 día)
+                const fechaFin = new Date(fin);
+                fechaFin.setDate(fechaFin.getDate() + 1);
+                const finAjustado = fechaFin.toISOString().split('T')[0];
+                
+                return {
+                    inicio: inicio,
+                    fin: finAjustado,
+                    titulo: `Vacaciones - ${persona}`,
+                    descripcion: descripcion || 'Período vacacional'
+                };
+            });
+
+            const ics = generarICS(eventos, `Vacaciones ${persona}`);
+            descargarICS(ics, `vacaciones_${persona.toLowerCase()}.ics`);
+        }
+
+        // Variables para el modal de intercambio
+        let intercambioActual = {
+            personaOrigen: '',
+            indexOrigen: -1,
+            personaDestino: '',
+            indexDestino: -1
+        };
+
+        function abrirModalIntercambio(persona, guardiaIndex) {
+            intercambioActual.personaOrigen = persona;
+            intercambioActual.indexOrigen = guardiaIndex;
+            
+            const guardia = GUARDIAS[persona][guardiaIndex];
+            const inicioDate = new Date(guardia[0]);
+            const finDate = new Date(guardia[1]);
+            
+            document.getElementById('guardia-origen').innerHTML = `
+                <strong>${persona}</strong><br>
+                ${inicioDate.toLocaleDateString('es-ES')} - ${finDate.toLocaleDateString('es-ES')}
+            `;
+            
+            // Llenar select de personas (excluyendo la persona actual)
+            const selectPersona = document.getElementById('select-persona-destino');
+            selectPersona.innerHTML = '<option value="">Selecciona un técnico...</option>';
+            
+            for (const nombrePersona of Object.keys(GUARDIAS)) {
+                if (nombrePersona !== persona) {
+                    selectPersona.innerHTML += `<option value="${nombrePersona}">${nombrePersona}</option>`;
+                }
+            }
+            
+            // Limpiar select de guardias
+            document.getElementById('select-guardia-destino').innerHTML = 
+                '<option value="">Primero selecciona un técnico...</option>';
+            
+            // Event listener para cuando se selecciona una persona
+            selectPersona.onchange = function() {
+                cargarGuardiasDestino(this.value);
+            };
+            
+            document.getElementById('modal-intercambio').classList.add('active');
+        }
+
+        function cargarGuardiasDestino(personaDestino) {
+            if (!personaDestino) return;
+            
+            const selectGuardia = document.getElementById('select-guardia-destino');
+            selectGuardia.innerHTML = '<option value="">Selecciona una guardia...</option>';
+            
+            const guardias = GUARDIAS[personaDestino];
+            guardias.forEach((guardia, index) => {
+                const inicioDate = new Date(guardia[0]);
+                const finDate = new Date(guardia[1]);
+                selectGuardia.innerHTML += `
+                    <option value="${index}">
+                        ${inicioDate.toLocaleDateString('es-ES')} - ${finDate.toLocaleDateString('es-ES')}
+                    </option>
+                `;
+            });
+        }
+
+        function cerrarModalIntercambio() {
+            document.getElementById('modal-intercambio').classList.remove('active');
+            intercambioActual = {
+                personaOrigen: '',
+                indexOrigen: -1,
+                personaDestino: '',
+                indexDestino: -1
+            };
+        }
+
+        function confirmarIntercambio() {
+            const personaDestino = document.getElementById('select-persona-destino').value;
+            const guardiaDestino = document.getElementById('select-guardia-destino').value;
+            
+            if (!personaDestino || guardiaDestino === '') {
+                alert('Por favor selecciona un técnico y una guardia');
+                return;
+            }
+            
+            intercambioActual.personaDestino = personaDestino;
+            intercambioActual.indexDestino = parseInt(guardiaDestino);
+            
+            // Realizar el intercambio
+            const guardiaOrigen = GUARDIAS[intercambioActual.personaOrigen][intercambioActual.indexOrigen];
+            const guardiaDestinoData = GUARDIAS[intercambioActual.personaDestino][intercambioActual.indexDestino];
+            
+            // Intercambiar
+            GUARDIAS[intercambioActual.personaOrigen][intercambioActual.indexOrigen] = guardiaDestinoData;
+            GUARDIAS[intercambioActual.personaDestino][intercambioActual.indexDestino] = guardiaOrigen;
+            
+            // Guardar en localStorage
+            guardarGuardias();
+            
+            // Actualizar vistas
+            cargarResumen();
+            cargarPersonas();
+            updateCalendar();
+            cargarConflictos();
+            cargarHoy();
+            
+            // Cerrar modal
+            cerrarModalIntercambio();
+            
+            alert('✅ Guardias intercambiadas correctamente');
+        }
+
+        function guardarGuardias() {
+            if (isLocalMode) {
+                localStorage.setItem('guardias_2026', JSON.stringify(GUARDIAS));
+                console.log('Guardias guardadas en localStorage');
             }
         }
 
-        // Inicializar la página
-        document.addEventListener('DOMContentLoaded', () => {
-            cargarResumen();
-            // Inicializar calendario para el año actual
-            if (currentDate.getFullYear() === 2025 || currentDate.getFullYear() === 2026) {
-                currentYear = currentDate.getFullYear();
-                currentMonth = currentDate.getMonth();
-            } else {
-                currentYear = 2025;
-                currentMonth = 11; // Diciembre 2025
+        function resetearGuardias() {
+            if (confirm('¿Estás seguro de que quieres restaurar las guardias originales? Se perderán todos los cambios.')) {
+                localStorage.removeItem('guardias_2026');
+                location.reload();
             }
-        });
+        }
+
+        // Iniciar al cargar la página
+        window.onload = inicializarApp;
     </script>
 </body>
 </html>
-
