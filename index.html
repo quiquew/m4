@@ -946,11 +946,18 @@
         let GUARDIAS = {};
         let VACACIONES = {};
         let FESTIVOS = {};
+        let TECNICOS = {};
 
         // Función para cargar datos desde JSON
         async function cargarDatosDesdeJSON() {
             try {
                 console.log('Cargando datos desde archivos JSON...');
+                
+                // Cargar tecnicos.json
+                const respTecnicos = await fetch('tecnicos.json');
+                if (!respTecnicos.ok) throw new Error('No se pudo cargar tecnicos.json');
+                TECNICOS = await respTecnicos.json();
+                console.log('✅ Técnicos cargados');
                 
                 // Cargar guardias.json
                 const respGuardias = await fetch('guardias.json');
@@ -975,7 +982,7 @@
                 
             } catch (error) {
                 console.error('❌ Error cargando datos:', error);
-                alert('Error cargando datos desde los archivos JSON.\n\nAsegúrate de que los archivos guardias.json, vacaciones.json y festivos.json estén en la misma carpeta que index.html');
+                alert('Error cargando datos desde los archivos JSON.\n\nAsegúrate de que los archivos tecnicos.json, guardias.json, vacaciones.json y festivos.json estén en la misma carpeta que index.html');
                 return false;
             }
         }
@@ -1007,28 +1014,31 @@
             if (!isLocalMode) {
                 const cargado = await cargarDatosDesdeJSON();
                 if (!cargado) return; // Si falla, no continuar
-            } else {
-                // En modo local, primero cargar los datos hardcodeados
-                // (que están en el index.html local, no en este archivo)
             }
             
             // En modo local, sobreescribir con localStorage si existe
             if (isLocalMode) {
+                const tecnicosGuardados = localStorage.getItem('tecnicos_2026');
+                if (tecnicosGuardados) {
+                    Object.assign(TECNICOS, JSON.parse(tecnicosGuardados));
+                    console.log('Técnicos cargados desde localStorage');
+                }
+                
                 const guardiasGuardadas = localStorage.getItem('guardias_2026');
                 if (guardiasGuardadas) {
-                    GUARDIAS = JSON.parse(guardiasGuardadas);
+                    Object.assign(GUARDIAS, JSON.parse(guardiasGuardadas));
                     console.log('Guardias cargadas desde localStorage');
                 }
                 
                 const vacacionesGuardadas = localStorage.getItem('vacaciones_2026');
                 if (vacacionesGuardadas) {
-                    VACACIONES = JSON.parse(vacacionesGuardadas);
+                    Object.assign(VACACIONES, JSON.parse(vacacionesGuardadas));
                     console.log('Vacaciones cargadas desde localStorage');
                 }
                 
                 const festivosGuardados = localStorage.getItem('festivos_2026');
                 if (festivosGuardados) {
-                    FESTIVOS = JSON.parse(festivosGuardados);
+                    Object.assign(FESTIVOS, JSON.parse(festivosGuardados));
                     console.log('Festivos cargados desde localStorage');
                 }
             }
@@ -1079,7 +1089,11 @@
                     const año = new Date(inicio).getFullYear();
                     guardiasPorAño[año] = (guardiasPorAño[año] || 0) + 1;
                 });
-                
+            }
+            
+            // Mostrar técnicos (de TECNICOS, no de GUARDIAS)
+            for (const persona of Object.keys(TECNICOS)) {
+                const guardias = GUARDIAS[persona] || [];
                 const card = document.createElement('div');
                 card.className = 'person-card';
                 card.innerHTML = `
@@ -1115,7 +1129,7 @@
             const statsGrid = document.getElementById('stats-grid');
             
             // Total personas siempre aparece
-            document.getElementById('total-personas').textContent = Object.keys(GUARDIAS).length;
+            document.getElementById('total-personas').textContent = Object.keys(TECNICOS).length;
             
             // Agregar stats por año
             añosOrdenados.forEach(año => {
@@ -1158,7 +1172,8 @@
             const grid = document.getElementById('personas-grid');
             grid.innerHTML = '';
             
-            for (const [persona, guardias] of Object.entries(GUARDIAS)) {
+            for (const persona of Object.keys(TECNICOS)) {
+                const guardias = GUARDIAS[persona] || [];
                 const card = document.createElement('div');
                 card.className = 'person-card';
                 
@@ -1252,14 +1267,16 @@
             
             const firstDay = new Date(currentYear, currentMonth, 1);
             const lastDay = new Date(currentYear, currentMonth + 1, 0);
-            const startDay = firstDay.getDay();
+            let startDay = firstDay.getDay();
+            // Ajustar para que lunes sea 0 (domingo era 0, ahora es 6)
+            startDay = startDay === 0 ? 6 : startDay - 1;
             const daysInMonth = lastDay.getDate();
             
             let html = `
                 <thead>
                     <tr>
-                        <th>Dom</th><th>Lun</th><th>Mar</th><th>Mié</th>
-                        <th>Jue</th><th>Vie</th><th>Sáb</th>
+                        <th>Lun</th><th>Mar</th><th>Mié</th><th>Jue</th>
+                        <th>Vie</th><th>Sáb</th><th>Dom</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1482,7 +1499,10 @@
             const list = document.getElementById('festivos-list');
             let html = '';
             
-            for (const [fecha, nombre] of Object.entries(FESTIVOS)) {
+            // Ordenar festivos por fecha
+            const festivosOrdenados = Object.entries(FESTIVOS).sort((a, b) => a[0].localeCompare(b[0]));
+            
+            for (const [fecha, nombre] of festivosOrdenados) {
                 // Ver si hay guardias ese día
                 let personasGuardia = [];
                 for (const [persona, guardias] of Object.entries(GUARDIAS)) {
@@ -1516,22 +1536,32 @@
             const list = document.getElementById('vacaciones-list');
             let html = '';
             
+            // Crear array con todas las vacaciones y ordenar por fecha
+            const todasVacaciones = [];
             for (const [persona, vacaciones] of Object.entries(VACACIONES)) {
                 vacaciones.forEach(([inicio, fin, desc]) => {
-                    html += `
-                        <div class="event-item">
-                            <div style="font-weight: bold; margin-bottom: 5px;">${persona}</div>
-                            <div class="event-date">
-                                ${new Date(inicio).toLocaleDateString('es-ES')} - 
-                                ${new Date(fin).toLocaleDateString('es-ES')}
-                            </div>
-                            <div style="margin-top: 5px; color: var(--secondary-color);">
-                                ${desc || 'Vacaciones'}
-                            </div>
-                        </div>
-                    `;
+                    todasVacaciones.push({ persona, inicio, fin, desc });
                 });
             }
+            
+            // Ordenar por fecha de inicio
+            todasVacaciones.sort((a, b) => a.inicio.localeCompare(b.inicio));
+            
+            // Generar HTML
+            todasVacaciones.forEach(({ persona, inicio, fin, desc }) => {
+                html += `
+                    <div class="event-item">
+                        <div style="font-weight: bold; margin-bottom: 5px;">${persona}</div>
+                        <div class="event-date">
+                            ${new Date(inicio).toLocaleDateString('es-ES')} - 
+                            ${new Date(fin).toLocaleDateString('es-ES')}
+                        </div>
+                        <div style="margin-top: 5px; color: var(--secondary-color);">
+                            ${desc || 'Vacaciones'}
+                        </div>
+                    </div>
+                `;
+            });
             
             list.innerHTML = html;
         }
@@ -1941,6 +1971,13 @@ END:VEVENT
             }
         }
 
+        function guardarTecnicos() {
+            if (isLocalMode) {
+                localStorage.setItem('tecnicos_2026', JSON.stringify(TECNICOS));
+                console.log('Técnicos guardados en localStorage');
+            }
+        }
+
         function guardarVacaciones() {
             if (isLocalMode) {
                 localStorage.setItem('vacaciones_2026', JSON.stringify(VACACIONES));
@@ -1978,12 +2015,14 @@ END:VEVENT
                 return;
             }
             
-            if (GUARDIAS[nombre]) {
+            if (TECNICOS[nombre]) {
                 alert('Este técnico ya existe');
                 return;
             }
             
+            TECNICOS[nombre] = true;
             GUARDIAS[nombre] = [];
+            guardarTecnicos();
             guardarGuardias();
             actualizarSelectsTecnicos();
             cargarResumen();
@@ -2020,11 +2059,13 @@ END:VEVENT
             guardarGuardiasHuerfanas(guardiasHuerfanas);
             
             // Eliminar técnico
+            delete TECNICOS[nombre];
             delete GUARDIAS[nombre];
             if (VACACIONES[nombre]) {
                 delete VACACIONES[nombre];
             }
             
+            guardarTecnicos();
             guardarGuardias();
             guardarVacaciones();
             actualizarSelectsTecnicos();
@@ -2363,7 +2404,7 @@ END:VEVENT
         }
 
         function actualizarSelectsTecnicos() {
-            const tecnicos = Object.keys(GUARDIAS).sort();
+            const tecnicos = Object.keys(TECNICOS).sort();
             
             // Select para eliminar técnico
             const selectEliminar = document.getElementById('select-eliminar-tecnico');
@@ -2398,6 +2439,7 @@ END:VEVENT
                 localStorage.removeItem('guardias_2026');
                 localStorage.removeItem('vacaciones_2026');
                 localStorage.removeItem('festivos_2026');
+                localStorage.removeItem('tecnicos_2026');
                 localStorage.removeItem('guardias_huerfanas');
                 location.reload();
             }
@@ -2462,7 +2504,7 @@ END:VEVENT
                 return;
             }
             
-            if (!confirm('¿Estás seguro de que quieres subir los cambios a GitHub?\n\nSe actualizarán:\n• guardias.json\n• vacaciones.json\n• festivos.json\n\n(El index.html NO se actualiza automáticamente)')) {
+            if (!confirm('¿Estás seguro de que quieres subir los cambios a GitHub?\n\nSe actualizarán:\n• tecnicos.json\n• guardias.json\n• vacaciones.json\n• festivos.json\n\n(El index.html NO se actualiza automáticamente)')) {
                 return;
             }
             
@@ -2476,6 +2518,11 @@ END:VEVENT
                 
                 // Preparar solo los JSON (sin HTML por ahora)
                 const archivos = [
+                    {
+                        path: 'tecnicos.json',
+                        content: JSON.stringify(TECNICOS, null, 2),
+                        message: 'Actualizar técnicos desde modo local'
+                    },
                     {
                         path: 'guardias.json',
                         content: JSON.stringify(GUARDIAS, null, 2),
@@ -2526,7 +2573,7 @@ END:VEVENT
                 
                 setTimeout(() => {
                     document.getElementById('modal-github-progress').classList.remove('active');
-                    alert('✅ Cambios subidos a GitHub correctamente.\n\nSe han actualizado:\n• guardias.json\n• vacaciones.json\n• festivos.json\n\n⚠️ IMPORTANTE: El index.html NO se actualiza automáticamente.\nPara actualizar el HTML, debes subirlo manualmente o usar la versión que carga desde los JSON.\n\nGitHub Pages puede tardar 1-2 minutos en actualizar.');
+                    alert('✅ Cambios subidos a GitHub correctamente.\n\nSe han actualizado:\n• tecnicos.json\n• guardias.json\n• vacaciones.json\n• festivos.json\n\n⚠️ IMPORTANTE: El index.html NO se actualiza automáticamente.\nPara actualizar el HTML, debes subirlo manualmente o usar la versión que carga desde los JSON.\n\nGitHub Pages puede tardar 1-2 minutos en actualizar.');
                 }, 2000);
                 
             } catch (error) {
