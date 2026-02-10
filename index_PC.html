@@ -731,7 +731,7 @@
                 
                 <!-- Gestión de Festivos -->
                 <div class="gestion-card">
-                    <h3>🎊 Añadir Festivo / Día Especial</h3>
+                    <h3>🎊 Gestión de Festivos</h3>
                     <div class="form-group">
                         <label>Fecha:</label>
                         <input type="date" id="input-festivo-fecha" class="form-input">
@@ -746,6 +746,22 @@
                         </label>
                     </div>
                     <button class="btn-confirm" onclick="añadirFestivo()">➕ Añadir Festivo</button>
+                    <div id="lista-festivos-gestion" style="margin-top: 15px;"></div>
+                </div>
+
+                <!-- Importar / Exportar datos -->
+                <div class="gestion-card">
+                    <h3>💾 Importar / Exportar datos</h3>
+                    <p style="font-size:0.88em; opacity:0.85; margin-bottom:14px;">
+                        Exporta todos los datos a un archivo <code>.json</code> para hacer backup o cambiar de PC.<br>
+                        Importa un backup anterior para restaurar los datos.
+                    </p>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
+                        <button class="btn-confirm" onclick="exportarDatos()">📤 Exportar todos los datos</button>
+                        <button class="btn-confirm" style="background:var(--warning-color);" onclick="document.getElementById('input-importar-datos').click()">📥 Importar datos</button>
+                    </div>
+                    <input type="file" id="input-importar-datos" accept=".json" style="display:none;" onchange="importarDatos(event)">
+                    <div id="importar-estado" style="font-size:0.88em;"></div>
                 </div>
             </div>
             
@@ -944,18 +960,8 @@
         </div>
     </div>
 
-    <!-- Indicador de carga -->
-    <div id="loading-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; flex-direction: column;">
-        <div style="background: white; padding: 30px; border-radius: 10px; text-align: center;">
-            <div style="font-size: 24px; margin-bottom: 15px;">⏳ Cargando datos...</div>
-            <div id="loading-status" style="font-size: 14px; color: #666;"></div>
-        </div>
-    </div>
-
     <script>
-        // DATOS INTEGRADOS EN EL HTML
-        // Datos que se cargarán desde archivos JSON
-        // Datos incrustados directamente (se sobreescriben si hay localStorage en modo local)
+        // Datos incrustados (se actualizan al subir a GitHub)
         let TECNICOS = {
             "QUIQUE": true,
             "DANI": true,
@@ -1306,70 +1312,6 @@
             "2026-12-25": "Navidad"
 };
 
-        // Función para cargar datos desde JSON (fallback: usa datos incrustados)
-        async function cargarDatosDesdeJSON() {
-            const overlay = document.getElementById('loading-overlay');
-            const status = document.getElementById('loading-status');
-            
-            overlay.style.display = 'flex';
-            
-            try {
-                console.log('🔄 Cargando datos desde archivos JSON...');
-                
-                // Cargar tecnicos.json
-                status.textContent = 'Cargando técnicos...';
-                console.log('📥 Solicitando tecnicos.json...');
-                const respTecnicos = await fetch('tecnicos.json');
-                console.log('📊 Respuesta tecnicos.json:', respTecnicos.status, respTecnicos.statusText);
-                if (!respTecnicos.ok) throw new Error(`No se pudo cargar tecnicos.json (${respTecnicos.status})`);
-                TECNICOS = await respTecnicos.json();
-                console.log('✅ Técnicos cargados:', Object.keys(TECNICOS).length, 'técnicos');
-                
-                // Cargar guardias.json
-                status.textContent = 'Cargando guardias...';
-                console.log('📥 Solicitando guardias.json...');
-                const respGuardias = await fetch('guardias.json');
-                console.log('📊 Respuesta guardias.json:', respGuardias.status, respGuardias.statusText);
-                if (!respGuardias.ok) throw new Error(`No se pudo cargar guardias.json (${respGuardias.status})`);
-                GUARDIAS = await respGuardias.json();
-                console.log('✅ Guardias cargadas:', Object.keys(GUARDIAS).length, 'técnicos');
-                
-                // Cargar vacaciones.json
-                status.textContent = 'Cargando vacaciones...';
-                console.log('📥 Solicitando vacaciones.json...');
-                const respVacaciones = await fetch('vacaciones.json');
-                console.log('📊 Respuesta vacaciones.json:', respVacaciones.status, respVacaciones.statusText);
-                if (!respVacaciones.ok) throw new Error(`No se pudo cargar vacaciones.json (${respVacaciones.status})`);
-                VACACIONES = await respVacaciones.json();
-                console.log('✅ Vacaciones cargadas:', Object.keys(VACACIONES).length, 'personas');
-                
-                // Cargar festivos.json
-                status.textContent = 'Cargando festivos...';
-                console.log('📥 Solicitando festivos.json...');
-                const respFestivos = await fetch('festivos.json');
-                console.log('📊 Respuesta festivos.json:', respFestivos.status, respFestivos.statusText);
-                if (!respFestivos.ok) throw new Error(`No se pudo cargar festivos.json (${respFestivos.status})`);
-                FESTIVOS = await respFestivos.json();
-                console.log('✅ Festivos cargados:', Object.keys(FESTIVOS).length, 'festivos');
-                
-                status.textContent = '✅ ¡Todos los datos cargados!';
-                console.log('🎉 Todos los datos cargados correctamente');
-                
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                }, 500);
-                
-                return true;
-                
-            } catch (error) {
-                // Los JSON externos no están disponibles — usar datos incrustados
-                console.warn('⚠️ No se pudieron cargar los JSON externos, usando datos incrustados:', error.message);
-                status.textContent = '✅ Usando datos incrustados';
-                setTimeout(() => { overlay.style.display = 'none'; }, 500);
-                return true;
-            }
-        }
-
         let currentYear = 2026;
         let currentMonth = 0;
         let isLocalMode = false;
@@ -1390,40 +1332,9 @@
             }
         }
 
-        async function inicializarApp() {
+        function inicializarApp() {
             detectarEntorno();
-            
-            // Siempre cargar datos desde JSON (base de datos)
-            const cargado = await cargarDatosDesdeJSON();
-            if (!cargado) return;
-            
-            // En modo local, sobreescribir con localStorage si existe (cambios pendientes)
-            if (isLocalMode) {
-                const tecnicosGuardados = localStorage.getItem('tecnicos_2026');
-                if (tecnicosGuardados) {
-                    Object.assign(TECNICOS, JSON.parse(tecnicosGuardados));
-                    console.log('Técnicos cargados desde localStorage');
-                }
-                
-                const guardiasGuardadas = localStorage.getItem('guardias_2026');
-                if (guardiasGuardadas) {
-                    Object.assign(GUARDIAS, JSON.parse(guardiasGuardadas));
-                    console.log('Guardias cargadas desde localStorage');
-                }
-                
-                const vacacionesGuardadas = localStorage.getItem('vacaciones_2026');
-                if (vacacionesGuardadas) {
-                    Object.assign(VACACIONES, JSON.parse(vacacionesGuardadas));
-                    console.log('Vacaciones cargadas desde localStorage');
-                }
-                
-                const festivosGuardados = localStorage.getItem('festivos_2026');
-                if (festivosGuardados) {
-                    Object.assign(FESTIVOS, JSON.parse(festivosGuardados));
-                    console.log('Festivos cargados desde localStorage');
-                }
-            }
-            
+
             const hoy = new Date();
             currentYear = hoy.getFullYear();
             currentMonth = hoy.getMonth();
@@ -1437,6 +1348,7 @@
             cargarVacacionesLista();
             actualizarSelectsTecnicos();
             mostrarGuardiasHuerfanas();
+            cargarListaFestivosGestion();
         }
 
         function showSection(sectionId) {
@@ -1452,6 +1364,7 @@
             } else if (sectionId === 'gestion') {
                 actualizarSelectsTecnicos();
                 mostrarGuardiasHuerfanas();
+                cargarListaFestivosGestion();
             }
         }
 
@@ -2800,8 +2713,122 @@ END:VEVENT
             document.getElementById('input-festivo-nombre').value = '';
             document.getElementById('check-medio-dia').checked = false;
             
+            cargarListaFestivosGestion();
             alert(`✅ Festivo añadido: ${nombreFinal}`);
         }
+
+        function cargarListaFestivosGestion() {
+            const lista = document.getElementById('lista-festivos-gestion');
+            if (!lista) return;
+            const ordenados = Object.entries(FESTIVOS).sort((a, b) => a[0].localeCompare(b[0]));
+            if (ordenados.length === 0) {
+                lista.innerHTML = '<div style="opacity:0.6; font-size:0.88em;">No hay festivos añadidos.</div>';
+                return;
+            }
+            lista.innerHTML = ordenados.map(([fecha, nombre]) => `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.15);">
+                    <div style="font-size:0.88em;">
+                        <strong>${new Date(fecha + 'T00:00:00').toLocaleDateString('es-ES')}</strong> — ${nombre}
+                    </div>
+                    <div style="display:flex; gap:5px;">
+                        <button class="btn-edit" style="font-size:0.75em; padding:3px 8px;" onclick="editarFestivo('${fecha}')">✏️</button>
+                        <button class="btn-edit" style="font-size:0.75em; padding:3px 8px; background:var(--danger-color);" onclick="eliminarFestivo('${fecha}')">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function editarFestivo(fecha) {
+            const nombreActual = FESTIVOS[fecha];
+            const nuevoNombre = prompt(`Editar festivo del ${new Date(fecha + 'T00:00:00').toLocaleDateString('es-ES')}:`, nombreActual);
+            if (nuevoNombre === null) return;
+            if (!nuevoNombre.trim()) { alert('El nombre no puede estar vacío'); return; }
+            FESTIVOS[fecha] = nuevoNombre.trim();
+            guardarFestivos();
+            updateCalendar();
+            cargarFestivos();
+            cargarListaFestivosGestion();
+        }
+
+        function eliminarFestivo(fecha) {
+            const nombre = FESTIVOS[fecha];
+            if (!confirm(`¿Eliminar el festivo "${nombre}" (${new Date(fecha + 'T00:00:00').toLocaleDateString('es-ES')})?`)) return;
+            delete FESTIVOS[fecha];
+            guardarFestivos();
+            updateCalendar();
+            cargarFestivos();
+            cargarListaFestivosGestion();
+        }
+
+        // ── Importar / Exportar datos ─────────────────────────────────────
+        function exportarDatos() {
+            const backup = {
+                version: 1,
+                fecha: new Date().toISOString(),
+                TECNICOS,
+                GUARDIAS,
+                VACACIONES,
+                FESTIVOS
+            };
+            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement('a');
+            a.href     = url;
+            a.download = `backup_guardias_${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function importarDatos(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const estado = document.getElementById('importar-estado');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const backup = JSON.parse(e.target.result);
+                    if (!backup.TECNICOS || !backup.GUARDIAS || !backup.VACACIONES || !backup.FESTIVOS) {
+                        throw new Error('El archivo no tiene el formato correcto');
+                    }
+                    if (!confirm(`¿Importar datos del backup del ${new Date(backup.fecha).toLocaleDateString('es-ES')}?\n\nSe reemplazarán TODOS los datos actuales.`)) {
+                        event.target.value = '';
+                        return;
+                    }
+                    // Reemplazar datos en memoria
+                    Object.keys(TECNICOS).forEach(k => delete TECNICOS[k]);
+                    Object.assign(TECNICOS, backup.TECNICOS);
+                    Object.keys(GUARDIAS).forEach(k => delete GUARDIAS[k]);
+                    Object.assign(GUARDIAS, backup.GUARDIAS);
+                    Object.keys(VACACIONES).forEach(k => delete VACACIONES[k]);
+                    Object.assign(VACACIONES, backup.VACACIONES);
+                    Object.keys(FESTIVOS).forEach(k => delete FESTIVOS[k]);
+                    Object.assign(FESTIVOS, backup.FESTIVOS);
+                    // Guardar en localStorage
+                    guardarGuardias();
+                    guardarTecnicos();
+                    guardarVacaciones();
+                    guardarFestivos();
+                    // Recargar todo
+                    cargarResumen();
+                    cargarPersonas();
+                    updateCalendar();
+                    cargarConflictos();
+                    cargarHoy();
+                    cargarFestivos();
+                    cargarVacacionesLista();
+                    actualizarSelectsTecnicos();
+                    cargarListaFestivosGestion();
+                    estado.innerHTML = '<span style="color:#4CAF50;">✅ Datos importados correctamente</span>';
+                } catch (err) {
+                    estado.innerHTML = `<span style="color:var(--danger-color);">❌ Error: ${err.message}</span>`;
+                }
+                event.target.value = '';
+            };
+            reader.readAsText(file);
+        }
+        // ── Fin importar/exportar ─────────────────────────────────────────
 
         function actualizarSelectsTecnicos() {
             const tecnicos = Object.keys(TECNICOS).sort();
@@ -3013,23 +3040,23 @@ END:VEVENT
                 let scriptEncontrado = false;
                 
                 for (let script of scripts) {
-                    if (script.textContent.includes('const GUARDIAS =')) {
+                    if (script.textContent.includes('let GUARDIAS =')) {
                         console.log('Script con datos encontrado, actualizando...');
                         scriptEncontrado = true;
                         
                         let scriptContent = script.textContent;
                         
-                        const guardiasRegex = /const GUARDIAS = \{[\s\S]*?\};/;
-                        const nuevasGuardias = `const GUARDIAS = ${JSON.stringify(GUARDIAS, null, 12)};`;
-                        scriptContent = scriptContent.replace(guardiasRegex, nuevasGuardias);
+                        const tecnicosRegex = /let TECNICOS = \{[\s\S]*?\};/;
+                        scriptContent = scriptContent.replace(tecnicosRegex, `let TECNICOS = ${JSON.stringify(TECNICOS, null, 12)};`);
                         
-                        const vacacionesRegex = /const VACACIONES = \{[\s\S]*?\};/;
-                        const nuevasVacaciones = `const VACACIONES = ${JSON.stringify(VACACIONES, null, 12)};`;
-                        scriptContent = scriptContent.replace(vacacionesRegex, nuevasVacaciones);
+                        const guardiasRegex = /let GUARDIAS = \{[\s\S]*?\};/;
+                        scriptContent = scriptContent.replace(guardiasRegex, `let GUARDIAS = ${JSON.stringify(GUARDIAS, null, 12)};`);
                         
-                        const festivosRegex = /const FESTIVOS = \{[\s\S]*?\};/;
-                        const nuevosFestivos = `const FESTIVOS = ${JSON.stringify(FESTIVOS, null, 12)};`;
-                        scriptContent = scriptContent.replace(festivosRegex, nuevosFestivos);
+                        const vacacionesRegex = /let VACACIONES = \{[\s\S]*?\};/;
+                        scriptContent = scriptContent.replace(vacacionesRegex, `let VACACIONES = ${JSON.stringify(VACACIONES, null, 12)};`);
+                        
+                        const festivosRegex = /let FESTIVOS = \{[\s\S]*?\};/;
+                        scriptContent = scriptContent.replace(festivosRegex, `let FESTIVOS = ${JSON.stringify(FESTIVOS, null, 12)};`);
                         
                         script.textContent = scriptContent;
                         console.log('Datos actualizados en el script');
@@ -3115,6 +3142,7 @@ END:VEVENT
             document.getElementById('año-paso1').style.display = 'block';
             document.getElementById('año-paso2').style.display = 'none';
 
+            // Actualizar preview de carpeta en tiempo real
             document.getElementById('año-archivar').oninput = function() {
                 document.getElementById('año-preview-carpeta').textContent = this.value || '????';
             };
@@ -3154,6 +3182,7 @@ END:VEVENT
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
 
+                // Pasar al paso 2
                 document.getElementById('año-nuevo-label').textContent = añoNuevo;
                 document.getElementById('año-paso1').style.display = 'none';
                 document.getElementById('año-paso2').style.display = 'block';
