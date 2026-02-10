@@ -586,6 +586,7 @@
             }
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -617,6 +618,9 @@
             <button class="btn" onclick="showSection('vacaciones')">🏖️ Vacaciones</button>
             <button class="btn edit-controls" onclick="subirCambiosGithub()" style="background: linear-gradient(135deg, #24C6DC 0%, #514A9D 100%);">
                 ☁️ Subir a GitHub
+            </button>
+            <button class="btn edit-controls" onclick="abrirModalCambioAño()" style="background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%); color: #333;">
+                📦 Cambio de año
             </button>
             <button class="btn edit-controls" onclick="resetearGuardias()" style="background: var(--danger-color);">
                 🔄 Resetear Cambios
@@ -951,12 +955,358 @@
     <script>
         // DATOS INTEGRADOS EN EL HTML
         // Datos que se cargarán desde archivos JSON
-        let TECNICOS = {};
-        let GUARDIAS = {};
-        let VACACIONES = {};
-        let FESTIVOS = {};
+        // Datos incrustados directamente (se sobreescriben si hay localStorage en modo local)
+        let TECNICOS = {
+            "QUIQUE": true,
+            "DANI": true,
+            "RICARDO": true,
+            "JONA": true,
+            "PEDRO": true,
+            "MIGUEL": true,
+            "ANDREU": true
+};
+        let GUARDIAS = {
+            "QUIQUE": [
+                        [
+                                    "2026-01-01",
+                                    "2026-01-06"
+                        ],
+                        [
+                                    "2026-02-11",
+                                    "2026-02-17"
+                        ],
+                        [
+                                    "2026-03-18",
+                                    "2026-03-24"
+                        ],
+                        [
+                                    "2026-05-20",
+                                    "2026-05-26"
+                        ],
+                        [
+                                    "2026-07-22",
+                                    "2026-07-28"
+                        ],
+                        [
+                                    "2026-09-02",
+                                    "2026-09-08"
+                        ],
+                        [
+                                    "2026-10-28",
+                                    "2026-11-03"
+                        ],
+                        [
+                                    "2026-11-25",
+                                    "2026-12-01"
+                        ]
+            ],
+            "DANI": [
+                        [
+                                    "2026-01-07",
+                                    "2026-01-13"
+                        ],
+                        [
+                                    "2026-04-01",
+                                    "2026-04-07"
+                        ],
+                        [
+                                    "2026-05-13",
+                                    "2026-05-19"
+                        ],
+                        [
+                                    "2026-07-01",
+                                    "2026-07-07"
+                        ],
+                        [
+                                    "2026-08-05",
+                                    "2026-08-11"
+                        ],
+                        [
+                                    "2026-10-21",
+                                    "2026-10-27"
+                        ],
+                        [
+                                    "2026-12-09",
+                                    "2026-12-15"
+                        ]
+            ],
+            "RICARDO": [
+                        [
+                                    "2026-01-14",
+                                    "2026-01-20"
+                        ],
+                        [
+                                    "2026-02-18",
+                                    "2026-02-24"
+                        ],
+                        [
+                                    "2026-04-22",
+                                    "2026-04-28"
+                        ],
+                        [
+                                    "2026-06-10",
+                                    "2026-06-16"
+                        ],
+                        [
+                                    "2026-07-15",
+                                    "2026-07-21"
+                        ],
+                        [
+                                    "2026-08-12",
+                                    "2026-08-18"
+                        ],
+                        [
+                                    "2026-09-23",
+                                    "2026-09-29"
+                        ],
+                        [
+                                    "2026-11-11",
+                                    "2026-11-17"
+                        ]
+            ],
+            "JONA": [
+                        [
+                                    "2026-01-21",
+                                    "2026-01-27"
+                        ],
+                        [
+                                    "2026-02-25",
+                                    "2026-03-03"
+                        ],
+                        [
+                                    "2026-04-08",
+                                    "2026-04-14"
+                        ],
+                        [
+                                    "2026-06-17",
+                                    "2026-06-23"
+                        ],
+                        [
+                                    "2026-08-19",
+                                    "2026-08-25"
+                        ],
+                        [
+                                    "2026-09-30",
+                                    "2026-10-06"
+                        ],
+                        [
+                                    "2026-12-16",
+                                    "2026-12-22"
+                        ]
+            ],
+            "PEDRO": [
+                        [
+                                    "2026-01-28",
+                                    "2026-02-03"
+                        ],
+                        [
+                                    "2026-03-04",
+                                    "2026-03-10"
+                        ],
+                        [
+                                    "2026-04-29",
+                                    "2026-05-05"
+                        ],
+                        [
+                                    "2026-06-24",
+                                    "2026-06-30"
+                        ],
+                        [
+                                    "2026-09-09",
+                                    "2026-09-15"
+                        ],
+                        [
+                                    "2026-10-07",
+                                    "2026-10-13"
+                        ],
+                        [
+                                    "2026-11-18",
+                                    "2026-11-24"
+                        ]
+            ],
+            "MIGUEL": [
+                        [
+                                    "2026-02-04",
+                                    "2026-02-10"
+                        ],
+                        [
+                                    "2026-03-25",
+                                    "2026-03-31"
+                        ],
+                        [
+                                    "2026-05-06",
+                                    "2026-05-12"
+                        ],
+                        [
+                                    "2026-06-03",
+                                    "2026-06-09"
+                        ],
+                        [
+                                    "2026-07-29",
+                                    "2026-08-04"
+                        ],
+                        [
+                                    "2026-08-26",
+                                    "2026-09-01"
+                        ],
+                        [
+                                    "2026-10-14",
+                                    "2026-10-20"
+                        ],
+                        [
+                                    "2026-12-02",
+                                    "2026-12-08"
+                        ]
+            ],
+            "ANDREU": [
+                        [
+                                    "2026-03-11",
+                                    "2026-03-17"
+                        ],
+                        [
+                                    "2026-04-15",
+                                    "2026-04-21"
+                        ],
+                        [
+                                    "2026-05-27",
+                                    "2026-06-02"
+                        ],
+                        [
+                                    "2026-07-08",
+                                    "2026-07-14"
+                        ],
+                        [
+                                    "2026-09-16",
+                                    "2026-09-22"
+                        ],
+                        [
+                                    "2026-11-04",
+                                    "2026-11-10"
+                        ],
+                        [
+                                    "2026-12-23",
+                                    "2026-12-29"
+                        ],
+                        [
+                                    "2026-12-30",
+                                    "2026-12-31"
+                        ]
+            ]
+};
+        let VACACIONES = {
+            "RICARDO": [
+                        [
+                                    "2026-01-21",
+                                    "2026-01-27",
+                                    "Vacaciones enero"
+                        ],
+                        [
+                                    "2026-03-16",
+                                    "2026-03-22",
+                                    "Vacaciones marzo"
+                        ],
+                        [
+                                    "2026-03-30",
+                                    "2026-04-05",
+                                    "Vacaciones abril"
+                        ],
+                        [
+                                    "2026-06-29",
+                                    "2026-07-05",
+                                    "Vacaciones julio"
+                        ]
+            ],
+            "JONA": [
+                        [
+                                    "2026-02-09",
+                                    "2026-02-15",
+                                    "Vacaciones febrero"
+                        ],
+                        [
+                                    "2026-07-27",
+                                    "2026-08-09",
+                                    "Vacaciones verano"
+                        ],
+                        [
+                                    "2026-10-26",
+                                    "2026-11-01",
+                                    "Vacaciones noviembre"
+                        ]
+            ],
+            "QUIQUE": [
+                        [
+                                    "2026-03-23",
+                                    "2026-03-29",
+                                    "Vacaciones marzo"
+                        ],
+                        [
+                                    "2026-06-08",
+                                    "2026-06-14",
+                                    "Vacaciones junio"
+                        ],
+                        [
+                                    "2026-09-28",
+                                    "2026-10-11",
+                                    "Vacaciones octubre"
+                        ]
+            ],
+            "PEDRO": [
+                        [
+                                    "2026-04-06",
+                                    "2026-04-12",
+                                    "Vacaciones abril"
+                        ],
+                        [
+                                    "2026-07-06",
+                                    "2026-07-26",
+                                    "Vacaciones verano"
+                        ]
+            ],
+            "MIGUEL": [
+                        [
+                                    "2026-04-13",
+                                    "2026-04-26",
+                                    "Vacaciones abril"
+                        ]
+            ],
+            "ANDREU": [
+                        [
+                                    "2026-06-15",
+                                    "2026-06-21",
+                                    "Vacaciones junio"
+                        ],
+                        [
+                                    "2026-11-16",
+                                    "2026-11-29",
+                                    "Vacaciones noviembre"
+                        ]
+            ],
+            "DANI": [
+                        [
+                                    "2026-08-17",
+                                    "2026-08-30",
+                                    "Vacaciones verano"
+                        ]
+            ]
+};
+        let FESTIVOS = {
+            "2026-01-01": "Año Nuevo",
+            "2026-01-06": "Epifanía Reyes",
+            "2026-01-22": "San Vicente Mártir",
+            "2026-03-19": "San José",
+            "2026-04-03": "Viernes Santo",
+            "2026-04-16": "San Vicente Ferrer",
+            "2026-06-24": "San Juan",
+            "2026-08-15": "Asunción de la Virgen",
+            "2026-10-09": "Día de la Comunidad Valenciana",
+            "2026-10-12": "Día de la Hispanidad",
+            "2026-11-01": "Día de todos los santos",
+            "2026-12-06": "Día de la constitución",
+            "2026-12-08": "Día de la Inmaculada Concepción",
+            "2026-12-25": "Navidad"
+};
 
-        // Función para cargar datos desde JSON
+        // Función para cargar datos desde JSON (fallback: usa datos incrustados)
         async function cargarDatosDesdeJSON() {
             const overlay = document.getElementById('loading-overlay');
             const status = document.getElementById('loading-status');
@@ -1012,15 +1362,11 @@
                 return true;
                 
             } catch (error) {
-                console.error('❌ Error cargando datos:', error);
-                status.textContent = '❌ Error: ' + error.message;
-                
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    alert('❌ Error cargando datos desde los archivos JSON.\n\n' + error.message + '\n\nAsegúrate de que los archivos tecnicos.json, guardias.json, vacaciones.json y festivos.json estén en la misma carpeta que index.html\n\nAbre la consola (F12) para más detalles.');
-                }, 2000);
-                
-                return false;
+                // Los JSON externos no están disponibles — usar datos incrustados
+                console.warn('⚠️ No se pudieron cargar los JSON externos, usando datos incrustados:', error.message);
+                status.textContent = '✅ Usando datos incrustados';
+                setTimeout(() => { overlay.style.display = 'none'; }, 500);
+                return true;
             }
         }
 
@@ -1047,13 +1393,11 @@
         async function inicializarApp() {
             detectarEntorno();
             
-            // Primero cargar datos desde JSON (GitHub Pages)
-            if (!isLocalMode) {
-                const cargado = await cargarDatosDesdeJSON();
-                if (!cargado) return; // Si falla, no continuar
-            }
+            // Siempre cargar datos desde JSON (base de datos)
+            const cargado = await cargarDatosDesdeJSON();
+            if (!cargado) return;
             
-            // En modo local, sobreescribir con localStorage si existe
+            // En modo local, sobreescribir con localStorage si existe (cambios pendientes)
             if (isLocalMode) {
                 const tecnicosGuardados = localStorage.getItem('tecnicos_2026');
                 if (tecnicosGuardados) {
@@ -1111,6 +1455,18 @@
             }
         }
 
+        // Calcula el número de semanas de guardia sumando los días de todos los periodos y dividiendo entre 7
+        function calcularSemanasGuardia(guardias) {
+            let totalDias = 0;
+            guardias.forEach(([inicio, fin]) => {
+                const inicioDate = new Date(inicio);
+                const finDate = new Date(fin);
+                const dias = Math.round((finDate - inicioDate) / (1000 * 60 * 60 * 24)) + 1;
+                totalDias += dias;
+            });
+            return Math.round(totalDias / 7);
+        }
+
         function cargarResumen() {
             const grid = document.getElementById('resumen-grid');
             grid.innerHTML = '';
@@ -1120,22 +1476,28 @@
             const vacacionesPorAño = {};
             const festivosPorAño = {};
             
-            // Contar guardias
+            // Contar guardias (sumando días de cada periodo y dividiendo entre 7)
             for (const [persona, guardias] of Object.entries(GUARDIAS)) {
-                guardias.forEach(([inicio]) => {
+                guardias.forEach(([inicio, fin]) => {
                     const año = new Date(inicio).getFullYear();
-                    guardiasPorAño[año] = (guardiasPorAño[año] || 0) + 1;
+                    const dias = Math.round((new Date(fin) - new Date(inicio)) / (1000 * 60 * 60 * 24)) + 1;
+                    guardiasPorAño[año] = (guardiasPorAño[año] || 0) + dias;
                 });
+            }
+            // Convertir días acumulados a semanas
+            for (const año in guardiasPorAño) {
+                guardiasPorAño[año] = Math.round(guardiasPorAño[año] / 7);
             }
             
             // Mostrar técnicos (de TECNICOS, no de GUARDIAS)
             for (const persona of Object.keys(TECNICOS)) {
                 const guardias = GUARDIAS[persona] || [];
+                const semanas = calcularSemanasGuardia(guardias);
                 const card = document.createElement('div');
                 card.className = 'person-card';
                 card.innerHTML = `
                     <div class="person-name">${persona}</div>
-                    <div>${guardias.length} guardias asignadas</div>
+                    <div>${semanas} guardia${semanas !== 1 ? 's' : ''} asignada${semanas !== 1 ? 's' : ''}</div>
                 `;
                 grid.appendChild(card);
             }
@@ -1175,7 +1537,7 @@
                     const card = document.createElement('div');
                     card.className = 'stat-card';
                     card.innerHTML = `
-                        <div class="stat-label">Guardias ${año}</div>
+                        <div class="stat-label">Semanas guardia ${año}</div>
                         <div class="stat-number">${guardiasPorAño[año]}</div>
                     `;
                     statsGrid.appendChild(card);
@@ -1211,6 +1573,7 @@
             
             for (const persona of Object.keys(TECNICOS)) {
                 const guardias = GUARDIAS[persona] || [];
+                const semanas = calcularSemanasGuardia(guardias);
                 const card = document.createElement('div');
                 card.className = 'person-card';
                 
@@ -1275,7 +1638,7 @@
                 card.innerHTML = `
                     <div class="person-name">${persona}</div>
                     <div style="margin-top: 10px; opacity: 0.9;">
-                        ${guardias.length} guardias • ${vacaciones.length} períodos de vacaciones
+                        ${semanas} guardia${semanas !== 1 ? 's' : ''} • ${vacaciones.length} períodos de vacaciones
                     </div>
                     ${guardiasHTML}
                     ${vacacionesHTML}
@@ -2743,8 +3106,126 @@ END:VEVENT
             return await response.json();
         }
 
+        // ── Cambio de año / Backup ──────────────────────────────────────────
+        function abrirModalCambioAño() {
+            const añoActual = new Date().getFullYear();
+            document.getElementById('año-archivar').value = añoActual;
+            document.getElementById('año-nuevo').value = añoActual + 1;
+            document.getElementById('año-preview-carpeta').textContent = añoActual;
+            document.getElementById('año-paso1').style.display = 'block';
+            document.getElementById('año-paso2').style.display = 'none';
+
+            document.getElementById('año-archivar').oninput = function() {
+                document.getElementById('año-preview-carpeta').textContent = this.value || '????';
+            };
+
+            document.getElementById('modal-cambio-año').classList.add('active');
+        }
+
+        function cerrarModalCambioAño() {
+            document.getElementById('modal-cambio-año').classList.remove('active');
+        }
+
+        async function ejecutarBackupAño() {
+            const añoArchivar = document.getElementById('año-archivar').value.trim();
+            const añoNuevo   = document.getElementById('año-nuevo').value.trim();
+
+            if (!añoArchivar || !añoNuevo) {
+                alert('Por favor rellena ambos años.');
+                return;
+            }
+
+            try {
+                const zip = new JSZip();
+                const carpeta = zip.folder(`backup/${añoArchivar}`);
+
+                carpeta.file('guardias.json',   JSON.stringify(GUARDIAS,   null, 2));
+                carpeta.file('vacaciones.json', JSON.stringify(VACACIONES, null, 2));
+                carpeta.file('festivos.json',   JSON.stringify(FESTIVOS,   null, 2));
+                carpeta.file('tecnicos.json',   JSON.stringify(TECNICOS,   null, 2));
+
+                const blob = await zip.generateAsync({ type: 'blob' });
+                const url  = URL.createObjectURL(blob);
+                const a    = document.createElement('a');
+                a.href     = url;
+                a.download = `backup_guardias_${añoArchivar}.zip`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                document.getElementById('año-nuevo-label').textContent = añoNuevo;
+                document.getElementById('año-paso1').style.display = 'none';
+                document.getElementById('año-paso2').style.display = 'block';
+
+            } catch (err) {
+                alert('Error al generar el backup: ' + err.message);
+            }
+        }
+
+        function resetearParaNuevoAño() {
+            localStorage.removeItem('guardias_2026');
+            localStorage.removeItem('vacaciones_2026');
+            localStorage.removeItem('festivos_2026');
+            localStorage.removeItem('tecnicos_2026');
+            localStorage.removeItem('guardias_huerfanas');
+            cerrarModalCambioAño();
+            location.reload();
+        }
+
+        // ── Fin cambio de año ───────────────────────────────────────────────
+
         // Iniciar al cargar la página
         window.onload = inicializarApp;
     </script>
+    <!-- Modal cambio de año / backup -->
+    <div id="modal-cambio-año" class="modal">
+        <div class="modal-content" style="max-width: 560px;">
+            <div class="modal-header">📦 Cambio de año — Backup y reseteo</div>
+            <div class="modal-body">
+
+                <!-- Paso 1 -->
+                <div id="año-paso1">
+                    <p style="margin-bottom: 12px;">Indica el <strong>año actual</strong> que quieres archivar y el <strong>nuevo año</strong> al que pasas:</p>
+                    <div style="display: flex; gap: 16px; margin-bottom: 18px;">
+                        <div class="form-group" style="flex:1; margin:0;">
+                            <label>Año a archivar:</label>
+                            <input type="number" id="año-archivar" class="form-input" min="2020" max="2099" placeholder="2026">
+                        </div>
+                        <div class="form-group" style="flex:1; margin:0;">
+                            <label>Nuevo año:</label>
+                            <input type="number" id="año-nuevo" class="form-input" min="2020" max="2099" placeholder="2027">
+                        </div>
+                    </div>
+                    <div class="alert alert-info" style="font-size:0.88em; margin-bottom:16px;">
+                        Se descargará un <strong>.zip</strong> con los 4 JSON actuales dentro de la carpeta <code>backup/<span id="año-preview-carpeta">2026</span>/</code>.<br>
+                        Después podrás vaciar todos los datos para empezar el nuevo año.
+                    </div>
+                    <div style="display:flex; gap:10px; justify-content:flex-end;">
+                        <button class="btn-cancel" onclick="cerrarModalCambioAño()">Cancelar</button>
+                        <button class="btn-confirm" onclick="ejecutarBackupAño()">📥 Descargar backup</button>
+                    </div>
+                </div>
+
+                <!-- Paso 2 (tras descargar) -->
+                <div id="año-paso2" style="display:none;">
+                    <div class="alert" style="background:rgba(76,175,80,0.15); border-left:4px solid #4CAF50; padding:12px; margin-bottom:16px; font-size:0.9em;">
+                        ✅ <strong>Backup descargado correctamente.</strong><br>
+                        Guárdalo en un lugar seguro antes de continuar.
+                    </div>
+                    <p style="margin-bottom: 10px;">¿Quieres <strong>vaciar todos los datos</strong> (guardias, vacaciones, festivos y técnicos) para empezar el año <strong id="año-nuevo-label"></strong> desde cero?</p>
+                    <div class="alert alert-warning" style="font-size:0.85em; margin-bottom:16px;">
+                        ⚠️ Esta acción borrará todos los datos del navegador. Solo hazlo si ya has guardado el backup.
+                    </div>
+                    <div style="display:flex; gap:10px; justify-content:flex-end;">
+                        <button class="btn-cancel" onclick="cerrarModalCambioAño()">Cerrar sin resetear</button>
+                        <button class="btn-confirm" style="background: var(--danger-color);" onclick="resetearParaNuevoAño()">🗑️ Vaciar y empezar nuevo año</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
