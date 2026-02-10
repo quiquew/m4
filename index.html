@@ -1021,11 +1021,7 @@
                 status.textContent = '❌ Error: ' + error.message;
                 setTimeout(() => {
                     overlay.style.display = 'none';
-                    alert('❌ Error cargando datos.
-
-' + error.message + '
-
-Asegúrate de que los archivos tecnicos.json, guardias.json, vacaciones.json y festivos.json estén en la misma carpeta que este archivo.');
+                    alert('❌ Error cargando datos.\n\n' + error.message + '\n\nAsegúrate de que los archivos tecnicos.json, guardias.json, vacaciones.json y festivos.json estén en la misma carpeta que este archivo.');
                 }, 1500);
                 return false;
             }
