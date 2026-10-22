@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guardias 2026 - Sistema de Gestión</title>
+    <meta name="theme-color" content="#0f172a">
+    <title>Guardias - Máquina 4</title>
     <style>
         * {
             margin: 0;
@@ -587,6 +588,59 @@
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <style id="tema-m4">
+        /* ====== Tema M4 (rediseño) — sobreescribe estilos anteriores ====== */
+        :root{
+            --primary-color:#16a34a; --secondary-color:#2563eb; --danger-color:#dc2626; --warning-color:#d97706;
+            --dark-color:#0f172a; --light-color:#f1f5f9; --borde:#e2e8f0; --muted:#64748b; --acento:#0ea5e9;
+        }
+        body{ background:#eef2f7; padding:12px; font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; color:var(--dark-color); }
+        .container{ max-width:1500px; border-radius:18px; box-shadow:0 10px 40px rgba(15,23,42,.10); padding:24px; }
+        header{ text-align:left; margin-bottom:20px; padding-bottom:14px; border-bottom:1px solid var(--borde); }
+        h1{ font-size:1.7em; letter-spacing:-.02em; margin-bottom:2px; }
+        .subtitle{ font-size:.95em; color:var(--muted); }
+        h2{ font-size:1.25em; margin-bottom:14px; }
+        .controls{ justify-content:flex-start; gap:8px; margin-bottom:22px; position:sticky; top:0; z-index:20; background:#fff; padding:8px 0; overflow-x:auto; flex-wrap:nowrap; }
+        .controls .btn{ flex:0 0 auto; padding:9px 16px; font-size:.92em; background:var(--light-color); color:var(--dark-color); border:1px solid var(--borde); border-radius:999px; font-weight:600; white-space:nowrap; }
+        .controls .btn:hover{ transform:none; box-shadow:none; background:#e2e8f0; }
+        .controls .btn.active{ background:var(--dark-color); color:#fff; border-color:var(--dark-color); }
+        .stat-card,.person-card{ background:linear-gradient(135deg,#0f172a,#1e3a5f) !important; border-radius:14px; }
+        .person-card:hover{ transform:translateY(-3px); }
+        /* ----- Calendario: nunca se corta ----- */
+        #calendario{ min-width:0; }
+        .cal-wrap{ width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:14px; border:1px solid var(--borde); background:#fff; }
+        .cal-controls{ background:var(--light-color); border-radius:14px; padding:10px 12px; margin-bottom:14px; justify-content:center; gap:8px; }
+        .cal-controls .btn{ padding:8px 14px; font-size:.9em; }
+        .cal-title{ font-size:1.25em; min-width:170px; text-align:center; }
+        .cal-extra{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:center; }
+        .cal-extra select{ padding:7px 10px; border:1px solid var(--borde); border-radius:8px; font-size:.95em; background:#fff; }
+        .calendar-month{ table-layout:fixed; width:100%; min-width:720px; margin-top:0; border-radius:0; box-shadow:none; border:none; }
+        .calendar-month th{ background:var(--dark-color); padding:10px 4px; font-size:.85em; text-transform:uppercase; letter-spacing:.06em; }
+        .calendar-month td{ height:104px; padding:5px; font-size:.85em; overflow:hidden; border:1px solid var(--borde); }
+        .calendar-month td:empty{ background:#f8fafc; }
+        .day-number{ font-size:.85em; color:var(--muted); margin-bottom:3px; }
+        .today .day-number{ background:var(--acento); color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; }
+        .today{ background:#e0f2fe !important; }
+        .guardia-event,.vacaciones-event,.festivo-label{ display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border-radius:6px; padding:2px 6px; margin:2px 0; font-size:.78em; font-weight:600; line-height:1.35; }
+        .guardia-event{ background:var(--primary-color); }
+        .vacaciones-event{ background:#dbeafe; color:#1e40af; font-weight:500; }
+        .festivo-label{ background:#fee2e2; color:#991b1b; margin-top:3px; }
+        .festivo-day{ background:#fff7f7 !important; }
+        @media (max-width:768px){
+            body{ padding:0; } .container{ padding:12px; border-radius:0; } h1{ font-size:1.35em; }
+            .controls{ flex-direction:row !important; }
+            .calendar-month{ min-width:0; }
+            .calendar-month td{ height:78px; padding:2px; font-size:.72em; }
+            .calendar-month th{ font-size:.68em; padding:7px 0; letter-spacing:0; }
+            .guardia-event,.vacaciones-event,.festivo-label{ font-size:.66em; padding:1px 3px; border-radius:4px; }
+            .vacaciones-event{ font-size:.6em; }
+            .cal-title{ min-width:0; font-size:1.05em; flex:1 1 100%; order:-1; }
+            .cal-controls{ gap:6px; }
+        }
+        @media (min-width:769px){ .controls{ flex-wrap:wrap; overflow:visible; position:static; } }
+        @media print{ .controls,.cal-controls,.edit-controls{ display:none !important; } body{ background:#fff; } .container{ box-shadow:none; } }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -601,7 +655,7 @@
         </div>
         
         <header>
-            <h1>📅 Guardias 2026</h1>
+            <h1>📅 Guardias <span id="anio-titulo">2026</span></h1>
             <div class="subtitle">Sistema de visualización de guardias, festivos y vacaciones</div>
         </header>
         
@@ -3206,6 +3260,45 @@ END:VEVENT
 
         // Iniciar al cargar la página
         window.onload = inicializarApp;
+    
+        // ── Rediseño: año dinámico, selector de año y calendario con scroll ──
+        (function(){
+            const _upd = updateCalendar;
+            function aniosDisponibles(){
+                const s = new Set([new Date().getFullYear(), currentYear]);
+                const add = f => { if (f && /^\d{4}/.test(f)) s.add(+f.slice(0,4)); };
+                Object.values(GUARDIAS).forEach(l => l.forEach(r => { add(r[0]); add(r[1]); }));
+                Object.keys(FESTIVOS).forEach(add);
+                return [...s].sort();
+            }
+            window.updateCalendar = updateCalendar = function(){
+                const t = document.getElementById('calendar-month');
+                if (t && !t.parentElement.classList.contains('cal-wrap')) {
+                    const w = document.createElement('div'); w.className = 'cal-wrap';
+                    t.parentNode.insertBefore(w, t); w.appendChild(t);
+                    const ctrl = document.querySelector('#calendario .cal-controls');
+                    const extra = document.createElement('div'); extra.className = 'cal-extra';
+                    extra.innerHTML = '<select id="cal-anio" aria-label="Año"></select><button class="btn" id="cal-hoy">Hoy</button>';
+                    ctrl.appendChild(extra);
+                    document.getElementById('cal-anio').onchange = e => { currentYear = +e.target.value; updateCalendar(); };
+                    document.getElementById('cal-hoy').onclick = () => { const h = new Date(); currentYear = h.getFullYear(); currentMonth = h.getMonth(); updateCalendar(); };
+                }
+                _upd();
+                const sel = document.getElementById('cal-anio');
+                if (sel) {
+                    const ys = aniosDisponibles();
+                    if (sel.options.length !== ys.length) sel.innerHTML = ys.map(y => `<option>${y}</option>`).join('');
+                    sel.value = currentYear;
+                }
+            };
+            const _ini = inicializarApp;
+            inicializarApp = async function(){
+                await _ini();
+                const y = document.getElementById('anio-titulo'); if (y) y.textContent = new Date().getFullYear();
+                document.title = 'Guardias ' + new Date().getFullYear() + ' - Máquina 4';
+            };
+            window.onload = inicializarApp;
+        })();
     </script>
     <!-- Modal cambio de año / backup -->
     <div id="modal-cambio-año" class="modal">
