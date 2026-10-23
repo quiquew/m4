@@ -1394,7 +1394,7 @@
             `;
             
             let day = 1;
-            const hoy = new Date().toISOString().split('T')[0];
+            const hoy = hoyISO();
             
             for (let i = 0; i < 6; i++) {
                 html += '<tr>';
@@ -1575,7 +1575,7 @@
 
         function cargarHoy() {
             const content = document.getElementById('hoy-content');
-            const hoy = new Date().toISOString().split('T')[0];
+            const hoy = hoyISO();
             
             let html = '';
             let hayGuardia = false;
