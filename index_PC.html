@@ -655,7 +655,7 @@
         </div>
         
         <header>
-            <h1>📅 Guardias <span id="anio-titulo">2026</span></h1>
+            <h1>📅 Guardias</h1>
             <div class="subtitle">Sistema de visualización de guardias, festivos y vacaciones</div>
         </header>
         
@@ -916,7 +916,7 @@
                 
                 <div class="form-group">
                     <label>Nombre del repositorio:</label>
-                    <input type="text" id="input-github-repo" class="form-input" placeholder="guardias-2026">
+                    <input type="text" id="input-github-repo" class="form-input" placeholder="nombre-del-repositorio">
                 </div>
                 
                 <div class="form-group">
@@ -1956,7 +1956,7 @@
             // Formato ICS (iCalendar)
             let ics = `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Guardias 2026//ES
+PRODID:-//Guardias//ES
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:${titulo}
@@ -1982,7 +1982,7 @@ END:VTIMEZONE
 `;
 
             eventos.forEach(evento => {
-                const uid = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}@guardias.local`;
+                const uid = evento.uid || `${evento.titulo}-${evento.inicio}`.replace(/[^A-Za-z0-9-]/g, '_') + '@guardias.local';
                 const dtstamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
                 
                 // Convertir fechas a formato ICS (YYYYMMDD)
@@ -2018,10 +2018,18 @@ END:VEVENT
             URL.revokeObjectURL(url);
         }
 
+        // Fecha de hoy (local) en formato YYYY-MM-DD: lo ya pasado no se exporta,
+        // para no generar eventos repetidos al importar de nuevo en el calendario.
+        function hoyISO() {
+            const d = new Date();
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        }
+
         function exportarGuardiasCalendario(persona) {
-            const guardias = GUARDIAS[persona];
-            if (!guardias || guardias.length === 0) {
-                alert('No hay guardias para exportar');
+            const hoy = hoyISO();
+            const guardias = (GUARDIAS[persona] || []).filter(([inicio, fin]) => fin >= hoy);
+            if (guardias.length === 0) {
+                alert('No hay guardias pendientes para exportar.\n\nLas guardias ya pasadas no se exportan para no repetir eventos.');
                 return;
             }
 
@@ -2034,6 +2042,7 @@ END:VEVENT
                 return {
                     inicio: inicio,
                     fin: finAjustado,
+                    uid: `guardia-${persona}-${inicio}@guardias.local`.replace(/[^A-Za-z0-9@.-]/g, '_'),
                     titulo: `Guardia - ${persona}`,
                     descripcion: `Período de guardia asignado a ${persona}`
                 };
@@ -2044,9 +2053,10 @@ END:VEVENT
         }
 
         function exportarVacacionesCalendario(persona) {
-            const vacaciones = VACACIONES[persona];
-            if (!vacaciones || vacaciones.length === 0) {
-                alert('No hay vacaciones para exportar');
+            const hoy = hoyISO();
+            const vacaciones = (VACACIONES[persona] || []).filter(([inicio, fin]) => fin >= hoy);
+            if (vacaciones.length === 0) {
+                alert('No hay vacaciones pendientes para exportar.\n\nLas vacaciones ya pasadas no se exportan para no repetir eventos.');
                 return;
             }
 
@@ -2059,6 +2069,7 @@ END:VEVENT
                 return {
                     inicio: inicio,
                     fin: finAjustado,
+                    uid: `vacaciones-${persona}-${inicio}@guardias.local`.replace(/[^A-Za-z0-9@.-]/g, '_'),
                     titulo: `Vacaciones - ${persona}`,
                     descripcion: descripcion || 'Período vacacional'
                 };
@@ -3294,8 +3305,7 @@ END:VEVENT
             const _ini = inicializarApp;
             inicializarApp = async function(){
                 await _ini();
-                const y = document.getElementById('anio-titulo'); if (y) y.textContent = new Date().getFullYear();
-                document.title = 'Guardias ' + new Date().getFullYear() + ' - Máquina 4';
+                document.title = 'Guardias - Máquina 4';
             };
             window.onload = inicializarApp;
         })();
