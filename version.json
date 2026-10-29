@@ -1,10 +1,10 @@
 {
-  "version": "3.4.25",
-  "fecha": "29/10/2026, 16:58:48",
-  "notas": "Fallo servidor caído. Permite usarlo aunque el servidor haya caído",
-  "pyw_url": "https://github.com/quiquew/m4/releases/download/v3.4.25/Maquina4_Operarios.pyw",
-  "apk_url": "https://github.com/quiquew/m4/releases/download/v3.4.25/Maquina4_Operarios.apk",
+  "version": "3.4.26",
+  "fecha": "29/10/2026, 18:16:31",
+  "notas": "Actualización",
+  "pyw_url": "https://github.com/quiquew/m4/releases/download/v3.4.26/Maquina4_Operarios.pyw",
+  "apk_url": "https://github.com/quiquew/m4/releases/download/v3.4.26/Maquina4_Operarios.apk",
   "caducidad_dias": 40,
-  "caducidad_fecha": "2026-12-01",
+  "caducidad_fecha": "",
   "tok_reporte_c": "b0V1Vm8zR0tETkQ3Q0ZYRnJIM1FZVXhrNmR4UU5BbzZ6RnM2c1Q4SDVKM08zaTBlcEVGQ3k3VmZZRXpfWmxRTE1yNFQ2R1psMElEU1hBNEExMV90YXBfYnVodGln"
 }
