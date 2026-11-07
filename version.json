@@ -1,10 +1,14 @@
 {
-  "version": "3.4.57",
-  "fecha": "7/11/2026, 0:17:01",
+  "version": "3.4.61",
+  "fecha": "7/11/2026, 18:47:36",
   "notas": "",
   "pyw_url": "",
-  "apk_url": "https://github.com/quiquew/m4/releases/download/v3.4.57/Maquina4_Operarios.2.apk",
-  "caducidad_dias": 40,
-  "caducidad_fecha": "2026-10-15",
+  "apk_url": "https://github.com/quiquew/m4/releases/download/v3.4.61/Maquina4_Operarios.6.apk",
+  "aviso_version": "3.4.60",
+  "aviso_fecha": "2026-11-06",
+  "bloqueo_version": "3.4.59",
+  "bloqueo_fecha": "2026-11-06",
+  "caducidad_dias": 9999,
+  "caducidad_fecha": "",
   "tok_reporte_c": "b0V1Vm8zR0tETkQ3Q0ZYRnJIM1FZVXhrNmR4UU5BbzZ6RnM2c1Q4SDVKM08zaTBlcEVGQ3k3VmZZRXpfWmxRTE1yNFQ2R1psMElEU1hBNEExMV90YXBfYnVodGln"
 }
