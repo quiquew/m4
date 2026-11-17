@@ -1,9 +1,9 @@
 {
-  "version": "3.4.89",
-  "fecha": "15/11/2026, 17:54:47",
-  "notas": "",
+  "version": "3.4.94",
+  "fecha": "17/11/2026, 18:45:57",
+  "notas": "Habilitado el escáner de QR",
   "pyw_url": "",
-  "apk_url": "https://github.com/quiquew/m4/releases/download/v3.4.89/Maquina4_Operarios_3.4.89.apk",
+  "apk_url": "https://github.com/quiquew/m4/releases/download/v3.4.94/Maquina4_Operarios_3.4.94.apk",
   "aviso_version": "3.4.71",
   "aviso_fecha": "2026-11-06",
   "bloqueo_version": "3.4.70",
